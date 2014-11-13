@@ -1,14 +1,14 @@
 (ns learnable.life
   (:require [learnable.display :as display]))
 
-(defn neighbors [tcell population]
-  (let [[x y] tcell]
+(defn neighbors [cell population]
+  (let [[x y] cell]
     (filter
       (fn [[cx cy]]
           (and
             (< (Math/abs (- cx x)) 2)
             (< (Math/abs (- cy y)) 2)))
-      (remove #(= tcell %) population))))
+      (disj population cell))))
 
 (defn should-live? [cell population]
   (let [ncount (count (neighbors cell population))]
@@ -19,38 +19,42 @@
     (= ncount 3)))
 
 (defn surrounding [cell]
-  (let [[x y] cell]
-    (list (list (inc x) (inc y))
-          (list (inc x) (dec y))
-          (list (dec x) (inc y))
-          (list (dec x) (dec y))
-          (list x (inc y))
-          (list x (dec y))
-          (list (inc x) y)
-          (list (dec x) y))))
+  (let [[x y] cell
+        next-x (inc x)
+        prev-x (dec x)
+        next-y (inc y)
+        prev-y (dec y)]
+    (list (list next-x next-y)
+          (list next-x prev-y)
+          (list prev-x next-y)
+          (list prev-x prev-y)
+          (list x next-y)
+          (list x prev-y)
+          (list next-x y)
+          (list prev-x y))))
 
+(defn get-potential [population]
+  (distinct (concat population (mapcat surrounding population))))
 
 (defn step [world]
-  (let [population (:cells world)
-        potentials (distinct (concat
-                               population
-                               (mapcat surrounding population)))]
+  (let [population (:cells world)]
     (reduce
       (fn [generation cell]
-        (if (some #(= % cell) population)
+        (if (contains? population cell)
           (if (should-live? cell population)
-            (cons cell generation)
-            generation)
+            generation
+            (disj generation cell))
           (if (should-spawn? cell population)
-            (cons cell generation)
+            (conj generation cell)
             generation)))
-      (list)
-      potentials)))
+      population
+      (get-potential population))))
 
 (def life-game
   {:boot
      (fn [screen]
-       {:cells `((10 10) (11 11) (10 11))})
+       {:cells (set `())
+        :status :paused})
 
    :draw
      (fn [state screen]
@@ -65,7 +69,11 @@
               (assoc state :cells (step state))))
       :mouse
         (fn [state point]
-          (update-in state [:cells] #(conj % point)))
+          (update-in state [:cells]
+            (fn [population]
+              (if (contains? population point)
+                (disj population point)
+                (conj population point)))))
       :keyboard (fn [state ks]
                   (when (= ks :key-up)
                     (assoc state
