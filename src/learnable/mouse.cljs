@@ -15,4 +15,4 @@
           [mx my] (mouse-offset e)
           x (Math/floor (/ (- mx sx) px))
           y (Math/floor (/ (- my sy) px))]
-      (put! bus [:mouse `(x y)]))))
+      (put! bus [:mouse (list x y)]))))
