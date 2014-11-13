@@ -15,7 +15,7 @@
   (let [ncount (count (neighbors cell population))]
     (or (= ncount 2) (= ncount 3))))
 
-(defn should-spawn? [square population]
+(defn should-spawn? [cell population]
   (let [ncount (count (neighbors cell population))]
     (= ncount 3)))
 
@@ -33,7 +33,7 @@
 (def life-game
   {:boot
      (fn [screen]
-       {:cells (list)})
+       {:cells `((10 10) (11 11) (10 11))})
 
    :draw
      (fn [state screen]
@@ -45,22 +45,22 @@
         (fn [state _]
           (assoc state :cells
             (let [population (:cells state)]
-              (into (list)
+              (into ()
                 (reduce
-                   (fn [nextgen cell]
-                     (let [live (reduce
-                                  (fn [nextgen dead-cell]
-                                    (if (should-spawn? dead-cell population)
-                                      (conj dead-cell nextgen)
-                                      nextgen))
-                                  nextgen
-                                  (surrounding cell))]
-                       (if (should-live? cell population)
-                         (conj cell live)
-                         live)))
-                    (set `())
-                    population)))))
+                 (fn [nextgen cell]
+                   (let [live (reduce
+                                (fn [nextgen dead-cell]
+                                  (if (should-spawn? dead-cell population)
+                                    (conj dead-cell nextgen)
+                                    nextgen))
+                                nextgen
+                                (surrounding cell))]
+                     (if (should-live? cell population)
+                       (conj cell live)
+                       live)))
+                (set `())
+                population)))))
       :mouse
         (fn [state point]
-          (update-in state :cells #(conj % point)))
+          (update-in state [:cells] #(conj % point)))
       :keyboard (fn [s _] s)}})
