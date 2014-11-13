@@ -32,7 +32,6 @@
 
 (defn commit [process entry]
   (let [{:keys [state log]} process]
-    (println state)
     (assoc process
       :state ((transition process) state entry)
       :log (statelog/commit log entry))))

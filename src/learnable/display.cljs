@@ -5,6 +5,8 @@
     [om.core :as om :include-macros true]
     [om.dom :as dom :include-macros true]))
 
+(enable-console-print!)
+
 (defn screen-pixel-size [dim res]
   (min (/ (first dim) (first res))
        (/ (last dim) (last res))))
@@ -38,6 +40,7 @@
 (defn css-measure [unit value] (str value unit))
 
 (defmethod render-screen-item :pixel [pixel screen]
+  (println pixel)
   (let [[_ [x y] color] pixel
         measure (partial css-measure (:unit screen))
         [x-offset y-offset] (:offset screen)
