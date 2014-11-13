@@ -30,6 +30,24 @@
           (list (inc x) y)
           (list (dec x) y))))
 
+
+(defn step [world]
+  (let [population (set (:cells world))
+        potentials (difference
+                      (set (mapcat surrounding (:cells world)))
+                      population)]
+    (reduce (fn [generation cell]
+              (if (should-live? cell population)
+                (cons cell generation)
+                generation))
+            (reduce (fn [generation potential]
+                      (if (should-spawn? potential population)
+                        (cons potential generation)
+                        generation))
+                    (list)
+                    potentials)
+            population)))
+
 (def life-game
   {:boot
      (fn [screen]
@@ -37,30 +55,21 @@
 
    :draw
      (fn [state screen]
-       (reduce #(display/draw-pixel % % :green)
+       (reduce (fn [screen cell] (display/draw-pixel screen cell (if (= :paused (:status state)) :red :green)))
                screen
                (:cells state)))
    :transitions
       {:clock
         (fn [state _]
-          (assoc state :cells
-            (let [population (:cells state)]
-              (into ()
-                (reduce
-                  (fn [nextgen cell]
-                    (let [live (reduce
-                                 (fn [nextgen dead-cell]
-                                   (if (should-spawn? dead-cell population)
-                                     (conj nextgen dead-cell)
-                                     nextgen))
-                                 nextgen
-                                 (surrounding cell))]
-                      (if (should-live? cell population)
-                        (conj live cell)
-                        live)))
-                  (set `())
-                  population)))))
+          (if (= :paused (:status state))
+              state
+              (assoc state :cells (step state))))
       :mouse
         (fn [state point]
           (update-in state [:cells] #(conj % point)))
-      :keyboard (fn [s _] s)}})
+      :keyboard (fn [state ks]
+                  (when (= ks :key-up)
+                    (assoc state
+                      :status (if (= :paused (:status state))
+                                :running
+                                :paused))))}})
