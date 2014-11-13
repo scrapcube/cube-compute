@@ -17,5 +17,6 @@
               :compiler {
                 :output-to "learnable.js"
                 :output-dir "out"
-                :optimizations :none
-                :source-map true}}]})
+                :preamble ["react/react.min.js"]
+                :externs ["react/externs/react.js"]
+                :optimizations :advanced}}]})
