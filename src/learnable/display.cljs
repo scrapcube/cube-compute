@@ -55,15 +55,20 @@
 
 (defn ui [screen owner]
   (reify
+    om/IWillMount
+    (will-mount [_]
+      (om/set-state! owner
+        :offset (mouse/node-offset (om/get-node owner))))
+
     om/IRenderState
-    (render-state [_ {:keys [bus interrupt]}]
+    (render-state [_ {:keys [bus interrupt offset]}]
       (let [{:keys [dimension unit]} screen
             [screen-width screen-height] dimension]
         (apply
           dom/div
            #js {:tabIndex "0"
                 :className "screen"
-                :onClick (mouse/controller screen bus)
+                :onClick (mouse/controller offset bus)
                 :onKeyboard (keyboard/controller bus interrupt)
                 :style
                   {:width (css-measure unit screen-width)

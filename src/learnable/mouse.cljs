@@ -9,10 +9,10 @@
 (defn mouse-offset [e]
   [(.-pageX e) (.-pageY e)])
 
-(defn controller [screen bus]
+(defn controller [screen-offset bus]
   (fn [e]
     (let [px (:px screen)
-          [sx sy] (node-offset (om/get-node owner))
+          [sx sy] screen-offset
           [mx my] (mouse-offset e)]
       (put! bus
             [:mouse
