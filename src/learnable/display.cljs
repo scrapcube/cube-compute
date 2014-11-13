@@ -24,7 +24,7 @@
 
 (defn draw-pixel [screen point color]
   (let [pixel [:pixel point color]]
-    (update-in screen :items #(conj % pixel))))
+    (update-in screen [:items] #(conj % pixel))))
 
 (defn color-class [color]
   (condp = color
