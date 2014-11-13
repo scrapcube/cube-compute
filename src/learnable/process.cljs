@@ -11,6 +11,7 @@
 
 (defn transition [process]
   (fn [state [type input]]
+    (println (str "transition: " [(str type) (str input)]))
     ((get-in process [:transitions type]) state input)))
 
 (defn halt [process]
