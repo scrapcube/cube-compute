@@ -47,7 +47,7 @@
         [x-offset y-offset] (:offset screen)
         px (:px screen)]
     (dom/div
-      #js {:key (reduce str "" pixel)
+      #js {:key (str x y color)
            :className (str "pixel " (color-class color))
            :style #js
              {:display "absolute"
