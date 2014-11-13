@@ -4,7 +4,7 @@
 (defn translate [point ray]
   (let [[x y] point
         [dx dy] ray]
-    [(+ x dx) (+ y dy)]))
+    (list (+ x dx) (+ y dy))))
 
 (defn draw [state screen]
   (let [{:keys [food snake]} state]
@@ -49,10 +49,10 @@
 
 (defn to-direction [keystroke]
   (condp = keystroke
-         :key-up [0 -1]
-         :key-right [1 0]
-         :key-down [0 1]
-         :key-left [-1 0]
+         :key-up `(0 -1)
+         :key-right `(1 0)
+         :key-down `(0 1)
+         :key-left `(-1 0)
          nil))
 
 (defn on-keyboard [state keystroke]
@@ -76,10 +76,10 @@
     (fn [screen]
       {:world-w (first (:resolution screen))
        :world-h (last (:resolution screen))
-       :snake [[2 2]]
-       :food [[4 1] [2 0] [4 7] [6 3]]
+       :snake `((2 2))
+       :food `((4 1) (2 0) (4 7) (6 3))
        :energy 0
-       :direction [0 1]
+       :direction `(0 1)
        :status :alive})
    :draw
       draw
