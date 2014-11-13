@@ -7,7 +7,7 @@
 
 (defn entries-list [log]
   (letfn [(lentry [at [type input]]
-            (str at " - " type " : " input))]
+            (str at " - " type " - " input))]
     (cons
       (lentry 0 ["system" "start"])
       (map-indexed
@@ -18,17 +18,17 @@
 (defn inspect [item]
   (apply dom/ul #js {:className "item-inspection"}
     (map
-      (fn [k v]
+      (fn [[k v]]
         (dom/li nil
-          (dom/div #js {:className "key"} (str k " : "))
+          (dom/div #js {:className "key"} (str k " - "))
           (dom/div #js {:className "value"} (str v))))
       item)))
 
 (defn selectable [plog]
-  (let [length (count plog)]
+  (let [length (dec (count plog))]
     (map-indexed
       (fn [idx entry]
-        [(- length idx) entry])
+        [(- plog idx) entry])
       plog)))
 
 (defn ui [process owner]
@@ -36,7 +36,7 @@
     om/IRenderState
     (render-state [_ {:keys [interrupt]}]
       (let [{:keys [log status state]} process]
-        (dom/div nil
+        (dom/div #js {:className "screen inspector"}
           (dom/div nil
             (form/heading "status:")
             (str status))
