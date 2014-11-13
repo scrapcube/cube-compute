@@ -14,10 +14,6 @@
   (let [ncount (count (neighbors cell population))]
     (or (= ncount 2) (= ncount 3))))
 
-(defn should-spawn? [cell population]
-  (let [ncount (count (neighbors cell population))]
-    (= ncount 3)))
-
 (def surrounding (memoize
   (fn [cell]
     (let [[x y] cell
@@ -38,19 +34,19 @@
   (distinct (concat population (mapcat surrounding population))))
 
 (defn step [world]
-  (let [population (:cells world)]
-    (persistent!
-      (reduce
-        (fn [generation cell]
-          (if (contains? population cell)
-            (if (should-live? cell population)
-              generation
-              (disj! generation cell))
-            (if (should-spawn? cell population)
-              (conj! generation cell)
-              generation)))
-        (transient population)
-        (get-potential population)))))
+  (let [population (:cells world)
+        nextgen (reduce
+                  (fn [nextgen cell]
+                    (if (should-live? cell population)
+                      population
+                      (disj! population cell)))
+                  (transient population)
+                  population)]
+    (reduce
+      conj!
+      nextgen
+      (filter (fn [[x v]] (= 3 v))
+              (frequencies (mapcat surrounding population))))))
 
 (def life-game
   {:boot
