@@ -1,5 +1,6 @@
 (ns learnable.inspector
   (:require [learnable.process :as proc]
+            [learnable.form :as form]
             [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]
             [cljs.core.async :as async :refer [put!]]))

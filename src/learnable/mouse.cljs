@@ -1,4 +1,7 @@
-(ns learnable.mouse)
+(ns learnable.mouse
+  (:require
+    [om.core :as om :include-macros true]
+    [cljs.core.async :as async :refer [put!]]))
 
 (defn node-offset [node]
   [(.-offsetLeft node) (.-offsetTop node)])
@@ -7,11 +10,11 @@
   [(.-pageX e) (.-pageY e)])
 
 (defn controller [screen owner]
-  (let [px (:px screen)
-        bus (om/get-state owner :bus)
-        [sx sy] (node-offset (om/get-node owner))
-        [mx my] (mouse-offset e)]
-    (fn [e]
+  (fn [e]
+    (let [px (:px screen)
+          bus (om/get-state owner :bus)
+          [sx sy] (node-offset (om/get-node owner))
+          [mx my] (mouse-offset e)]
       (put! bus
             [:mouse
              [(Math/floor (/ (- mx sx) px))
