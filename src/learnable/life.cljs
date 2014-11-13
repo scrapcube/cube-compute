@@ -1,15 +1,14 @@
 (ns learnable.life
   (:require [learnable.display :as display]))
 
-(def neighbors (memoize
-  (fn [cell population]
+(defn neighbors [cell population]
     (let [[x y] cell]
       (filter
         (fn [[cx cy]]
             (and
               (< (Math/abs (- cx x)) 2)
               (< (Math/abs (- cy y)) 2)))
-        (disj population cell))))))
+        (disj population cell))))
 
 (defn should-live? [cell population]
   (let [ncount (count (neighbors cell population))]
@@ -74,9 +73,11 @@
         (fn [state point]
           (update-in state [:cells]
             (fn [population]
-              (if (contains? population point)
-                (disj population point)
-                (conj population point)))))
+              (if (= :paused (:status state))
+                state
+                (if (contains? population point)
+                  (disj population point)
+                  (conj population point))))))
       :keyboard (fn [state ks]
                   (when (= ks :key-up)
                     (assoc state
