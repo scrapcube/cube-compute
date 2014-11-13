@@ -34,6 +34,7 @@
   {:boot
      (fn [screen]
        {:cells (list)})
+
    :draw
      (fn [state screen]
        (reduce #(display/draw-pixel % % :green)
@@ -41,23 +42,23 @@
                (:cells state)))
    :clock
      (fn [state _]
-       (let [population (:cells state)
-             nextgen (set)]
-         (into (list)
-          (reduce (fn [nextgen cell]
-                    (let [live
-                            (reduce
+       (assoc state :cells
+         (let [population (:cells state)]
+           (into (list)
+             (reduce
+                (fn [nextgen cell]
+                  (let [live (reduce
                                (fn [nextgen dead-cell]
                                  (if (should-spawn? dead-cell population)
                                    (conj dead-cell nextgen)
                                    nextgen))
                                nextgen
                                (surrounding cell))]
-                     (if (should-live? cell)
-                       (conj cell live)
-                       live)))
-                  nextgen
-                  population))))
+                    (if (should-live? cell)
+                      (conj cell live)
+                      live)))
+                 (set `())
+                 population)))))
    :mouse
      (fn [state point]
        (update-in state :cells #(conj % point)))
