@@ -1,8 +1,8 @@
 (ns learnable.life
   (:require (learnable.display :as display)))
 
-(defn neighbors [square population]
-  (let [[x y] square]
+(defn neighbors [tcell population]
+  (let [[x y] tcell]
     (filter
       (fn [cell]
         (let [[cx cy] cell]
@@ -19,8 +19,8 @@
   (let [ncount (count (neighbors cell population))]
     (= ncount 3)))
 
-(defn surrounding [square]
-  (let [[x y] square]
+(defn surrounding [cell]
+  (let [[x y] cell]
     (list (list (inc x) (inc y))
           (list (inc x) (dec y))
           (list (dec x) (inc y))
@@ -47,19 +47,19 @@
             (let [population (:cells state)]
               (into ()
                 (reduce
-                 (fn [nextgen cell]
-                   (let [live (reduce
-                                (fn [nextgen dead-cell]
-                                  (if (should-spawn? dead-cell population)
-                                    (conj dead-cell nextgen)
-                                    nextgen))
-                                nextgen
-                                (surrounding cell))]
-                     (if (should-live? cell population)
-                       (conj cell live)
-                       live)))
-                (set `())
-                population)))))
+                  (fn [nextgen cell]
+                    (let [live (reduce
+                                 (fn [nextgen dead-cell]
+                                   (if (should-spawn? dead-cell population)
+                                     (conj nextgen dead-cell)
+                                     nextgen))
+                                 nextgen
+                                 (surrounding cell))]
+                      (if (should-live? cell population)
+                        (conj live cell)
+                        live)))
+                  (set `())
+                  population)))))
       :mouse
         (fn [state point]
           (update-in state [:cells] #(conj % point)))
