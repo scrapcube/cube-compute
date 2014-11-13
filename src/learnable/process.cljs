@@ -9,6 +9,10 @@
      :transitions [:transitions program]
      :log (statelog/create start-state)}))
 
+(defn transition [process]
+  (fn [state [type input]]
+    ((get-in process [:transitions type]) state input)))
+
 (defn halt [process]
   (assoc process :status :halted))
 
@@ -22,10 +26,6 @@
     (assoc process
       :state (statelog/replay log at (transition process))
       :log (statelog/settime log at))))
-
-(defn transition [process]
-  (fn [state [type input]]
-    ((get-in process [:transitions type]) state input)))
 
 (defn commit [process entry]
   (let [{:keys [state log]} process]
