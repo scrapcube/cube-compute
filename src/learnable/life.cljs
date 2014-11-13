@@ -4,12 +4,11 @@
 (defn neighbors [tcell population]
   (let [[x y] tcell]
     (filter
-      (fn [cell]
-        (let [[cx cy] cell]
+      (fn [[cx cy]]
           (and
             (< (Math/abs (- cx x)) 2)
-            (< (Math/abs (- cy y)) 2))))
-      population)))
+            (< (Math/abs (- cy y)) 2)))
+      (remove #(= tcell %) population))))
 
 (defn should-live? [cell population]
   (let [ncount (count (neighbors cell population))]
@@ -46,7 +45,7 @@
             (cons cell generation)
             generation)))
       (list)
-      (potentials))))
+      potentials)))
 
 (def life-game
   {:boot

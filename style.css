@@ -83,7 +83,13 @@ body {
 
 .pixel {
     box-sizing: border-box;
-    border-radius: 10px;
+    border-radius: 1px;
+}
+
+.pixel:hover {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #23B505;
 }
 
 .pixel.green {
