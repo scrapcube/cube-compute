@@ -55,8 +55,8 @@
 
 (defn ui [screen owner]
   (reify
-    om/IWillMount
-    (will-mount [_]
+    om/IDidMount
+    (did-mount [_]
       (om/set-state! owner
         :offset (mouse/node-offset (om/get-node owner))))
 
