@@ -60,6 +60,12 @@ body {
     border-color: #23B505;
 }
 
+.screen .heading {
+    border-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #23B505;
+}
+
 .screen ul {
     list-style-type: none;
 }

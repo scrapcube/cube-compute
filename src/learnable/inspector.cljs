@@ -20,8 +20,8 @@
     (map
       (fn [[k v]]
         (dom/li nil
-          (dom/div #js {:className "key"} (str k " - "))
-          (dom/div #js {:className "value"} (str v))))
+          (dom/span #js {:className "key"} (str k " - "))
+          (dom/span #js {:className "value"} (str v))))
       item)))
 
 (defn selectable [plog]
@@ -36,7 +36,7 @@
     om/IRenderState
     (render-state [_ {:keys [interrupt]}]
       (let [{:keys [log status state]} process]
-        (dom/div #js {:className "screen inspector"}
+        (dom/div #js {:className "inspector"}
           (dom/div nil
             (form/heading "status:")
             (str status))
@@ -57,6 +57,6 @@
               (form/radio-group #(put! interrupt [:restore %])
                 (selectable (entries-list log))
                 (:now log))
-              (form/ulist (entries-list log)))))))))
+              (form/ulist (reverse (entries-list log))))))))))
 
 

@@ -3,7 +3,7 @@
             [om.dom :as dom :include-macros true]))
 
 (defn heading [text]
-  (dom/u nil text))
+  (dom/div #js {:className "heading"} text))
 
 (defn ulist [items]
   (apply
@@ -25,6 +25,6 @@
                 (let [selected? (= value radio-value)
                       mark (if selected? "[X] " "[ ] ")]
                    (dom/a #js {:onClick (fn [_] (fselect value))}
-                          (str mark value))))))
+                          (str mark label))))))
          options)))
 
