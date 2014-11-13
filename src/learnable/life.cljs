@@ -73,8 +73,8 @@
         (fn [state point]
           (update-in state [:cells]
             (fn [population]
-              (if (= :paused (:status state))
-                state
+              (if (= :running (:status state))
+                population
                 (if (contains? population point)
                   (disj population point)
                   (conj population point))))))
