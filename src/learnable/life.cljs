@@ -1,14 +1,15 @@
 (ns learnable.life
   (:require [learnable.display :as display]))
 
-(defn neighbors [cell population]
-  (let [[x y] cell]
-    (filter
-      (fn [[cx cy]]
-          (and
-            (< (Math/abs (- cx x)) 2)
-            (< (Math/abs (- cy y)) 2)))
-      (disj population cell))))
+(def neighbors (memoize
+  (fn [cell population]
+    (let [[x y] cell]
+      (filter
+        (fn [[cx cy]]
+            (and
+              (< (Math/abs (- cx x)) 2)
+              (< (Math/abs (- cy y)) 2)))
+        (disj population cell))))))
 
 (defn should-live? [cell population]
   (let [ncount (count (neighbors cell population))]
@@ -18,20 +19,21 @@
   (let [ncount (count (neighbors cell population))]
     (= ncount 3)))
 
-(defn surrounding [cell]
-  (let [[x y] cell
-        next-x (inc x)
-        prev-x (dec x)
-        next-y (inc y)
-        prev-y (dec y)]
-    (list (list next-x next-y)
-          (list next-x prev-y)
-          (list prev-x next-y)
-          (list prev-x prev-y)
-          (list x next-y)
-          (list x prev-y)
-          (list next-x y)
-          (list prev-x y))))
+(def surrounding (memoize
+  (fn [cell]
+    (let [[x y] cell
+          next-x (inc x)
+          prev-x (dec x)
+          next-y (inc y)
+          prev-y (dec y)]
+      (list (list next-x next-y)
+            (list next-x prev-y)
+            (list prev-x next-y)
+            (list prev-x prev-y)
+            (list x next-y)
+            (list x prev-y)
+            (list next-x y)
+            (list prev-x y))))))
 
 (defn get-potential [population]
   (distinct (concat population (mapcat surrounding population))))
