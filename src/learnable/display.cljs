@@ -41,6 +41,7 @@
 
 (defmethod render-screen-item :pixel [pixel screen]
   (println pixel)
+  (println (str "screen-offset " (:offset screen)))
   (let [[_ [x y] color] pixel
         measure (partial css-measure (:unit screen))
         [x-offset y-offset] (:offset screen)
