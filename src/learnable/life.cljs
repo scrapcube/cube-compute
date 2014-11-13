@@ -46,9 +46,9 @@
           (if (contains? population cell)
             (if (should-live? cell population)
               generation
-              (disj generation cell))
+              (disj! generation cell))
             (if (should-spawn? cell population)
-              (conj generation cell)
+              (conj! generation cell)
               generation)))
         (transient population)
         (get-potential population)))))
