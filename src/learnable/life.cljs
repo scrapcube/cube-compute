@@ -1,5 +1,5 @@
 (ns learnable.life
-  (:require (learnable.display :as display)))
+  (:require [learnable.display :as display]))
 
 (defn neighbors [tcell population]
   (let [[x y] tcell]
@@ -32,21 +32,21 @@
 
 
 (defn step [world]
-  (let [population (set (:cells world))
-        potentials (difference
-                      (set (mapcat surrounding (:cells world)))
-                      population)]
-    (reduce (fn [generation cell]
-              (if (should-live? cell population)
-                (cons cell generation)
-                generation))
-            (reduce (fn [generation potential]
-                      (if (should-spawn? potential population)
-                        (cons potential generation)
-                        generation))
-                    (list)
-                    potentials)
-            population)))
+  (let [population (:cells world)
+        potentials (distinct (concat
+                               population
+                               (mapcat surrounding population)))]
+    (reduce
+      (fn [generation cell]
+        (if (some #(= % cell) population)
+          (if (should-live? cell population)
+            (cons cell generation)
+            generation)
+          (if (should-spawn? cell population)
+            (cons cell generation)
+            generation)))
+      (list)
+      (potentials))))
 
 (def life-game
   {:boot
