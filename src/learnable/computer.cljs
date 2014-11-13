@@ -70,8 +70,9 @@
               (proc/output process screen)
               {:init-state state}))
 
-          (dom/div
-            #js {:id "inspector"}
-            (om/build inspector/ui
-              process
-              {:init-state state})))))))
+          )))))
+          ;;(dom/div
+          ;;  #js {:id "inspector"}
+          ;;  (om/build inspector/ui
+          ;;    process
+          ;;    {:init-state state})))))))
