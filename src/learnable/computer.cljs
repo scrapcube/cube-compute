@@ -73,4 +73,4 @@
             #js {:id "inspector"}
             (om/build inspector/ui
               process
-              {:init-state state}))))))))
+              {:init-state state})))))))
