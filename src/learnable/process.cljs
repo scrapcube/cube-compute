@@ -6,7 +6,7 @@
     {:status :halted
      :draw (:draw program)
      :state start-state
-     :transitions [:transitions program]
+     :transitions (:transitions program)
      :log (statelog/create start-state)}))
 
 (defn transition [process]
