@@ -61,17 +61,21 @@
 
         (dom/div #js {:className "computer"}
           (dom/div
-            #js {:id "clock"}
+            #js {:id "clock"
+                 :style #js {:height (last (:dimensions screen))}}
             (om/build clock/ui hz {:init-state state}))
 
           (dom/div
-            #js {:id "main"}
+            #js {:id "main"
+                 :style #js {:height (last (:dimensions screen))}}
             (om/build display/ui
               (proc/output process screen)
               {:init-state state}))
 
           (dom/div
-            #js {:id "inspector"}
+            #js {:id "inspector"
+                 :className "screen"
+                 :style #js {:height (last (:dimensions screen))}}
             (om/build inspector/ui
               process
               {:init-state state})))))))

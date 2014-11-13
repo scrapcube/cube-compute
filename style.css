@@ -50,12 +50,18 @@ body {
 }
 
 #inspector {
+    width: 400px;
+    height: 512px;
     overflow-y: scroll;
 }
 
 .screen hr {
     margin: 10px 0;
     border-color: #23B505;
+}
+
+.screen ul {
+    list-style-type: none;
 }
 
 .computer-history {

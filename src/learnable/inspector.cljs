@@ -28,7 +28,7 @@
   (let [length (count plog)]
     (map-indexed
       (fn [idx entry]
-        [(- plog idx) entry])
+        [(- length idx) entry])
       plog)))
 
 (defn ui [process owner]
@@ -36,7 +36,7 @@
     om/IRenderState
     (render-state [_ {:keys [interrupt]}]
       (let [{:keys [log status state]} process]
-        (dom/div #js {:className "screen inspector"}
+        (dom/div nil
           (dom/div nil
             (form/heading "status:")
             (str status))
