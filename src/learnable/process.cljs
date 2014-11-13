@@ -1,6 +1,8 @@
 (ns learnable.process
   (:require [learnable.statelog :as statelog]))
 
+(enable-console-print!)
+
 (defn launch [program screen]
   (let [start-state ((:boot program) screen)]
     {:status :halted
@@ -30,6 +32,7 @@
 
 (defn commit [process entry]
   (let [{:keys [state log]} process]
+    (println state)
     (assoc process
       :state ((transition process) state entry)
       :log (statelog/commit log entry))))
