@@ -47,7 +47,7 @@
         [x-offset y-offset] (:offset screen)
         px (:px screen)]
     (dom/div
-      #js {:key (str pixel)
+      #js {:key (reduce str "" pixel)
            :className (str "pixel " (color-class color))
            :style #js
              {:display "absolute"
@@ -75,6 +75,7 @@
                 :onClick (mouse/controller (:px screen) offset bus)
                 :onKeyboard (keyboard/controller bus interrupt)
                 :style #js
-                  {:width (css-measure unit screen-width)
+                  {:display "relative"
+                   :width (css-measure unit screen-width)
                    :height (css-measure unit screen-height)}}
            (map #(render-screen-item % screen) (:items screen)))))))
