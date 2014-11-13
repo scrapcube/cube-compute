@@ -48,7 +48,9 @@
 
           (dom/div nil
             (form/heading "state:")
-            (inspect state))
+            (if (proc/halted? process)
+              (inspect state)
+              "press ESC to view"))
 
           (dom/br nil)
 
@@ -58,6 +60,6 @@
               (form/radio-group #(put! interrupt [:restore %])
                 (selectable (entries-list log))
                 (:now log))
-              (form/ulist (entries-list log)))))))))
+              "press ESC to view")))))))
 
 
