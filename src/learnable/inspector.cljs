@@ -8,12 +8,13 @@
 (defn entries-list [log]
   (letfn [(lentry [at [type input]]
             (str at " - " type " - " (str input)))]
-    (cons
-      (lentry 0 ["system" "start"])
-      (map-indexed
-        (fn [idx entry]
-          (let [at (inc idx)] (lentry at entry)))
-        (:entries log)))))
+    (reverse
+      (cons
+        (lentry 0 ["system" "start"])
+        (map-indexed
+          (fn [idx entry]
+            (let [at (inc idx)] (lentry at entry)))
+          (:entries log))))))
 
 (defn inspect [item]
   (apply dom/ul #js {:className "item-inspection"}
