@@ -67,5 +67,5 @@
                 :onKeyboard (keyboard/controller owner)
                 :style
                   {:width (css-measure unit screen-width)
-                   :height (css-measure unit screen-height)}
+                   :height (css-measure unit screen-height)}}
            (map #(render-screen-item % screen) (:items screen))))))))
