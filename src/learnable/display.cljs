@@ -68,7 +68,7 @@
           dom/div
            #js {:tabIndex "0"
                 :className "screen"
-                :onClick (mouse/controller offset bus)
+                :onClick (mouse/controller (:px screen) offset bus)
                 :onKeyboard (keyboard/controller bus interrupt)
                 :style
                   {:width (css-measure unit screen-width)
