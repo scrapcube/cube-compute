@@ -22,7 +22,7 @@
            (let [[value label] option]
              (dom/li
                 #js {:key value}
-                (let [selected? (= selected radio-value)
+                (let [selected? (= value radio-value)
                       mark (if selected? "[X] " "[ ] ")]
                    (dom/a #js {:onClick (fn [_] (fselect value))}
                           (str mark value))))))

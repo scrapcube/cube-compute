@@ -13,7 +13,7 @@
 (enable-console-print!)
 
 (defn assemble-grid-computer [unit dim res hz]
-  {:screen (screen/grid-screen unit dim res)
+  {:screen (display/grid-screen unit dim res)
    :hz hz})
 
 (defn run-program [computer program]

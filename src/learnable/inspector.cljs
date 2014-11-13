@@ -15,7 +15,7 @@
           (let [at (inc idx)] (lentry at entry)))
         (:entries log)))))
 
-(defn inspect [f item]
+(defn inspect [item]
   (dom/ul #js {:className "item-inspection"}
     (map
       (fn [k v]
@@ -26,7 +26,7 @@
 
 (defn selectable [plog]
   (let [length (count plog)]
-    (map-index
+    (map-indexed
       (fn [idx entry]
         [(- plog idx) entry])
       plog)))
