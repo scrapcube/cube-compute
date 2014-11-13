@@ -9,7 +9,7 @@
 (def dim [512 512])
 (def res [32 32])
 
-(def supervisor (computer/assemble-grid-computer "px" dim res 4))
+(def supervisor (computer/assemble-grid-computer "px" dim res 10))
 
 (def app-state (atom (computer/run-program supervisor life/life-game)))
 
