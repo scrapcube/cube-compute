@@ -30,10 +30,9 @@
 (defn load-key-binding [ks]
   (last (find key-bindings ks)))
 
-(defn controller [owner]
-  (let [{:keys [bus interrupt]} (om/get-state owner)]
-    (fn [e]
-      (let [ks (parse-keystroke e)]
-        (if (is-key-binding? ks)
-          (put! interrupt (load-key-binding ks))
-          (put! bus ks))))))
+(defn controller [bus interrupt]
+  (fn [e]
+    (let [ks (parse-keystroke e)]
+      (if (is-key-binding? ks)
+        (put! interrupt (load-key-binding ks))
+        (put! bus ks)))))

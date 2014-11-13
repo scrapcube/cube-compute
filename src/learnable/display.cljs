@@ -56,15 +56,15 @@
 (defn ui [screen owner]
   (reify
     om/IRenderState
-    (render-state [_]
+    (render-state [_ {:keys [bus interrupt]}]
       (let [{:keys [dimension unit]} screen
             [screen-width screen-height] dimension]
         (apply
           dom/div
            #js {:tabIndex "0"
                 :className "screen"
-                :onClick (mouse/controller screen owner)
-                :onKeyboard (keyboard/controller owner)
+                :onClick (mouse/controller screen bus)
+                :onKeyboard (keyboard/controller bus interrupt)
                 :style
                   {:width (css-measure unit screen-width)
                    :height (css-measure unit screen-height)}}
