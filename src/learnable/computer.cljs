@@ -61,9 +61,7 @@
         (dom/div nil
           (dom/div
             #js {:id "clock"}
-            (om/build clock/ui
-              (hz :computer)
-              {:init-state state})
+            (om/build clock/ui hz {:init-state state}))
 
           (dom/div
             #js {:id "main"}
