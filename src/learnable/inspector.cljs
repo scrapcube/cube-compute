@@ -28,7 +28,7 @@
   (let [length (dec (count plog))]
     (map-indexed
       (fn [idx entry]
-        [(- plog idx) entry])
+        [(- length idx) entry])
       plog)))
 
 (defn ui [process owner]
