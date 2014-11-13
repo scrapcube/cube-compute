@@ -40,26 +40,27 @@
        (reduce #(display/draw-pixel % % :green)
                screen
                (:cells state)))
-   :clock
-     (fn [state _]
-       (assoc state :cells
-         (let [population (:cells state)]
-           (into (list)
-             (reduce
-                (fn [nextgen cell]
-                  (let [live (reduce
-                               (fn [nextgen dead-cell]
-                                 (if (should-spawn? dead-cell population)
-                                   (conj dead-cell nextgen)
-                                   nextgen))
-                               nextgen
-                               (surrounding cell))]
-                    (if (should-live? cell)
-                      (conj cell live)
-                      live)))
-                 (set `())
-                 population)))))
-   :mouse
-     (fn [state point]
-       (update-in state :cells #(conj % point)))
-   :keyboard (fn [s _] s)})
+   :transitions
+      {:clock
+        (fn [state _]
+          (assoc state :cells
+            (let [population (:cells state)]
+              (into (list)
+                (reduce
+                   (fn [nextgen cell]
+                     (let [live (reduce
+                                  (fn [nextgen dead-cell]
+                                    (if (should-spawn? dead-cell population)
+                                      (conj dead-cell nextgen)
+                                      nextgen))
+                                  nextgen
+                                  (surrounding cell))]
+                       (if (should-live? cell population)
+                         (conj cell live)
+                         live)))
+                    (set `())
+                    population)))))
+      :mouse
+        (fn [state point]
+          (update-in state :cells #(conj % point)))
+      :keyboard (fn [s _] s)}})
