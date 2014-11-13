@@ -10,7 +10,7 @@
     dom/ul
     #js {:className "ulist"}
     (map (fn [item]
-           (dom/li #js {:key ()}
+           (dom/li #js {:key item}
                    (str " * " item)))
          items)))
 
