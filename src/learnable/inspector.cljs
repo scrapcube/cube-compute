@@ -11,7 +11,7 @@
     (cons
       (lentry 0 ["system" "start"])
       (map-indexed
-        (fn [[idx entry]]
+        (fn [idx entry]
           (let [at (inc idx)] (lentry at entry)))
         (:entries log)))))
 
