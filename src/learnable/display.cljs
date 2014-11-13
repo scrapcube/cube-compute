@@ -12,8 +12,8 @@
        (/ (last dim) (last res))))
 
 (defn screen-offset [dim res px]
-  [(/ (- (first dim) (* first res px)) 2)
-   (/ (- (last dim) (* last res px)) 2)])
+  [(/ (- (first dim) (* (first res) px)) 2)
+   (/ (- (last dim) (* (last res) px)) 2)])
 
 (defn grid-screen [unit dim res]
   (let [px (screen-pixel-size dim res)]
