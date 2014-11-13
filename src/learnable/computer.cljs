@@ -59,7 +59,7 @@
     (render-state [_ state]
       (let [{:keys [hz process screen]} computer]
 
-        (dom/div nil
+        (dom/div #js {:className "computer"}
           (dom/div
             #js {:id "clock"}
             (om/build clock/ui hz {:init-state state}))
@@ -70,9 +70,8 @@
               (proc/output process screen)
               {:init-state state}))
 
-          )))))
-          ;;(dom/div
-          ;;  #js {:id "inspector"}
-          ;;  (om/build inspector/ui
-          ;;    process
-          ;;    {:init-state state})))))))
+          (dom/div
+            #js {:id "inspector"}
+            (om/build inspector/ui
+              process
+              {:init-state state})))))))

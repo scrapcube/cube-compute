@@ -3,6 +3,7 @@ body {
 }
 
 #app {
+    display: table;
     overflow: hidden;
     padding: 50px;
     background: #666;
@@ -14,7 +15,16 @@ body {
 }
 
 .computer {
-    float: left;
+    display: table-row;
+}
+
+#clock, #main, #inspector {display: table-cell; float: left;}
+
+#clock {width: 100px;}
+
+.clock-speed {
+    font-size: 2em;
+    text-align: center;
 }
 
 .screen {
@@ -39,12 +49,8 @@ body {
     text-shadow: 0px 0px 1px #0C2B06;
 }
 
-.inspector {
-    width: 300px;
-    height: 512px;
+#inspector {
     overflow-y: scroll;
-    float: left;
-    margin: 0 0 0 15px;
 }
 
 .screen hr {
@@ -61,17 +67,6 @@ body {
     margin: 0 0 0 10px;
     padding: 10px;
     display: block;
-}
-
-.computer-clock {
-    float: left;
-    margin: 0 15px 0 0;
-    width: 100px;
-}
-
-.computer-clock .clock-speed {
-    font-size: 2em;
-    text-align: center;
 }
 
 .pixel {

@@ -53,7 +53,7 @@
 
           (dom/div nil
             (form/heading "log:")
-            (if (proc/running? process)
+            (if (proc/halted? process)
               (form/radio-group #(put! interrupt [:restore %])
                 (selectable (entries-list log))
                 (:now log))
