@@ -85,5 +85,6 @@
       draw
    :transitions
       {:clock on-clock
-       :keyboard on-keyboard}})
+       :keyboard on-keyboard
+       :mouse (fn [s _] s)}})
 

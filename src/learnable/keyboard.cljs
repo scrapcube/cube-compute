@@ -35,4 +35,4 @@
     (let [ks (parse-keystroke e)]
       (if (is-key-binding? ks)
         (put! interrupt (load-key-binding ks))
-        (put! bus ks)))))
+        (put! bus [:keyboard ks])))))

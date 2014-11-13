@@ -12,8 +12,7 @@
 (defn controller [px screen-offset bus]
   (fn [e]
     (let [[sx sy] screen-offset
-          [mx my] (mouse-offset e)]
-      (put! bus
-            [:mouse
-             [(Math/floor (/ (- mx sx) px))
-              (Math/floor (/ (- my sy) px))]]))))
+          [mx my] (mouse-offset e)
+          x (Math/floor (/ (- mx sx) px))
+          y (Math/floor (/ (- my sy) px))]
+      (put! bus [:mouse [x y]]))))
