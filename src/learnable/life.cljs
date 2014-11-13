@@ -30,23 +30,23 @@
             (list next-x y)
             (list prev-x y))))))
 
-(defn get-potential [population]
-  (distinct (concat population (mapcat surrounding population))))
-
-(defn step [world]
-  (let [population (:cells world)
-        nextgen (reduce
-                  (fn [nextgen cell]
-                    (if (should-live? cell population)
-                      population
-                      (disj! population cell)))
-                  (transient population)
-                  population)]
-    (reduce
-      conj!
-      nextgen
-      (filter (fn [[x v]] (= 3 v))
-              (frequencies (mapcat surrounding population))))))
+(defn step [state]
+  (let [population (:cells state)]
+    (persistent!
+      (reduce
+        (fn [generation spawned]
+          (conj! generation (first spawned)))
+        (reduce
+          (fn [survivors cell]
+            (if (should-live? cell population)
+              survivors
+              (disj! survivors cell)))
+          (transient population)
+          population)
+        (filter
+          (fn [[_ cnt]]
+            (= cnt 3))
+          (frequencies (mapcat surrounding population)))))))
 
 (def life-game
   {:boot
