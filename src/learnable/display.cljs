@@ -40,8 +40,6 @@
 (defn css-measure [unit value] (str value unit))
 
 (defmethod render-screen-item :pixel [pixel screen]
-  (println pixel)
-  (println (str "screen-offset " (:offset screen)))
   (let [[_ [x y] color] pixel
         measure (partial css-measure (:unit screen))
         [x-offset y-offset] (:offset screen)
@@ -73,7 +71,7 @@
            #js {:tabIndex "0"
                 :className "screen"
                 :onClick (mouse/controller (:px screen) offset bus)
-                :onKeyboard (keyboard/controller bus interrupt)
+                :onKeyDown (keyboard/controller bus interrupt)
                 :style #js
                   {:position "relative"
                    :width (css-measure unit screen-width)
