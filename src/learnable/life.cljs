@@ -40,17 +40,18 @@
 
 (defn step [world]
   (let [population (:cells world)]
-    (reduce
-      (fn [generation cell]
-        (if (contains? population cell)
-          (if (should-live? cell population)
-            generation
-            (disj generation cell))
-          (if (should-spawn? cell population)
-            (conj generation cell)
-            generation)))
-      population
-      (get-potential population))))
+    (persistent!
+      (reduce
+        (fn [generation cell]
+          (if (contains? population cell)
+            (if (should-live? cell population)
+              generation
+              (disj generation cell))
+            (if (should-spawn? cell population)
+              (conj generation cell)
+              generation)))
+        (transient population)
+        (get-potential population)))))
 
 (def life-game
   {:boot
