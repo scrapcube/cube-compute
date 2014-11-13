@@ -46,6 +46,7 @@
       (let [bus (om/get-state owner :bus)]
         (go (loop []
           (let [entry (<! bus)]
+            (println (str "entry: " entry))
             (when (proc/running? (:process @computer))
               (om/transact! computer :process #(proc/commit % entry)))
             (recur)))))
