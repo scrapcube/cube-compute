@@ -16,7 +16,7 @@
         (:entries log)))))
 
 (defn inspect [item]
-  (dom/ul #js {:className "item-inspection"}
+  (apply dom/ul #js {:className "item-inspection"}
     (map
       (fn [k v]
         (dom/li nil
