@@ -34,8 +34,7 @@
 (defn ui [process owner]
   (reify
     om/IRenderState
-    (render [_ {:keys [interrupt {:keys [interrupt]}]}]
-
+    (render [_ {:keys [interrupt]}]
       (let [{:keys [log status state]} process]
         (dom/div #js {:className "screen inspector"}
           (dom/div nil
