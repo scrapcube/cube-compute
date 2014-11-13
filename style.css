@@ -61,7 +61,7 @@ body {
 }
 
 .screen .heading {
-    border-style: solid;
+    border-style: none none solid none;
     border-bottom-width: 1px;
     border-bottom-color: #23B505;
 }

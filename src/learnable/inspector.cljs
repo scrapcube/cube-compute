@@ -7,7 +7,7 @@
 
 (defn entries-list [log]
   (letfn [(lentry [at [type input]]
-            (str at " - " type " - " input))]
+            (str at " - " type " - " (str input)))]
     (cons
       (lentry 0 ["system" "start"])
       (map-indexed
@@ -57,6 +57,6 @@
               (form/radio-group #(put! interrupt [:restore %])
                 (selectable (entries-list log))
                 (:now log))
-              (form/ulist (reverse (entries-list log))))))))))
+              (form/ulist (entries-list log)))))))))
 
 
