@@ -4,25 +4,34 @@
 (defn neighbors [cell population state]
   (let [[x y] cell
         {:keys [width height]} state]
-      (filter
-        (fn [[cx cy]]
-          (let [dx (Math/abs (- cx x))
-                dy (Math/abs (- cy y))]
-            (and
-              (or (= dx 1) (= dx (dec width)))
-              (or (= dy 1) (= dy (dec height))))))
-        population)))
+    (filter
+      (fn [[cx cy]]
+        (let [dx (Math/abs (- cx x))
+              dy (Math/abs (- cy y))]
+          (and
+            (or
+              (= dx 1)
+              (= dx (dec width)))
+            (or
+              (= dy 1)
+              (= dy (dec height))))))
+      population)))
 
 (defn should-live? [cell population state]
   (let [n (count (neighbors cell population state))]
     (or (= n 2) (= n 3))))
 
+(defn normalize (n m)
+  (if (> n 0)
+    (mod n m)
+    (add (mod n m) m)))
+
 (defn surrounding [cell state]
   (let [[x y] cell
-        next-x (mod (inc x) (:width state))
-        prev-x (mod (dec x) (:width state))
-        next-y (mod (inc y) (:height state))
-        prev-y (mod (dec y) (:height state))]
+        next-x (normalize (inc x) (:width state))
+        prev-x (normalize (dec x) (:width state))
+        next-y (normalize (inc y) (:height state))
+        prev-y (normalize (dec y) (:height state))]
       (list
         (list next-x next-y)
         (list next-x prev-y)
