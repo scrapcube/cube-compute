@@ -13,10 +13,10 @@
               dy (distance cy y)]
           (and
             (or
-              (= dx 1)
+              (<= dx 1)
               (= dx (dec width)))
             (or
-              (= dy 1)
+              (<= dy 1)
               (= dy (dec height))))))
       (disj population cell))))
 
@@ -25,7 +25,7 @@
     (or (= n 2) (= n 3))))
 
 (defn normalize [n m]
-  (if (> n 0)
+  (if (>= n 0)
     (mod n m)
     (+ (mod n m) m)))
 
@@ -59,11 +59,9 @@
           (transient population)
           population)
         (filter
-          (fn [[_ cnt]]
-            (= cnt 3))
+          #(= (second %) 3)
           (frequencies
-            (mapcat #(surrounding % state)
-                    population)))))))
+            (mapcat #(surrounding % state) population)))))))
 
 (def life-game
   {:boot
