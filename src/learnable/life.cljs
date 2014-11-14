@@ -1,16 +1,18 @@
 (ns learnable.life
   (:require [learnable.display :as display]))
 
-(defn distance [a b]
-  (Math/abs (- a b)))
+(defn normalize [n m]
+  (if (>= n 0)
+    (mod n m)
+    (+ (mod n m) m)))
 
 (defn neighbors [cell population state]
   (let [[x y] cell
         {:keys [width height]} state]
     (filter
       (fn [[cx cy]]
-        (let [dx (distance cx x)
-              dy (distance cy y)]
+        (let [dx (normalize (- cx x) width)
+              dy (normalize (- cy y) height)]
           (and
             (or
               (<= dx 1)
@@ -23,11 +25,6 @@
 (defn should-live? [cell population state]
   (let [n (count (neighbors cell population state))]
     (or (= n 2) (= n 3))))
-
-(defn normalize [n m]
-  (if (>= n 0)
-    (mod n m)
-    (+ (mod n m) m)))
 
 (defn surrounding [cell state]
   (let [[x y] cell
