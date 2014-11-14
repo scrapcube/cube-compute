@@ -2,35 +2,27 @@
   (:require [learnable.display :as display]))
 
 (defn neighbors [cell population state]
-  (let [{:keys [width height]} state]
-    (let [[x y] cell]
-      (filter
-        (fn [[cx cy]]
-            (let [dx (Math/abs (- cx x))
-                  dy (Math/abs (- cy y))]
-              (and
-                (or (= dx 1) (= dx (dec width)))
-                (or (= dy 1) (= dy (dec height))))))
-        (population cell)))))
-
-(defn should-live? [cell population state]
-  (let [ncount (count (neighbors cell population state))]
-    (or (= ncount 2) (= ncount 3))))
-
-(defn normalize [cell state]
   (let [[x y] cell
         {:keys [width height]} state]
-    (list (mod x width)
-          (mod y height))))
+      (filter
+        (fn [[cx cy]]
+          (let [dx (Math/abs (- cx x))
+                dy (Math/abs (- cy y))]
+            (and
+              (or (= dx 1) (= dx (dec width)))
+              (or (= dy 1) (= dy (dec height))))))
+        population)))
+
+(defn should-live? [cell population state]
+  (let [n (count (neighbors cell population state))]
+    (or (= n 2) (= n 3))))
 
 (defn surrounding [cell state]
   (let [[x y] cell
-        next-x (inc x)
-        prev-x (dec x)
-        next-y (inc y)
-        prev-y (dec y)]
-    (map
-      #(normalize % state)
+        next-x (mod (inc x) (:width state))
+        prev-x (mod (dec x) (:width state))
+        next-y (mod (inc y) (:height state))
+        prev-y (mod (dec y) (:height state))]
       (list
         (list next-x next-y)
         (list next-x prev-y)
@@ -39,7 +31,7 @@
         (list x next-y)
         (list x prev-y)
         (list next-x y)
-        (list prev-x y)))))
+        (list prev-x y))))
 
 (defn step [state]
   (let [population (:cells state)]
