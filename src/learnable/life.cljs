@@ -11,8 +11,8 @@
         {:keys [width height]} state]
     (filter
       (fn [[cx cy]]
-        (let [dx (normalize (- cx x) width)
-              dy (normalize (- cy y) height)]
+        (let [dx (Math/abs (- cx x))
+              dy (Math/abs (- cy y))]
           (and
             (or
               (<= dx 1)
