@@ -14,25 +14,27 @@
   (let [ncount (count (neighbors cell population))]
     (or (= ncount 2) (= ncount 3))))
 
-(def surrounding (memoize
-  (fn [cell]
-    (let [[x y] cell
-          next-x (inc x)
-          prev-x (dec x)
-          next-y (inc y)
-          prev-y (dec y)]
-      (list (list next-x next-y)
-            (list next-x prev-y)
-            (list prev-x next-y)
-            (list prev-x prev-y)
-            (list x next-y)
-            (list x prev-y)
-            (list next-x y)
-            (list prev-x y))))))
-
 (defn normalize [cell state]
-  (list (/ (first cell) (:width state))
-        (/ (last cell) (:height state))))
+  (let [[x y] cell
+        {:keys [width height]} state]
+    (list (mod x height)
+          (mod y height))))
+
+(defn surrounding [cell state]
+  (let [[x y] cell
+        next-x (inc x)
+        prev-x (dec x)
+        next-y (inc y)
+        prev-y (dec y)]
+    (map #(normalize % state)
+      (list (list next-x next-y)
+        (list next-x prev-y)
+        (list prev-x next-y)
+        (list prev-x prev-y)
+        (list x next-y)
+        (list x prev-y)
+        (list next-x y)
+        (list prev-x y)))))
 
 (defn step [state]
   (let [population (:cells state)]
@@ -50,7 +52,9 @@
         (filter
           (fn [[_ cnt]]
             (= cnt 3))
-          (frequencies (mapcat surrounding population)))))))
+          (frequencies
+            (mapcat #(surrounding % state)
+                    population)))))))
 
 (def life-game
   {:boot
