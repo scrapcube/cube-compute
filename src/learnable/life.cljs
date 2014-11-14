@@ -58,7 +58,8 @@
         (filter
           #(= (second %) 3)
           (frequencies
-            (mapcat #(surrounding % state) population)))))))
+            (remove #(contains? population %)
+              (mapcat #(surrounding % state) population))))))))
 
 (def life-game
   {:boot
