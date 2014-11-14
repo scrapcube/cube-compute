@@ -30,12 +30,16 @@
             (list next-x y)
             (list prev-x y))))))
 
+(defn normalize [cell state]
+  (list (/ (first cell) (:width state))
+        (/ (last cell) (:height state))))
+
 (defn step [state]
   (let [population (:cells state)]
     (persistent!
       (reduce
         (fn [generation spawned]
-          (conj! generation (first spawned)))
+          (conj! generation (normalize (first spawned) state)))
         (reduce
           (fn [survivors cell]
             (if (should-live? cell population)
@@ -52,7 +56,9 @@
   {:boot
      (fn [screen]
        {:cells (set `((16 13) (16 11) (14 12) (12 15) (16 12) (14 13) (10 16) (14 14) (12 16) (17 12)))
-        :status :paused})
+        :status :paused
+        :width (first (:resolution screen))
+        :height (last (:resolution screen))})
 
    :draw
      (fn [state screen]
