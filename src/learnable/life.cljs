@@ -1,23 +1,26 @@
 (ns learnable.life
   (:require [learnable.display :as display]))
 
-(defn neighbors [cell population]
+(defn neighbors [cell population state]
+  (let [{:keys [width height]} state]
     (let [[x y] cell]
       (filter
         (fn [[cx cy]]
-            (and
-              (< (Math/abs (- cx x)) 2)
-              (< (Math/abs (- cy y)) 2)))
-        (disj population cell))))
+            (let [dx (Math/abs (- cx x))
+                  dy (Math/abs (- cy y))]
+              (and
+                (or (= dx 1) (= dx (dec width)))
+                (or (= dy 1) (= dy (dec height))))))
+        (population cell)))))
 
-(defn should-live? [cell population]
-  (let [ncount (count (neighbors cell population))]
+(defn should-live? [cell population state]
+  (let [ncount (count (neighbors cell population state))]
     (or (= ncount 2) (= ncount 3))))
 
 (defn normalize [cell state]
   (let [[x y] cell
         {:keys [width height]} state]
-    (list (mod x height)
+    (list (mod x width)
           (mod y height))))
 
 (defn surrounding [cell state]
@@ -26,8 +29,10 @@
         prev-x (dec x)
         next-y (inc y)
         prev-y (dec y)]
-    (map #(normalize % state)
-      (list (list next-x next-y)
+    (map
+      #(normalize % state)
+      (list
+        (list next-x next-y)
         (list next-x prev-y)
         (list prev-x next-y)
         (list prev-x prev-y)
@@ -41,10 +46,10 @@
     (persistent!
       (reduce
         (fn [generation spawned]
-          (conj! generation (normalize (first spawned) state)))
+          (conj! generation (first spawned)))
         (reduce
           (fn [survivors cell]
-            (if (should-live? cell population)
+            (if (should-live? cell population state)
               survivors
               (disj! survivors cell)))
           (transient population)
