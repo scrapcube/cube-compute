@@ -2,31 +2,9 @@
   (:require [learnable.display :as display]))
 
 (defn normalize [n m]
-  (if (>= n 0)
-    (mod n m)
-    (+ (mod n m) m)))
+  (if (>= n 0) (mod n m) (mod (+ n m) m)))
 
-(defn neighbors [cell population state]
-  (let [[x y] cell
-        {:keys [width height]} state]
-    (filter
-      (fn [[cx cy]]
-        (let [dx (Math/abs (- cx x))
-              dy (Math/abs (- cy y))]
-          (and
-            (or
-              (<= dx 1)
-              (= dx (dec width)))
-            (or
-              (<= dy 1)
-              (= dy (dec height))))))
-      (disj population cell))))
-
-(defn should-live? [cell population state]
-  (let [n (count (neighbors cell population state))]
-    (or (= n 2) (= n 3))))
-
-(defn surrounding [cell state]
+(defn neighbors [cell state]
   (let [[x y] cell
         next-x (normalize (inc x) (:width state))
         prev-x (normalize (dec x) (:width state))
@@ -41,6 +19,12 @@
       (list x prev-y)
       (list next-x y)
       (list prev-x y))))
+
+(defn should-live? [cell population state]
+  (let [live-neighbors (filter
+                         #(contains? population %)
+                         (neighbors cell state))]
+    (= 3 (count live-neighbors))))
 
 (defn step [state]
   (let [population (:cells state)]
@@ -59,7 +43,7 @@
           #(= (second %) 3)
           (frequencies
             (remove #(contains? population %)
-              (mapcat #(surrounding % state) population))))))))
+              (mapcat #(neighbors % state) population))))))))
 
 (def life-game
   {:boot
