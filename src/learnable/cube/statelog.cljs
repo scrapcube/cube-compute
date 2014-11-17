@@ -1,4 +1,4 @@
-(ns learnable.statelog)
+(ns learnable.cube.statelog)
 
 (defn create [start-state]
   {:entries []

@@ -6,10 +6,11 @@
         [dx dy] ray]
     (list (+ x dx) (+ y dy))))
 
-(defn draw [state screen]
+(defn get-frame [state screen]
   (let [{:keys [food snake]} state]
-    (reduce (fn [screen food-p] (display/draw-pixel screen food-p :red))
-            (reduce (fn [screen snake-p] (display/draw-pixel screen snake-p :green))
+    (reduce (fn [screen food-p] (display/get-frame-pixel screen food-p :red))
+            (reduce (fn [screen snake-p]
+                      (graphics/draw screen :pixel snake-p :green))
                     screen
                     snake)
             food)))
@@ -81,8 +82,8 @@
        :energy 0
        :direction `(0 1)
        :status :alive})
-   :draw
-      draw
+   :get-frame
+      get-frame
    :transitions
       {:clock on-clock
        :keyboard on-keyboard

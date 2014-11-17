@@ -53,11 +53,12 @@
         :width (first (:resolution screen))
         :height (last (:resolution screen))})
 
-   :draw
+   :get-frame
      (fn [state screen]
-       (reduce (fn [screen cell] (display/draw-pixel screen cell (if (= :paused (:status state)) :red :green)))
-               screen
-               (:cells state)))
+       (let [cells (:cells state)
+             color (if (= :paused (:status state)) :red :green)]
+         (reduce #(graphix/draw %1 :pixel %2 color) screen cells)))
+
    :transitions
       {:clock
         (fn [state _]

@@ -1,19 +1,29 @@
 (ns learnable.core
-  (:require [learnable.computer :as computer]
-            [learnable.life :as life]
+  (:require [learnable.cube.core :as cube]
+            [learnable.components.cube :as cube-manifestation]
+            [learnable.games.life :as life]
             [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]))
 
 (enable-console-print!)
 
-(def dim [512 512])
-(def res [32 32])
+(def box
+  {:screen (graphix/surface :canvas :main `(0 0) `(512 512))
+   :hz 5})
 
-(def supervisor (computer/assemble-grid-computer "px" dim res 10))
+(defn boot [program]
+  (cube/run-logged box program))
 
-(def app-state (atom (computer/run-program supervisor life/life-game)))
+(def game (cube/grid-game life/life-game))
+
+(def cube-state
+  (atom (boot (cube/grid-game game))))
+
+(defn reboot [js-code]
+  (js/eval js-code)
+  (swap! cube-state (boot (cube/grid-game game))))
 
 (om/root
-  computer/ui
-  app-state
+  cube-manifestation/ui
+  cube-state
   {:target (. js/document (getElementById "app"))})
