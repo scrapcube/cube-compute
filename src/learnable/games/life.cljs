@@ -30,22 +30,24 @@
 
 (defn step [state]
   (let [population (:cells state)]
-    (persistent!
-      (reduce
-        (fn [generation spawned]
-          (conj! generation (first spawned)))
-        (reduce
-          (fn [survivors cell]
-            (if (should-live? cell population state)
-              survivors
-              (disj! survivors cell)))
-          (transient population)
-          population)
-        (filter
-          #(= (second %) 3)
-          (frequencies
-            (remove #(contains? population %)
-              (mapcat #(neighbors % state) population))))))))
+    (assoc state
+      :cells
+      (persistent!
+          (reduce
+            (fn [generation spawned]
+              (conj! generation (first spawned)))
+            (reduce
+              (fn [survivors cell]
+                (if (should-live? cell population state)
+                  survivors
+                  (disj! survivors cell)))
+              (transient population)
+              population)
+            (filter
+              #(= (second %) 3)
+              (frequencies
+                (remove #(contains? population %)
+                  (mapcat #(neighbors % state) population)))))))))
 
 (def life-game
   {:boot
