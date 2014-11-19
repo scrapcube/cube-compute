@@ -11,6 +11,8 @@
             [cljs.core.async :as async :refer [put! <!]])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
+(enable-console-print!)
+
 (defn clock [hz owner]
   (reify
     om/IWillMount
