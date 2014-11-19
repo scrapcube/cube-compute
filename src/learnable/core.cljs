@@ -38,7 +38,7 @@
                   {:init-state {:bus bus}})))))
 
 (om/root
-  cube-manifestation/ui
+  learnable-computer
   cube-state
   {:target (. js/document (getElementById "app"))})
 
