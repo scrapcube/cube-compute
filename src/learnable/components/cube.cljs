@@ -48,7 +48,6 @@
         (go (loop []
           (let [entry (<! bus)]
             (println (str "event! - " (str (first entry)) (str (last entry))))
-            (println (get-in @a-cube [:process :status]))
             (om/transact! a-cube :process
               (fn [process]
                 (if (= :running (:status process))

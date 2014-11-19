@@ -13,7 +13,6 @@
 
 (defn transition [process]
   (fn [state [etype input]]
-    (println (get-in process [:transitions etype]))
     ((get-in process [:transitions etype]) state input)))
 
 (defn logtime [process]
@@ -29,13 +28,12 @@
   (println "called commit")
   (let [{:keys [state log]} process
         tlog (if (statelog/synced? log)
-              (do (println "log synced") log)
+              log
               (statelog/trim log))]
     (assoc process
       :state
         (let [t (transition process)
               state-prime (t state entry)]
-          (println (str state-prime))
           state-prime)
       :log (statelog/commit tlog entry))))
 

@@ -78,6 +78,7 @@
 
     om/IRenderState
     (render-state [_ {:keys [page-offset mouse]}]
+      (println (str frame))
       (dom/div
         #js {:style #js {:position "relative"}}
         (render-surface frame mouse (list #(map - % page-offset)))))))
