@@ -11,11 +11,12 @@
 (enable-console-print!)
 
 (defn grid-game [game]
-  (let [{:keys [transitions get-frame]} game
+  (let [{:keys [boot transitions get-frame]} game
         {:keys [mouse]} transitions
         grid (graphix/surface :grid :game `(0 0) `(512 512) `(32 32))]
     (assoc
       game
+      :boot (fn [_] (boot grid))
       :get-frame #(graphix/blit %2 (get-frame %1 grid))
       :transitions
         (assoc transitions
