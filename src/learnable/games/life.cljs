@@ -79,7 +79,7 @@
                   (disj population point)
                   (conj population point))))))
       :keyboard (fn [state ks]
-                  (when (= ks :key-up)
+                  (when (= ks :esc)
                     (assoc state
                       :status (if (= :paused (:status state))
                                 :running
