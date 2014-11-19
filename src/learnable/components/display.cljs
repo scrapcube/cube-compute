@@ -47,7 +47,10 @@
 ;       (= :grid (:type obj)))
 
 (defn render-graphic [graphic]
-  (dom/div #js {:style (box-style graphic)} ""))
+  (let [{:keys [etype offset]}]
+    (dom/div #js {:style (box-style graphic)
+                  :key (str (name etype) offset)}
+             "")))
 
 (defn render-surface [surface mouse transforms]
   (let [{:keys [id transform items offset dimensions]} surface
@@ -55,8 +58,9 @@
     (apply
       dom/div
       #js {:style (box-style surface)
+           :key (str "surface" (name "id"))
            :onClick (mouse (fn [point]
-                              [id ((apply comp transforms-prime) point)]))}
+                              [id ((apply comp transforms-prime) point)]  ))}
       (map
         (fn [item]
           (if (graphix/is-surface? item)

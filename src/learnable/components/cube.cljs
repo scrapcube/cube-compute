@@ -51,7 +51,7 @@
             (om/transact! a-cube :process
               (fn [process]
                 (if (= :running (:status process))
-                  (proc/commit process entry)
+                  (proc/commit process entry) ;; [:mouse [:game (0 0)]]
                   process)))
             (recur))))))
 
