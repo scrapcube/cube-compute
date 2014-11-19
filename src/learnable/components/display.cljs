@@ -47,7 +47,7 @@
 ;       (= :grid (:type obj)))
 
 (defn render-graphic [graphic]
-  (let [{:keys [etype offset]}]
+  (let [{:keys [etype offset]} graphic]
     (dom/div #js {:style (box-style graphic)
                   :key (str (name etype) offset)}
              "")))
