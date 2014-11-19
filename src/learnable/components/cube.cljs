@@ -48,9 +48,12 @@
         (go (loop []
           (let [entry (<! bus)]
             (println (str "event! - " (str (first entry)) (str (last entry))))
-            (when (= :running (get-in a-cube [:process :status]))
-              (println "transitioning.")
-              (om/transact! a-cube :process #(proc/commit % entry))))))))
+            (println (get-in @a-cube [:process :status]))
+            (om/transact! a-cube :process
+              (fn [process]
+                (if (= :running (:status process))
+                  (proc/commit process entry)
+                  process))))))))
 
     om/IRenderState
     (render-state [_ {:keys [bus]}]
