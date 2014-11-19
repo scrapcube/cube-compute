@@ -14,7 +14,7 @@
 
           (dom/div
             #js {:id "clock-speed"}
-            (str hz "Hz")))
+            (str hz "Hz"))
 
           (dom/a
             #js {:className "button decrease"
@@ -28,4 +28,4 @@
                                     a-cube
                                     :hz
                                     overclock))}
-                "Increase clock speed.")))))
+                "Increase clock speed."))))))

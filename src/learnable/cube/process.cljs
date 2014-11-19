@@ -12,8 +12,8 @@
      :log (statelog/create start-state)}))
 
 (defn transition [process]
-  (fn [state [type input]]
-    ((get-in process [:transitions type]) state input)))
+  (fn [state [etype input]]
+    ((get-in process [:transitions etype]) state input)))
 
 (defn logtime [process]
   (get-in process [:log :now]))
@@ -25,6 +25,7 @@
       :log (statelog/settime log at))))
 
 (defn commit [process entry]
+  (println "called commit")
   (let [{:keys [state log]} process
         tlog (if (statelog/synced? log)
               log
