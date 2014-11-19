@@ -10,7 +10,7 @@
 
 (enable-console-print!)
 
-(defn wrap-grid-game [game]
+(defn grid-game [game]
   (let [{:keys [transitions get-frame]} game
         {:keys [mouse]} transitions
         grid (graphix/surface :grid :game `(0 0) `(512 512) `(32 32))]
