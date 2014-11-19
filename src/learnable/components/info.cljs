@@ -1,5 +1,5 @@
 (ns learnable.components.info
-  (:require [learnable.cube :as cube :refer [overclock throttle]]
+  (:require [learnable.cube.core :as cube :refer [overclock throttle]]
             [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]))
 
@@ -7,7 +7,7 @@
   (reify
     om/IRender
     (render [_]
-      (let [{:keys [hz process]}]
+      (let [{:keys [hz process]} a-cube]
         (dom/div
           #js {:id "process-info"}
           (dom/h1 nil "Clock speed")
