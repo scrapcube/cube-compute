@@ -29,7 +29,7 @@
   (println "called commit")
   (let [{:keys [state log]} process
         tlog (if (statelog/synced? log)
-              log
+              (do (println "log synced") log)
               (statelog/trim log))]
     (assoc process
       :state ((transition process) state entry)
