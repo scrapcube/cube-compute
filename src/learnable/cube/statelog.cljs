@@ -18,5 +18,8 @@
 (defn replay [log atime f]
   (reduce f (:start-state log) (subvec (:entries log) 0 atime)))
 
+(defn synced? [log]
+  (or (= 0 now) (= now (count (:entries log)))))
+
 (defn settime [log atime]
   (assoc log :now atime))

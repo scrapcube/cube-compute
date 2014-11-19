@@ -26,9 +26,6 @@
     om/IRenderState
     (render-state [_ _] (dom/span #js {:className "hidden"} ""))))
 
-
-;; state - {:bus - used to communicate transitions to the currently
-;;                 running process}
 (defn ui [a-cube owner]
   (reify
     IWillMount
@@ -36,7 +33,7 @@
       (let [bus (om/get-state owner :bus)]
         (go (loop []
           (let [entry (<! bus)]
-            (when (proc/running? (:process a-cube))
+            (when (= :running (get-in a-cube [:process :status]))
               (om/transact! a-cube :process #(proc/commit % entry))))))))
 
     IRenderState
@@ -58,7 +55,7 @@
 
           (dom/div #js {:id "cube-interface"}
             (om/build controls/ui process)
-            (if (proc/running? process)
+            (if (= :running (:status process))
               (om/build clock hz)
               (do
                 (om/build info/ui a-cube)

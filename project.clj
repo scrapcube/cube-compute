@@ -3,15 +3,15 @@
   :url "http://example.com/FIXME"
 
   :dependencies [[org.clojure/clojure "1.6.0"]
-                 [org.clojure/clojurescript "0.0-2311"]
+                 [org.clojure/clojurescript "0.0-2322"]
                  [org.clojure/core.async "0.1.267.0-0d7780-alpha"]
-                 [om "0.7.1"]]
+                 [om "0.8.0-alpha2"]]
 
   :plugins [[lein-cljsbuild "1.0.4-SNAPSHOT"]]
 
   :source-paths ["src"]
 
-  :cljsbuild { 
+  :cljsbuild {
     :builds [{:id "learnable"
               :source-paths ["src"]
               :compiler {

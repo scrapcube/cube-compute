@@ -3,27 +3,29 @@
             [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]))
 
-(defn ui [computer owner]
+(defn ui [a-cube owner]
   (reify
     om/IRender
     (render [_]
       (let [{:keys [hz process]}]
         (dom/div
           #js {:id "process-info"}
-          (dom/h1 nil "Hz")
+          (dom/h1 nil "Clock speed")
 
           (dom/div
             #js {:id "clock-speed"}
-            hz))
+            (str hz "Hz")))
 
-          (dom/div
+          (dom/a
             #js {:className "button decrease"
                  :onClick
                    (fn [_]
-                     (om/transact! computer :hz throttle))})
-          (dom/div
+                     (om/transact! a-cube :hz throttle))}
+                "Throttle clock speed.")
+          (dom/a
             #js {:className "button increase"
                  :onClick (fn [_] (om/transact!
-                                    computer
+                                    a-cube
                                     :hz
-                                    overclock))})))))
+                                    overclock))}
+                "Increase clock speed.")))))

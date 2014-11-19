@@ -1,5 +1,5 @@
 (ns learnable.life
-  (:require [learnable.display :as display]))
+  (:require [learnable.cube.graphix :as graphix]))
 
 (defn normalize [n m]
   (if (>= n 0) (mod n m) (mod (+ n m) m)))

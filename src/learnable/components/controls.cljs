@@ -12,12 +12,14 @@
         (dom/a
           #js {:id "play"
                :href "#"
-               :onClick (fn [_]
-                          (om/transact! process proc/resume))}
+               :onClick
+                 (fn [_]
+                   (om/transact! process :status (constantly :running)))}
           "Play")
         (dom/a
           #js {:id "pause"
                :href "#"
-               :onClick (fn [_]
-                          (om/transact! process proc/halt))}
+               :onClick
+                 (fn [_]
+                   (om/transact! process :status (constantly :halted)))}
           "Pause")))))

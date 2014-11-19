@@ -5,14 +5,17 @@
 
 (enable-console-print!)
 
-(defn box-css [offset dimensions]
-  (let [[x y] offset
-        [width height] dimensionss]
+(defn box-css [graphic]
+  (let [[x y] (:offset graphic)
+        [width height] (:dimensions graphic)]
     {:position "absolute"
      :left (str x "px")
      :top (str y "px")
      :width (str width "px")
      :height (str height "px")}))
+
+(defn color-css [graphic]
+  {:background (name (:color graphic))})
 
 ; Style Helpers
 ; =============
@@ -25,9 +28,8 @@
 
 (defn graphic-style [graphic]
   (merge
-    (box-css (:offset graphic) (:dimensions graphic))
-    (when (:color graphic)
-      {:background (name (:color graphic))})))
+    (box-css graphic)
+    (when (:color graphic) (color-css graphic))))
 
 ; # Rendering Functions
 ; =====================
@@ -59,8 +61,8 @@
         transforms-prime (cons transform transforms)]
     (apply
       dom/div
-      #js {:style #js (box-css offset dimensions)
-           :onClick (mouse (graphix/build-transformation transforms-prime))}
+      #js {:style #js (box-css graphic)
+           :onClick (mouse (apply comp transforms-prime))}
       (map
         (fn [item]
           (if (is-surface? item)

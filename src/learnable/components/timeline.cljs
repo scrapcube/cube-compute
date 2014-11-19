@@ -5,11 +5,11 @@
 
 (defn display-entry [at entry]
   (let [[type input] entry]
-    (str at "-" entry)))
+    (str at "-" (str (name type) " : " (name input)))))
 
 (defn timeline-entry [process at entry]
   (dom/li
-    #js {:className (when (= at (proc/logtime process)))}
+    #js {:className (when (= at (get-in process [:log :now])))}
     (dom/a
       #js {:onClick (fn [_] (om/transact! process #(proc/restore % at)))}
       (display-entry at entry))))
@@ -18,13 +18,10 @@
   (reify
     IRender
     (render [_]
-      (let [entry (partial timeline-entry (proc/logtime process))]
-        (apply
-          dom/ul
-          #js {:id "timeline"}
-          (reverse
-            (cons
-              (entry 0 ["system" "start"])
-              (map-indexed
-                entry
-                (:log process)))))))))
+      (apply dom/ul #js {:id "timeline"}
+        (reverse
+          (cons
+            (entry 0 ["system" "start"])
+            (map-indexed
+              #(timeline-entry process %1 %2)
+              (:log process))))))))

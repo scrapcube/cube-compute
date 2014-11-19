@@ -8,7 +8,7 @@
 (def stypes (list :canvas :grid))
 
 (defn is-surface? [obj]
-  (some #(= % (:type obj)) stypes))
+  (some #(= % (:etype obj)) stypes))
 
 (defn is-graphic? [obj]
   (not (is-surface? obj)))
@@ -24,11 +24,8 @@
   (fn [point]
     (map #(Math/floor (/ % m) point))))
 
-(defn build-transformation [transforms]
-  (apply comp transforms))
-
-;; Constructors
-;; ============
+;; Hash Map Constructors
+;; =====================
 
 (defn box [offset dimensions]
   {:offset offset :dimensions dimensions})

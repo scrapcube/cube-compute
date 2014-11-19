@@ -18,14 +18,6 @@
 (defn logtime [process]
   (get-in process [:log :now]))
 
-(defn halt [process]
-  (assoc process :status :halted))
-
-(defn resume [process]
-  (assoc process
-    :status :running
-    :log (statelog/trim (:log process))))
-
 (defn restore [process at]
   (let [{:keys [log transitions]} process]
     (assoc process
@@ -33,16 +25,13 @@
       :log (statelog/settime log at))))
 
 (defn commit [process entry]
-  (let [{:keys [state log]} process]
+  (let [{:keys [state log]} process
+        tlog (if (in-sync? log)
+              log
+              (stalog/trim log))]
     (assoc process
       :state ((proc/transition process) state entry)
-      :log (statelog/commit log entry))))
+      :log (statelog/commit tlog entry))))
 
 (defn output [process screen]
   ((:get-frame process) (:state process) screen))
-
-(defn halted? [process]
-  (= :halted (:status process)))
-
-(defn running? [process]
-  (= :running (:status process)))

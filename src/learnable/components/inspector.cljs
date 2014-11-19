@@ -12,5 +12,5 @@
             (dom/div
               #js {:className "attribute"}
               (dom/div {:className "name"} (name identifier))
-              (dom/div {:className "value"} (value))))
+              (dom/div {:className "value"} (str value))))
           (:state process))))))

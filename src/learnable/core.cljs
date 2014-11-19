@@ -1,5 +1,6 @@
 (ns learnable.core
   (:require [learnable.cube.core :as cube]
+            [learnable.cube.graphix :as graphix]
             [learnable.components.cube :as cube-manifestation]
             [learnable.games.life :as life]
             [om.core :as om :include-macros true]
@@ -10,6 +11,8 @@
 (def box
   {:screen (graphix/surface :canvas :main `(0 0) `(512 512))
    :hz 5})
+
+(def bus (chan))
 
 (defn boot [program]
   (cube/run-logged box program))
@@ -23,7 +26,20 @@
   (js/eval js-code)
   (swap! cube-state (boot (cube/grid-game game))))
 
+(defn learnable-computer [cube-state owner]
+  (reify
+    IRender
+    (render [_]
+      (dom/div
+        #js {:id "learnable-computer"}
+        (om/build editor)
+        (om/build cube-manifestation/ui
+                  cube-state
+                  {:init-state {:bus bus}})))))
+
 (om/root
   cube-manifestation/ui
   cube-state
   {:target (. js/document (getElementById "app"))})
+
+
