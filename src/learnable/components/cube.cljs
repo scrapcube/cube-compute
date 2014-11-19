@@ -5,6 +5,7 @@
             [learnable.components.info :as info]
             [learnable.components.inspector :as inspector]
             [learnable.components.timeline :as timeline]
+            [learnable.components.controls :as controls]
             [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]
             [cljs.core.async :as async :refer [put! <!]])

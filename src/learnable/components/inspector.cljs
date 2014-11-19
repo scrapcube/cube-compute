@@ -1,5 +1,6 @@
 (ns learnable.components.inspector
-  (:require [om.dom :as dom :include-macros true]))
+  (:require [om.core :as om :include-macros true]
+            [om.dom :as dom :include-macros true]))
 
 (defn ui [process owner]
   (reify

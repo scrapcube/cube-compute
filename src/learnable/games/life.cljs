@@ -1,4 +1,4 @@
-(ns learnable.life
+(ns learnable.games.life
   (:require [learnable.cube.graphix :as graphix]))
 
 (defn normalize [n m]

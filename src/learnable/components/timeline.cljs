@@ -21,7 +21,7 @@
       (apply dom/ul #js {:id "timeline"}
         (reverse
           (cons
-            (entry 0 ["system" "start"])
+            (timeline-entry 0 ["system" "start"])
             (map-indexed
               #(timeline-entry process %1 %2)
               (:log process))))))))

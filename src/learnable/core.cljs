@@ -29,11 +29,10 @@
 
 (defn learnable-computer [cube-state owner]
   (reify
-    IRender
+    om/IRender
     (render [_]
       (dom/div
         #js {:id "learnable-computer"}
-        (om/build editor)
         (om/build cube-manifestation/ui
                   cube-state
                   {:init-state {:bus bus}})))))

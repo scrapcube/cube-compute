@@ -1,5 +1,6 @@
-(ns learnable.display
+(ns learnable.components.display
   (:require
+    [learnable.cube.graphix :as graphix]
     [om.core :as om :include-macros true]
     [om.dom :as dom :include-macros true]))
 
