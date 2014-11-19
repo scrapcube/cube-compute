@@ -27,7 +27,7 @@
 ; we can support a greater number of object types.
 
 (defn graphic-style [graphic]
-  (merge
+  #js (merge
     (box-css graphic)
     (when (:color graphic) (color-css graphic))))
 
@@ -53,7 +53,7 @@
 (defn render-graphic [graphic]
   (apply
     dom/div
-    #js (graphic-style graphic)
+    (graphic-style graphic)
     (graphic-contents graphic)))
 
 (defn render-surface [surface mouse transforms]
