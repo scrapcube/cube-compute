@@ -24,4 +24,4 @@
             (timeline-entry process 0 ["system" "start"])
             (map-indexed
               #(timeline-entry process %1 %2)
-              (:log process))))))))
+              (get-in process :log :entries))))))))
