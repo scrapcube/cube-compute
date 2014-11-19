@@ -45,10 +45,6 @@
 
           (dom/div
             #js {:id "cube-screen"
-                 :position "relative"
-                 :style
-                    #js {:width (str (:width screen) "px")
-                         :height (str (:height screen) "px")}
                  :onKeyDown (cube/keyboard-controller bus)}
             (om/build display/ui
               (proc/output process screen)

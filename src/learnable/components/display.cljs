@@ -17,14 +17,14 @@
 
 (defn box-style [graphic]
   (let [[x y] (:offset graphic)
-        [width height] (:dimensiona graphic)
+        [width height] (:dimensions graphic)
         color (:color graphic)]
     #js {:position "absolute"
          :left (str x "px")
          :top (str y "px")
          :width (str width "px")
          :height (str height "px")
-         :background (if color color "#FFF")}))
+         :background (if color (name color) "#FFF")}))
 
 ; # Rendering Functions
 ; =====================
@@ -79,5 +79,5 @@
     om/IRenderState
     (render-state [_ {:keys [page-offset mouse]}]
       (dom/div
-        nil
+        #js {:style #js {:position "relative"}}
         (render-surface frame mouse (list #(map - % page-offset)))))))
