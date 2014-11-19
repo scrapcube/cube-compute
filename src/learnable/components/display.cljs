@@ -48,13 +48,15 @@
 
 (defn render-graphic [graphic]
   (let [{:keys [etype offset]} graphic]
+    (println "rendering: " etype " - " id)
     (dom/div #js {:style (box-style graphic)
                   :key (str (name etype) (first offset) (last offset))}
              "")))
 
 (defn render-surface [surface mouse transforms]
-  (let [{:keys [id transform items offset dimensions]} surface
+  (let [{:keys [etype id transform items offset dimensions]} surface
         transforms-prime (cons transform transforms)]
+    (println "rendering: " etype " - " id)
     (apply
       dom/div
       #js {:style (box-style surface)
