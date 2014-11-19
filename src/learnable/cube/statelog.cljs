@@ -19,7 +19,8 @@
   (reduce f (:start-state log) (subvec (:entries log) 0 atime)))
 
 (defn synced? [log]
-  (or (= 0 now) (= now (count (:entries log)))))
+  (let [{:keys [now entries]} log]
+    (or (= 0 now) (= now (count entries)))))
 
 (defn settime [log atime]
   (assoc log :now atime))

@@ -21,16 +21,16 @@
 (defn restore [process at]
   (let [{:keys [log transitions]} process]
     (assoc process
-      :state (statelog/replay log at (proc/transition process))
+      :state (statelog/replay log at (transition process))
       :log (statelog/settime log at))))
 
 (defn commit [process entry]
   (let [{:keys [state log]} process
-        tlog (if (in-sync? log)
+        tlog (if (statelog/in-sync? log)
               log
-              (stalog/trim log))]
+              (statelog/trim log))]
     (assoc process
-      :state ((proc/transition process) state entry)
+      :state ((transition process) state entry)
       :log (statelog/commit tlog entry))))
 
 (defn output [process screen]

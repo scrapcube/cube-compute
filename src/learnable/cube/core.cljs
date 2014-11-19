@@ -1,6 +1,7 @@
 (ns learnable.cube.core
   (:require
     [learnable.cube.process :as proc]
+    [learnable.cube.graphix :as graphix]
     [om.core :as om :include-macros true]
     [om.dom :as dom :include-macros true]
     [cljs.core.async :as async :refer [chan put! <!]])

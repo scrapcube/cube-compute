@@ -29,7 +29,7 @@
 (defn graphic-style [graphic]
   #js (merge
     (box-css graphic)
-    (when (:color graphic) (color-css graphic))))
+    (if (:color graphic) (color-css graphic) nil)))
 
 ; # Rendering Functions
 ; =====================
