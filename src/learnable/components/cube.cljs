@@ -30,6 +30,16 @@
     om/IRenderState
     (render-state [_ _] (dom/span #js {:className "clock hidden"} ""))))
 
+(defn inspection-ui [a-cube owner]
+  (reify
+    (om/IRender
+      (render [_]
+        (dom/div
+          nil
+          (om/build info/ui a-cube)
+          (om/build inspector/ui (:process a-cube))
+          (om/build timeline/ui (:process a-cube)))))))
+
 (defn ui [a-cube owner]
   (reify
     om/IWillMount
@@ -60,9 +70,6 @@
             (om/build controls/ui process)
             (if (= :running (:status process))
               (om/build clock hz {:init-state {:bus bus}})
-              (do
-                (om/build info/ui a-cube)
-                (om/build inspector/ui process)
-                (om/build timeline/ui process)))))))))
+              (om/build inspection-ui a-cube))))))))
 
 
