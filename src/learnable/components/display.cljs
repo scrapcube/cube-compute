@@ -5,19 +5,6 @@
 
 (enable-console-print!)
 
-(defn box-css [graphic]
-  (let [[x y] (:offset graphic)
-        [width height] (:dimensions graphic)]
-    {:position "absolute"
-     :left (str x "px")
-     :top (str y "px")
-     :width (str width "px")
-     :height (str height "px")}))
-
-(defn color-css [graphic]
-  (when (:color graphic)
-    {:background (name (:color graphic))}))
-
 ; Style Helpers
 ; =============
 ; These functions provide appropriate styles for various graphics objects.
@@ -27,10 +14,16 @@
 ; the :type property of the graphics object. This option is desirable because
 ; we can support a greater number of object types.
 
-(defn graphic-style [graphic]
-  #js (merge
-    (box-css graphic)
-    (color-css graphic)))
+(defn box-style [graphic]
+  (let [[x y] (:offset graphic)
+        [width height] (:dimensiona graphic)
+        color (:color graphic)]
+    #js {:position "absolute"
+         :left (str x "px")
+         :top (str y "px")
+         :width (str width "px")
+         :height (str height "px")
+         :background (if color color "#FFF")}))
 
 ; # Rendering Functions
 ; =====================
@@ -52,17 +45,14 @@
 ;       (= :grid (:type obj)))
 
 (defn render-graphic [graphic]
-  (apply
-    dom/div
-    (graphic-style graphic)
-    (graphic-contents graphic)))
+  (dom/div #js {:style (box-style graphic)} ""))
 
 (defn render-surface [surface mouse transforms]
   (let [{:keys [transform items offset dimensions]} surface
         transforms-prime (cons transform transforms)]
     (apply
       dom/div
-      #js {:style #js (box-css graphic)
+      #js {:style (box-style surface)
            :onClick (mouse (apply comp transforms-prime))}
       (map
         (fn [item]
