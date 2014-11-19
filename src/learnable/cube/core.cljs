@@ -20,6 +20,7 @@
         (assoc transitions
           :mouse
           (fn [state [graphic-id point]]
+            (str "T: " graphic-id " - " (str point))
             (if (= :game graphic-id)
               (mouse state point)
               state))))))
