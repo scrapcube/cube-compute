@@ -71,6 +71,7 @@
               (assoc state :cells (step state))))
       :mouse
         (fn [state point]
+          (println (str "life point: " (str point)))
           (update-in state [:cells]
             (fn [population]
               (if (= :running (:status state))

@@ -18,7 +18,7 @@
 
 (defn offset-transform [offset]
   (fn [point]
-    (map #(- % %) point offset)))
+    (map #(- %1 %2) point offset)))
 
 (defn modulo-transform [offset resolution]
   (fn [point]
