@@ -5,7 +5,7 @@
 
 (defn ui [process owner]
   (reify
-    IRender
+    om/IRender
     (render [_]
       (dom/div
         #js {:id "process-controls"}

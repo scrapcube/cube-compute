@@ -4,7 +4,7 @@
     [learnable.cube.graphix :as graphix]
     [om.core :as om :include-macros true]
     [om.dom :as dom :include-macros true]
-    [cljs.core.async :as async :refer [chan put! <!]])
+    [cljs.core.async :as async :refer [put!]])
   (:require-macros
     [cljs.core.async.macros :as async-mac :refer [go]]))
 

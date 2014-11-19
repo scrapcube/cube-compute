@@ -1,8 +1,9 @@
-(ns learnable.components.inspector)
+(ns learnable.components.inspector
+  (:require [om.dom :as dom :include-macros true]))
 
 (defn ui [process owner]
   (reify
-    IRender
+    om/IRender
     (render [_]
       (apply
         dom/div

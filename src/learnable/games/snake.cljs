@@ -1,4 +1,4 @@
-;(ns learnable.snake
+(ns learnable.snake)
 ;  (:require [learnable.display :as display]))
 ;
 ;(defn translate [point ray]

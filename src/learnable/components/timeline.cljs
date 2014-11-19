@@ -1,5 +1,5 @@
 (ns learnable.components.timeline
-  (:require [learnable.process :as proc]
+  (:require [learnable.cube.process :as proc]
             [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]))
 
@@ -16,7 +16,7 @@
 
 (defn ui [process owner]
   (reify
-    IRender
+    om/IRender
     (render [_]
       (apply dom/ul #js {:id "timeline"}
         (reverse

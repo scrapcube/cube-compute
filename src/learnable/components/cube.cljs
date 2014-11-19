@@ -7,7 +7,8 @@
             [learnable.components.timeline :as timeline]
             [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]
-            [cljs.core.async :as async :refer [put!]]))
+            [cljs.core.async :as async :refer [put! <!]])
+  (:require-macros [cljs.core.async.macros :refer [go]]))
 
 (defn clock [hz owner]
   (reify
@@ -28,7 +29,7 @@
 
 (defn ui [a-cube owner]
   (reify
-    IWillMount
+    om/IWillMount
     (will-mount [_]
       (let [bus (om/get-state owner :bus)]
         (go (loop []
@@ -36,7 +37,7 @@
             (when (= :running (get-in a-cube [:process :status]))
               (om/transact! a-cube :process #(proc/commit % entry))))))))
 
-    IRenderState
+    om/IRenderState
     (render-state [_ {:keys [bus]}]
       (let [{:keys [process screen hz]} a-cube]
         (dom/div nil

@@ -56,7 +56,7 @@
            :onClick (mouse (apply comp transforms-prime))}
       (map
         (fn [item]
-          (if (is-surface? item)
+          (if (graphix/is-surface? item)
             (render-surface item mouse transforms-prime)
             (render-graphic item)))
         items))))

@@ -4,7 +4,8 @@
             [learnable.components.cube :as cube-manifestation]
             [learnable.games.life :as life]
             [om.core :as om :include-macros true]
-            [om.dom :as dom :include-macros true]))
+            [om.dom :as dom :include-macros true]
+            [cljs.core.async :as async :refer [chan]]))
 
 (enable-console-print!)
 
