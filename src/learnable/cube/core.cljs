@@ -15,7 +15,9 @@
     (assoc
       game
       :boot (fn [_] (boot grid))
-      :get-frame #(graphix/blit %2 (get-frame %1 grid))
+      :get-frame
+        (fn [state screen]
+          (graphix/blit screen (get-frame state grid)))
       :transitions
         (assoc transitions
           :mouse
