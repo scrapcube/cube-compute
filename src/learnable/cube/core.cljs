@@ -50,7 +50,7 @@
               32 :space
               nil)]
       (when (not= nil keystroke)
-        (put! bus keystroke)))))
+        (put! bus [:keyboard keystroke])))))
 
 (defn mouse-controller [bus]
   (fn [transform]

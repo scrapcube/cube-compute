@@ -54,7 +54,7 @@
     (apply
       dom/div
       #js {:style (box-style surface)
-           :onClick (mouse (apply comp transforms-prime))}
+           :onClick (mouse (fn [point] ((apply comp transforms-prime) e)))}
       (map
         (fn [item]
           (if (graphix/is-surface? item)
