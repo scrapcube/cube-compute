@@ -37,6 +37,7 @@
       (let [bus (om/get-state owner :bus)]
         (go (loop []
           (let [entry (<! bus)]
+            (println (str "event! - " (str (first entry)) (str (last entry))))
             (when (= :running (get-in a-cube [:process :status]))
               (println "transitioning.")
               (om/transact! a-cube :process #(proc/commit % entry))))))))
