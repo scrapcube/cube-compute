@@ -13,8 +13,6 @@
   {:screen (graphix/surface :canvas :main `(0 0) `(512 512))
    :hz 5})
 
-(def bus (chan))
-
 (defn boot [program]
   (cube/run-logged box program))
 
@@ -29,8 +27,12 @@
 
 (defn learnable-computer [cube-state owner]
   (reify
-    om/IRender
-    (render [_]
+    om/IInitState
+    (init-state [_]
+      {:bus (chan)})
+
+    om/IRenderState
+    (render-state [_ {:keys [bus]}]
       (dom/div
         #js {:id "learnable-computer"}
         (om/build cube-manifestation/ui
