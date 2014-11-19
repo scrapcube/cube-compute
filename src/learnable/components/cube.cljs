@@ -20,7 +20,7 @@
       (let [bus (om/get-state owner :bus)]
         (om/set-state! owner :timer
           (js/setInterval
-            (fn [] (put! bus [:clock nil]))
+            (fn [] (println "tick.") (put! bus [:clock nil]))
             (* 1000 (/ 1.0 hz))))))
 
     om/IWillUnmount
@@ -28,7 +28,7 @@
       (js/clearInterval (om/get-state owner :timer)))
 
     om/IRenderState
-    (render-state [_ _] (dom/span #js {:className "hidden"} ""))))
+    (render-state [_ _] (dom/span #js {:className "clock hidden"} ""))))
 
 (defn ui [a-cube owner]
   (reify
