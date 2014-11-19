@@ -11,7 +11,7 @@
 
 (def box
   {:screen (graphix/surface :canvas :main `(0 0) `(512 512))
-   :hz 5})
+   :hz 1})
 
 (defn boot [program]
   (cube/run-logged box program))
