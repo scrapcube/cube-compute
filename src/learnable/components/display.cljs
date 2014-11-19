@@ -50,12 +50,13 @@
   (dom/div #js {:style (box-style graphic)} ""))
 
 (defn render-surface [surface mouse transforms]
-  (let [{:keys [transform items offset dimensions]} surface
+  (let [{:keys [id transform items offset dimensions]} surface
         transforms-prime (cons transform transforms)]
     (apply
       dom/div
       #js {:style (box-style surface)
-           :onClick (mouse (fn [point] ((apply comp transforms-prime) point)))}
+           :onClick (mouse (fn [point]
+                              [id ((apply comp transforms-prime) point)]))}
       (map
         (fn [item]
           (if (graphix/is-surface? item)
