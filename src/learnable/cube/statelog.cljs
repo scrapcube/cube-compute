@@ -20,7 +20,7 @@
 
 (defn synced? [log]
   (let [{:keys [now entries]} log]
-    (or (= 0 now) (= now (count entries)))))
+    (or (and (= 0 now) (= 0 (count entries))) (= now (count entries)))))
 
 (defn settime [log atime]
   (assoc log :now atime))

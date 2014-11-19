@@ -26,7 +26,7 @@
 
 (defn commit [process entry]
   (let [{:keys [state log]} process
-        tlog (if (statelog/in-sync? log)
+        tlog (if (statelog/synced? log)
               log
               (statelog/trim log))]
     (assoc process
