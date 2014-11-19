@@ -53,7 +53,8 @@
               (fn [process]
                 (if (= :running (:status process))
                   (proc/commit process entry)
-                  process))))))))
+                  process)))
+            (recur))))))
 
     om/IRenderState
     (render-state [_ {:keys [bus]}]
