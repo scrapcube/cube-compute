@@ -5,7 +5,7 @@
 
 (defn display-entry [at entry]
   (let [[type input] entry]
-    (str at "-" (str (name type) " : " (name input)))))
+    (str at "-" (str (name type) " : " (str input)))))
 
 (defn timeline-entry [process at entry]
   (dom/li
