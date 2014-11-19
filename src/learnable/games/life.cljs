@@ -13,14 +13,14 @@
         next-y (normalize (inc y) (:height state))
         prev-y (normalize (dec y) (:height state))]
     (list
-      (list next-x next-y)
-      (list next-x prev-y)
-      (list prev-x next-y)
-      (list prev-x prev-y)
-      (list x next-y)
-      (list x prev-y)
-      (list next-x y)
-      (list prev-x y))))
+      [next-x next-y]
+      [next-x prev-y]
+      [prev-x next-y]
+      [prev-x prev-y]
+      [x next-y]
+      [x prev-y]
+      [next-x y]
+      [prev-x y])))
 
 (defn should-live? [cell population state]
   (let [live-neighbors (filter
@@ -52,7 +52,7 @@
 (def life-game
   {:boot
      (fn [screen]
-       {:cells (set `((16 13) (16 11) (14 12) (12 15) (16 12) (14 13) (10 16) (14 14) (12 16) (17 12)))
+       {:cells (set `([16 13] [16 11] [14 12] [12 15] [16 12] [14 13] [10 16] [14 14] [12 16] [17 12]))
         :status :paused
         :width (first (:resolution screen))
         :height (last (:resolution screen))})

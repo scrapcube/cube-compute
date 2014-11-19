@@ -11,7 +11,7 @@
 (defn grid-game [game]
   (let [{:keys [boot transitions get-frame]} game
         {:keys [mouse]} transitions
-        grid (graphix/surface :grid :game `(0 0) `(512 512) `(32 32))]
+        grid (graphix/surface :grid :game [0 0] [512 512] [32 32])]
     (assoc
       game
       :boot (fn [_] (boot grid))

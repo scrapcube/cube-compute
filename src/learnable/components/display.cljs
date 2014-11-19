@@ -49,7 +49,7 @@
 (defn render-graphic [graphic]
   (let [{:keys [etype offset]} graphic]
     (dom/div #js {:style (box-style graphic)
-                  :key (str (name etype) offset)}
+                  :key (str (name etype) (first offset) (last offset))}
              "")))
 
 (defn render-surface [surface mouse transforms]
