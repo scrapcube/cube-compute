@@ -36,6 +36,7 @@
         (go (loop []
           (let [entry (<! bus)]
             (when (= :running (get-in a-cube [:process :status]))
+              (println "transitioning.")
               (om/transact! a-cube :process #(proc/commit % entry))))))))
 
     om/IRenderState
@@ -45,6 +46,7 @@
 
           (dom/div
             #js {:id "cube-screen"
+                 :tabIndex "0"
                  :onKeyDown (cube/keyboard-controller bus)}
             (om/build display/ui
               (proc/output process screen)

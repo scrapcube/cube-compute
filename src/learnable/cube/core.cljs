@@ -56,6 +56,7 @@
 (defn mouse-controller [bus]
   (fn [transform]
     (fn [e]
+      (println "mouse-event")
       (let [mouse-point (list (.-pageX e) (.-pageY e))
             point (transform mouse-point)]
         (when point
