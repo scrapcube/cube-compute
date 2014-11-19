@@ -50,7 +50,6 @@
 (def life-game
   {:boot
      (fn [screen]
-       (println (str screen))
        {:cells (set `((16 13) (16 11) (14 12) (12 15) (16 12) (14 13) (10 16) (14 14) (12 16) (17 12)))
         :status :paused
         :width (first (:resolution screen))

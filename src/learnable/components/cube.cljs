@@ -20,7 +20,7 @@
       (let [bus (om/get-state owner :bus)]
         (om/set-state! owner :timer
           (js/setInterval
-            (fn [] (println "tick.") (put! bus [:clock nil]))
+            (fn [] (put! bus [:clock nil]))
             (* 1000 (/ 1.0 hz))))))
 
     om/IWillUnmount
