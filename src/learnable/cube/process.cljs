@@ -13,6 +13,7 @@
 
 (defn transition [process]
   (fn [state [etype input]]
+    (println (get-in process [:transitions etype]))
     ((get-in process [:transitions etype]) state input)))
 
 (defn logtime [process]
