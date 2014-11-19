@@ -32,13 +32,13 @@
 
 (defn inspection-ui [a-cube owner]
   (reify
-    (om/IRender
+    om/IRender
       (render [_]
         (dom/div
           nil
           (om/build info/ui a-cube)
           (om/build inspector/ui (:process a-cube))
-          (om/build timeline/ui (:process a-cube)))))))
+          (om/build timeline/ui (:process a-cube))))))
 
 (defn ui [a-cube owner]
   (reify
