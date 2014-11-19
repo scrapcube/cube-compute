@@ -67,7 +67,7 @@
             (om/build display/ui
               (proc/output process screen)
               {:init-state
-                {:mouse (cube/mouse-controller bus)}}))
+                {:bus bus}}))
 
           (dom/div #js {:id "cube-interface"}
             (om/build controls/ui process)

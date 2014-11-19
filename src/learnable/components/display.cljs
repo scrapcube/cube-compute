@@ -77,8 +77,8 @@
             (list (.-offsetLeft domn) (.-offsetTop domn)))))
 
     om/IRenderState
-    (render-state [_ {:keys [page-offset mouse]}]
+    (render-state [_ {:keys [page-offset bus]}]
       (println (str (:etype frame)))
       (dom/div
         #js {:style #js {:position "relative"}}
-        (render-surface frame mouse (list #(map - % page-offset)))))))
+        (render-surface frame (cube/mouse-controller bus) (list #(map - % page-offset)))))))
