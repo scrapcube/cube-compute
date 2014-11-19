@@ -20,9 +20,9 @@
   (fn [point]
     (map #(- % %) point offset)))
 
-(defn modulo-transform [offset m]
+(defn modulo-transform [offset resolution]
   (fn [point]
-    (map #(Math/floor (/ % m) point))))
+    (map #(Math/floor (/ %1 %2)) point resolution)))
 
 ;; Hash Map Constructors
 ;; =====================
@@ -43,7 +43,7 @@
 (defmethod surface :canvas [stype id offset dimensions]
   (merge (box offset dimensions)
          (entity stype id)
-         {:transform offset-transform}))
+         {:transform (offset-transform offset)}))
 
 (defmethod surface :grid [stype id offset dimensions resolution]
   (let [square-size (apply min (map #(/ %1 %2) dimensions resolution))
@@ -58,7 +58,8 @@
       (entity stype id)
         {:square-size square-size
          :resolution resolution
-         :transform (comp modulo-transform offset-transform)})))
+         :transform (comp (modulo-transform offset resolution)
+                          (offset-transform offset))})))
 
 (defn blit [dest-surface src-surface]
   (update-in dest-surface [:items] #(cons src-surface %)))
