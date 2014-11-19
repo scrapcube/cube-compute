@@ -1,5 +1,5 @@
 (ns learnable.cube.process
-  (:require [learnable.statelog :as statelog]))
+  (:require [learnable.cube.statelog :as statelog]))
 
 (enable-console-print!)
 
