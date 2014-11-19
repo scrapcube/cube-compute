@@ -32,7 +32,11 @@
               (do (println "log synced") log)
               (statelog/trim log))]
     (assoc process
-      :state ((transition process) state entry)
+      :state
+        (let [t (transition process)
+              state-prime (t state entry)]
+          (println (str state-prime))
+          state-prime)
       :log (statelog/commit tlog entry))))
 
 (defn output [process screen]
