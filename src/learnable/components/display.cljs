@@ -58,7 +58,7 @@
     (apply
       dom/div
       #js {:style (box-style surface)
-           :key (str "surface" (name "id"))
+           :key (str "surface" (name id))
            :onClick (mouse (fn [point]
                               [id ((apply comp transforms-prime) point)]  ))}
       (map
