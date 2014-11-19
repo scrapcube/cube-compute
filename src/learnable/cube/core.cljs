@@ -61,7 +61,7 @@
       (let [mouse-point (list (.-pageX e) (.-pageY e))
             point (transform mouse-point)]
         (when (not= nil point)
-          (put! bus [:mouse point]))))))
+          (put! bus [:mouse (vec point)]))))))
 
 (defn run-logged [box program]
   (assoc box
