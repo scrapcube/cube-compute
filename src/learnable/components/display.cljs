@@ -75,6 +75,11 @@
 ; Establishes the root page offset and begins an in-order rendering traversal
 ; of the graphics tree. Our rendering process assumes that `frame` is a surface.
 
+(defn examine [obj depth]
+  (if (seq? obj)
+    (str (map #(examine % (inc depth)) obj) "\n")
+    (str (repeat depth " ") "obj")))
+
 (defn ui [frame owner]
   (reify
     om/IDidMount
@@ -87,6 +92,7 @@
     om/IRenderState
     (render-state [_ {:keys [page-offset bus]}]
       (println (str page-offset))
+      (println (examine frame 0))
       (println (str (:etype frame)))
       (dom/div
         #js {:style #js {:position "relative"}}
