@@ -54,7 +54,7 @@
           (dom/div #js {:id "cube-interface"}
             (om/build controls/ui process)
             (if (= :running (:status process))
-              (om/build clock hz)
+              (om/build clock hz {:init-state {:bus bus}})
               (do
                 (om/build info/ui a-cube)
                 (om/build inspector/ui process)
