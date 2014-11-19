@@ -28,7 +28,7 @@
 ;; =====================
 
 (defn box [offset dimensions]
-  {:offset offset :dimensions dimensions})
+  {:offset (vec offset) :dimensions (vec dimensions)})
 
 (defn entity [etype id]
   {:etype etype :id id :items []})
@@ -62,7 +62,7 @@
                           (offset-transform offset))})))
 
 (defn blit [dest-surface src-surface]
-  (update-in dest-surface [:items] #(cons src-surface %)))
+  (update-in dest-surface [:items] #(conj % src-surface)))
 
 ;; Graphics
 ;; ========
