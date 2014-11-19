@@ -15,7 +15,8 @@
      :height (str height "px")}))
 
 (defn color-css [graphic]
-  {:background (name (:color graphic))})
+  (when (:color graphic)
+    {:background (name (:color graphic))}))
 
 ; Style Helpers
 ; =============
@@ -29,7 +30,7 @@
 (defn graphic-style [graphic]
   #js (merge
     (box-css graphic)
-    (if (:color graphic) (color-css graphic) nil)))
+    (color-css graphic)))
 
 ; # Rendering Functions
 ; =====================
