@@ -94,6 +94,8 @@
       (println (str (:etype frame)))
       (dom/div
         #js {:style #js {:position "relative"
+                         :left 0
+                         :top 0
                          :width (first (:dimensions frame))
                          :height (last (:dimensions frame))}
              :key {}}

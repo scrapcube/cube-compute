@@ -20,9 +20,9 @@
   (fn [point]
     (map #(- %1 %2) point offset)))
 
-(defn modulo-transform [offset resolution]
+(defn modulo-transform [square-size resolution]
   (fn [point]
-    (map #(Math/floor (/ %1 %2)) point resolution)))
+    (map #(mod (Math/floor (/ %1 square-size)) %2) point resolution)))
 
 ;; Hash Map Constructors
 ;; =====================
@@ -58,7 +58,7 @@
       (entity stype id)
         {:square-size square-size
          :resolution resolution
-         :transform (comp (modulo-transform offset resolution)
+         :transform (comp (modulo-transform square-size resolution)
                           (offset-transform offset))})))
 
 (defn blit [dest-surface src-surface]
