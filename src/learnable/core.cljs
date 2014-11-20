@@ -16,7 +16,7 @@
 (defn boot [program]
   (cube/run-logged box program))
 
-(def game (cube/grid-game life/life-game))
+(def game life/life-game)
 
 (def cube-state
   (atom (boot (cube/grid-game game))))

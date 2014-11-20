@@ -47,8 +47,7 @@
 ;       (= :grid (:type obj)))
 
 (defn render-graphic [graphic]
-  (let [{:keys [etype offset]} graphic]
-    (println "rendering: " etype " - " id)
+  (let [{:keys [id etype offset]} graphic]
     (dom/div #js {:style (box-style graphic)
                   :key (str (name etype) (first offset) (last offset))}
              "")))
@@ -56,7 +55,6 @@
 (defn render-surface [surface mouse transforms]
   (let [{:keys [etype id transform items offset dimensions]} surface
         transforms-prime (cons transform transforms)]
-    (println "rendering: " etype " - " id)
     (apply
       dom/div
       #js {:style (box-style surface)
@@ -78,7 +76,7 @@
 (defn examine [obj depth]
   (if (seq? obj)
     (str (map #(examine % (inc depth)) obj) "\n")
-    (str (repeat depth " ") "obj")))
+    (str (repeat depth " ") obj)))
 
 (defn ui [frame owner]
   (reify
@@ -95,5 +93,8 @@
       (println (examine frame 0))
       (println (str (:etype frame)))
       (dom/div
-        #js {:style #js {:position "relative"}}
+        #js {:style #js {:position "relative"
+                         :width (first (:dimensions frame))
+                         :height (last (:dimensions frame))}
+             :key {}}
         (render-surface frame (cube/mouse-controller bus) (list #(map - % page-offset)))))))
