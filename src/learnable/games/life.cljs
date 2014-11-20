@@ -61,7 +61,7 @@
    :get-frame
      (fn [state screen]
        (let [cells (:cells state)
-             color (if (= :paused (:status state)) :red :green)]
+             color (if (= :paused (:status state)) "red" "green")]
          (reduce #(graphix/draw %1 :pixel %2 color) screen cells)))
 
    :transitions
@@ -72,7 +72,6 @@
             (step state)))
       :mouse
         (fn [state point]
-          (println (str "life point: " (str point)))
           (update-in state [:cells]
             (fn [population]
               (if (= :running (:status state))

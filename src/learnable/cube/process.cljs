@@ -25,7 +25,6 @@
       :log (statelog/settime log at))))
 
 (defn commit [process entry]
-  (println "called commit")
   (let [{:keys [state log]} process
         tlog (if (statelog/synced? log)
               log

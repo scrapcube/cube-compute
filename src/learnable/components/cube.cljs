@@ -47,7 +47,6 @@
       (let [bus (om/get-state owner :bus)]
         (go (loop []
           (let [entry (<! bus)]
-            (println (str "event! - " (str (first entry)) (str (last entry))))
             (om/transact! a-cube :process
               (fn [process]
                 (if (= :running (:status process))

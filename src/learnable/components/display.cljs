@@ -25,7 +25,7 @@
          :top (str y "px")
          :width (str width "px")
          :height (str height "px")
-         :background (if color (name color) "#FFF")}))
+         :background (if color color "#FFF")}))
 
 ; # Rendering Functions
 ; =====================
@@ -49,7 +49,7 @@
 (defn render-graphic [graphic]
   (let [{:keys [id etype offset]} graphic]
     (dom/div #js {:style (box-style graphic)
-                  :key (str (name etype) (first offset) (last offset))}
+                  :key id}
              "")))
 
 (defn render-surface [surface mouse transforms]
@@ -58,9 +58,9 @@
     (apply
       dom/div
       #js {:style (box-style surface)
-           :key (str "surface" (name id))
+           :key id
            :onClick (mouse (fn [point]
-                              [id ((apply comp transforms-prime) point)]  ))}
+                              [id ((apply comp transforms-prime) point)]))}
       (map
         (fn [item]
           (if (graphix/is-surface? item)
@@ -73,11 +73,6 @@
 ; Establishes the root page offset and begins an in-order rendering traversal
 ; of the graphics tree. Our rendering process assumes that `frame` is a surface.
 
-(defn examine [obj depth]
-  (if (seq? obj)
-    (str (map #(examine % (inc depth)) obj) "\n")
-    (str (repeat depth " ") obj)))
-
 (defn ui [frame owner]
   (reify
     om/IDidMount
@@ -89,14 +84,10 @@
 
     om/IRenderState
     (render-state [_ {:keys [page-offset bus]}]
-      (println (str page-offset))
-      (println (examine frame 0))
-      (println (str (:etype frame)))
       (dom/div
         #js {:style #js {:position "relative"
                          :left 0
                          :top 0
                          :width (first (:dimensions frame))
-                         :height (last (:dimensions frame))}
-             :key {}}
+                         :height (last (:dimensions frame))}}
         (render-surface frame (cube/mouse-controller bus) (list #(map - % page-offset)))))))
