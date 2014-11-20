@@ -25,8 +25,9 @@
 (defn should-live? [cell population state]
   (let [live-neighbors (filter
                          #(contains? population %)
-                         (neighbors cell state))]
-    (= 3 (count live-neighbors))))
+                         (neighbors cell state))
+        n (count live-neighbors)]
+    (or (= n 2) (= n 3))))
 
 (defn step [state]
   (let [population (:cells state)]
@@ -67,8 +68,8 @@
       {:clock
         (fn [state _]
           (if (= :paused (:status state))
-              state
-              (assoc state :cells (step state))))
+            state
+            (step state)))
       :mouse
         (fn [state point]
           (println (str "life point: " (str point)))
