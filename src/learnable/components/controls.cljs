@@ -19,18 +19,18 @@
     om/IRender
     (render [_]
       (dom/div #js {:className "cube-control toolbar"}
-        (dom/div #js {:className "toolgroup"}
-          (button "Decrease Clock Speed"
+        (dom/div #js {:className "toolgroup left"}
+          (button "-"
                   (fn [] (om/transact! a-cube :hz cube/throttle))
                   (constantly false))
           (dom/span #js {:className "clock-speed"}
             (:hz a-cube))
-          (button "Increase Clock Speed"
+          (button "+"
                   (fn [] (om/transact! a-cube :hz cube/overclock))
                   (constantly false))
 
 
-        (dom/div #js {:className "toolgroup"}
+        (dom/div #js {:className "toolgroup right"}
           (button "Play"
                   (fn [] (om/transact! a-cube cube/resume))
                   (fn [] (= (get-in a-cube [:process :status]) :running)))

@@ -8,7 +8,7 @@
     (render [_]
       (apply
         dom/div
-        #js {:id "process-inspector"}
+        #js {:className "inspector"}
         (map
           (fn [[identifier value]]
             (dom/div

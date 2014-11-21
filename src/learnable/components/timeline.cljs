@@ -18,7 +18,7 @@
   (reify
     om/IRender
     (render [_]
-      (apply dom/ul #js {:id "timeline"}
+      (apply dom/ul #js {:className "timeline"}
         (reverse
           (cons
             (timeline-entry process 0 ["system" "start"])

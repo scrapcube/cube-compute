@@ -30,10 +30,10 @@
 (def max-hertz 20)
 
 (defn halt [a-cube]
-  ())
+  (assoc-in a-cube [:process :status] :halted))
 
 (defn resume [a-cube]
-  ())
+  (assoc-in a-cube [:process :status] :running))
 
 (defn overclock [hz]
   (if (<= hz max-hertz)

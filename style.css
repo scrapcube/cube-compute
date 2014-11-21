@@ -56,6 +56,9 @@ body {
     display: inline-block;
 }
 
+.toolgroup.left {float:left;}
+.toolgroup.right {float:right;}
+
 .button {
     text-align: center;
     text-decoration: none;
