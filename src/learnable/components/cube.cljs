@@ -35,9 +35,9 @@
     om/IRender
       (render [_]
         (dom/div
-          nil
-          (om/build inspector/ui (:process a-cube))
-          (om/build timeline/ui (:process a-cube))))))
+          #js {:className "inspector"}
+          (om/build timeline/ui (:process a-cube))
+          (om/build inspector/ui (:process a-cube))))))
 
 (defn ui [a-cube owner]
   (reify

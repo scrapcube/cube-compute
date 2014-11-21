@@ -8,7 +8,7 @@
     (render [_]
       (apply
         dom/div
-        #js {:className "inspector"}
+        #js {:className "state"}
         (map
           (fn [[identifier value]]
             (dom/div

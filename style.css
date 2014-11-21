@@ -1,4 +1,5 @@
 body {
+    font-family: Helvetica;
     padding: 0;
     margin: 0;
     height: 100%;
@@ -30,24 +31,24 @@ body {
     position: relative;
     top: 100px;
     margin: 0 auto;
-    background: #ddd;
-    border-style: inset;
-    border-width: 2px;
-    border-color: #222;
+    background: #efefef;
+    box-shadow: 0 2px 3px 2px #222;
 }
 
 .cube > .interface {
-    background: #ddd;
+    background: #444;
     position: fixed;
     left: 0;
-    right: 50%;
+    right: 0;
     bottom: 0;
 }
 
 .cube > .interface > .toolbar {
-    background: #aaa;
+    overflow: hidden;
+    background: #ddd;
     font-size: 1em;
     width: 100%;
+    box-shadow: 0 2px 3px 2px #222;
 }
 
 .toolgroup {
@@ -79,16 +80,43 @@ body {
     background: #ddd;
 }
 
+.inspector {
+    background: #efefef;
+    overflow: hidden;
+}
+
+.state, ul.timeline {
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.state .attribute > .name {
+    font-style: bold;
+}
+
 ul.timeline {
-    float: left;
-    height: 200px;
+    margin: 0;
+    background: #222;
+    box-shadow: inset 0 2px 3px 2px #222;
     overflow-x: scroll;
 }
 
 ul.timeline > li {
     display: inline-block;
+    float: left;
 }
 
-.inspector {
-    float: right;
+ul.timeline > li > a {
+    display: block;
+    background: #fff;
+    color: #fff;
+    margin: 10px;
+    height: 2em;
+    width: 2em;
+    border-radius: 1em;
+    overflow: hidden;
+}
+
+.state {
+    background: #efefef;
 }
