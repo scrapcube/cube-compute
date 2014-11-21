@@ -7,7 +7,7 @@
 (defn button [text action active?]
   (dom/a
     #js {:className
-           (str "button" (if (active?) "active" ""))
+           (str "button" (if (active?) " active" ""))
          :href "#"
          :onClick (if (active?)
                     (constantly nil)

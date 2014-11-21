@@ -39,28 +39,41 @@ body {
 .cube > .interface {
     background: red;
     position: fixed;
+    left: 0;
+    right: 50%;
     bottom: 0;
 }
 
 .cube > .interface > .toolbar {
     background: #aaa;
+    font-size: 1em;
+    left: 0;
+    right: 0;
 }
 
 .toolgroup {
+    margin: 10px;
     display: inline-block;
 }
 
 .button {
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
     min-width: 2em;
-    margin: 5px;
-    height: 2em;
-    font-size: 1.5em;
+    padding: 10px;
     color: #fff;
     display: inline-block;
     background: #222;
 }
 
+.button.active {
+    background: #555;
+}
+
 .clock-speed {
+    padding: 10px;
+    text-align: center;
     background: #ddd;
 }
 
