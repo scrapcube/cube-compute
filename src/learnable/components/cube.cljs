@@ -69,7 +69,7 @@
           (dom/div #js {:className "interface"}
             (om/build controls/ui a-cube)
             (if (= :running (:status process))
-              (om/build inspection-ui a-cube)
-              (om/build clock hz {:init-state {:bus bus}}))))))))
+              (om/build clock hz {:init-state {:bus bus}})
+              (om/build inspection-ui a-cube))))))))
 
 

@@ -37,7 +37,7 @@ body {
 }
 
 .cube > .interface {
-    background: red;
+    background: #ddd;
     position: fixed;
     left: 0;
     right: 50%;
@@ -47,8 +47,7 @@ body {
 .cube > .interface > .toolbar {
     background: #aaa;
     font-size: 1em;
-    left: 0;
-    right: 0;
+    width: 100%;
 }
 
 .toolgroup {
