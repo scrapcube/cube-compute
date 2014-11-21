@@ -27,7 +27,7 @@
             (:hz a-cube))
           (button "+"
                   (fn [] (om/transact! a-cube :hz cube/overclock))
-                  (constantly false))
+                  (constantly false)))
 
 
         (dom/div #js {:className "toolgroup right"}
@@ -36,4 +36,4 @@
                   (fn [] (= (get-in a-cube [:process :status]) :running)))
           (button "Pause"
                   (fn [] (om/transact! a-cube cube/halt))
-                  (fn [] (= (get-in a-cube [:process :status]) :halted)))))))))
+                  (fn [] (= (get-in a-cube [:process :status]) :halted))))))))

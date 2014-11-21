@@ -80,10 +80,15 @@ body {
 }
 
 ul.timeline {
+    float: left;
     height: 200px;
     overflow-x: scroll;
 }
 
 ul.timeline > li {
     display: inline-block;
+}
+
+.inspector {
+    float: right;
 }
