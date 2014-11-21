@@ -35,10 +35,10 @@
     (render-state [_ {:keys [bus]}]
       (dom/div
         #js {:id "learnable-computer"}
-        (dom/div #js {:className "editor"})
         (om/build cube-manifestation/ui
                   cube-state
-                  {:init-state {:bus bus}})))))
+                  {:init-state {:bus bus}})
+        (dom/div #js {:className "editor"})))))
 
 (om/root
   learnable-computer

@@ -11,7 +11,8 @@
          :href "#"
          :onClick (if (active?)
                     (constantly nil)
-                    (fn [_] (action)))}))
+                    (fn [_] (action)))}
+      text))
 
 (defn ui [a-cube owner]
   (reify

@@ -59,15 +59,15 @@
         (dom/div #js {:className "cube"}
 
           (dom/div
-            #js {:id        "display"
+            #js {:className "display"
                  :tabIndex  "0"
                  :onKeyDown (cube/keyboard-controller bus)}
             (om/build display/ui
                       (proc/output process screen)
                       {:init-state{:bus bus}}))
 
-          (dom/div #js {:id "interface"}
-            (om/build controls/ui process)
+          (dom/div #js {:className "interface"}
+            (om/build controls/ui a-cube)
             (if (= :running (:status process))
               (om/build inspection-ui a-cube)
               (om/build clock hz {:init-state {:bus bus}}))))))))
