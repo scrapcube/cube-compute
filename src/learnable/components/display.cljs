@@ -85,9 +85,7 @@
     om/IRenderState
     (render-state [_ {:keys [page-offset bus]}]
       (dom/div
-        #js {:style #js {:position "relative"
-                         :left 0
-                         :top 0
-                         :width (first (:dimensions frame))
-                         :height (last (:dimensions frame))}}
+        #js {:className "screen"
+             :style #js {:width     (first (:dimensions frame))
+                         :height    (last (:dimensions frame))}}
         (render-surface frame (cube/mouse-controller bus) (list #(map - % page-offset)))))))

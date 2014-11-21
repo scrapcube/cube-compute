@@ -29,6 +29,12 @@
 
 (def max-hertz 20)
 
+(defn halt [a-cube]
+  ())
+
+(defn resume [a-cube]
+  ())
+
 (defn overclock [hz]
   (if (<= hz max-hertz)
     (if (< hz 1)

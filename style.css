@@ -1,31 +1,70 @@
 body {
-    background: #efefef;
-    padding: 20px;
+    height: 100%;
 }
 
-#app {
-    padding: 50px;
+.learnable-computer {
+    height: 100%;
 }
 
-#cube-screen {
-    width: 512px;
-    height: 512px;
+.editor {
     float: left;
-    border-style: solid;
-    border-width: 1px;
-    border-color: #666;
+    width: 50%;
+    height: 100%;
+    background: #333;
 }
 
-#process-info, #process-inspector {
-    background: #fff;
-    border-style: solid;
-    border-width: 1px;
-    border-color: #666;
-    box-shadow: 0 0 2px 4px #aaa;
-    padding: 20px;
-    margin: 20px;
-}
-
-#cube-interface {
+.cube {
     float: left;
+    width: 50%;
+    height: 100%;
+}
+
+.cube > .display {
+    background: #444;
+    height: 100%;
+}
+
+.cube > .display > .screen {
+    position: relative;
+    top: 100px;
+    margin: 0 auto;
+    background: #ddd;
+    border-style: inset;
+    border-width: 2px;
+    border-color: #222;
+}
+
+.cube > .interface {
+    position: fixed;
+    bottom: 0px;
+}
+
+.cube > .interface > .toolbar {
+    background: #aaa;
+}
+
+.toolgroup {
+    display: inline-block;
+}
+
+.button {
+    margin: 5px;
+    height: 2em;
+    font-size: 1.5em;
+    color: #fff;
+    display: inline-block;
+    background: #222;
+}
+
+.clock-speed {
+    background: #ddd;
+}
+
+ul.timeline {
+    height: 200px;
+    overflow-x: scroll;
+}
+
+ul.timeline > li {
+    display: inline-block;
 }

@@ -36,7 +36,6 @@
       (render [_]
         (dom/div
           nil
-          (om/build info/ui a-cube)
           (om/build inspector/ui (:process a-cube))
           (om/build timeline/ui (:process a-cube))))))
 
@@ -57,21 +56,20 @@
     om/IRenderState
     (render-state [_ {:keys [bus]}]
       (let [{:keys [process screen hz]} a-cube]
-        (dom/div nil
+        (dom/div #js {:className "cube"}
 
           (dom/div
-            #js {:id "cube-screen"
-                 :tabIndex "0"
+            #js {:id        "display"
+                 :tabIndex  "0"
                  :onKeyDown (cube/keyboard-controller bus)}
             (om/build display/ui
-              (proc/output process screen)
-              {:init-state
-                {:bus bus}}))
+                      (proc/output process screen)
+                      {:init-state{:bus bus}}))
 
-          (dom/div #js {:id "cube-interface"}
+          (dom/div #js {:id "interface"}
             (om/build controls/ui process)
             (if (= :running (:status process))
-              (om/build clock hz {:init-state {:bus bus}})
-              (om/build inspection-ui a-cube))))))))
+              (om/build inspection-ui a-cube)
+              (om/build clock hz {:init-state {:bus bus}}))))))))
 
 
