@@ -1,6 +1,6 @@
 (ns learnable.cube.core
   (:require
-    [learnable.cube.process :as proc]
+    [learnable.cube.process :as ps]
     [learnable.cube.graphix :as graphix]
     [om.core :as om :include-macros true]
     [om.dom :as dom :include-macros true]
@@ -72,4 +72,4 @@
 (defn run-logged [box program]
   (assoc box
          :process
-         (proc/launch program (:screen box))))
+         (ps/launch program (:screen box))))

@@ -1,6 +1,5 @@
 (ns learnable.components.controls
   (:require [learnable.cube.core :as cube]
-            [learnable.cube.process :as proc]
             [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]))
 

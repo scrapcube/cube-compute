@@ -1,9 +1,10 @@
 (ns learnable.components.inspector
-  (:require [om.core :as om :include-macros true]
+  (:require [learnable.cube.process :as ps]
+            [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]))
 
 (defn restore-to! [process this-time]
-  (om/transact! process #(proc/restore % this-time)))
+  (om/transact! process #(ps/restore % this-time)))
 
 (defn entry-class [process at entry]
   (let [classes "timeline-entry "]
@@ -15,7 +16,7 @@
 (defn timeline-entry [process at entry]
   (dom/li #js {:className (entry-class process at entry)}
     (dom/a #js {:className (name (first entry))
-                :onClick (fn [_] (restore-process-to! process at))}
+                :onClick (fn [_] (restore-to! process at))}
       "")))
 
 (defn ui [process owner]

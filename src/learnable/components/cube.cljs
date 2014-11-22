@@ -1,5 +1,5 @@
 (ns learnable.components.cube
-  (:require [learnable.cube.process :as proc]
+  (:require [learnable.cube.process :as ps]
             [learnable.cube.core :as cube]
             [learnable.components.display :as display]
             [learnable.components.inspector :as inspector]
@@ -38,7 +38,7 @@
             (om/transact! a-cube :process
               (fn [process]
                 (if (= :running (:status process))
-                  (proc/commit process entry)
+                  (ps/commit process entry)
                   process)))
             (recur))))))
 
@@ -52,7 +52,7 @@
                  :tabIndex  "0"
                  :onKeyDown (cube/keyboard-controller bus)}
             (om/build display/ui
-                      (proc/output process screen)
+                      (ps/output process screen)
                       {:init-state{:bus bus}}))
 
           (dom/div #js {:className "interface"}
