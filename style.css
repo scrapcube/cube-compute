@@ -89,31 +89,50 @@ body {
     font-style: bold;
 }
 
-.timeline {
-    height: 5em;
+.timeline { 
+    position: relative;
+    height: 8em;
+    width: 100%;
+    padding: 0;
     margin: 0;
-    background: #222;
     box-shadow: inset 0 2px 3px 2px #222;
     overflow-x: scroll;
-    display: table;
+    list-style-type: none;
 }
 
 .timeline li {
     height: 100%;
-    display: table-cell;
-    vertical-align: center;
+    display: inline-block;
+    width: 2em;
+    padding: 0;
+}
+
+.timeline-entry {
+    position: relative;
+    margin: 0;
+    height: 100%;
 }
 
 .timeline-entry a {
+    display: block;
     position: relative;
     width: 1em;
     height: 1em;
+    background: #fff;
     border-radius: 0.5em;
     box-shadow: 0 2px 3px 1px #222;
 }
-.timeline-entry a.clock {top: 0;}
-.timeline-entry a.mouse {top: 1em;}
-.timeline-entry a.keyboard {top: 2em;}
+
+.timeline-entry.current a {
+   width: 1.2em;
+   height: 1.2em;
+   border-radius: 0.6em;
+   box-shadow: 0 2px 5px 2px #222;
+}
+
+.timeline-entry .clock {top: 1em;}
+.timeline-entry .mouse {top: 3em;}
+.timeline-entry .keyboard {top: 5em;}
 
 .state {
     background: #efefef;
