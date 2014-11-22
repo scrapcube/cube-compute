@@ -15,7 +15,7 @@
 (defn timeline-entry [process at entry]
   (dom/li #js {:className (entry-class process at entry)}
     (dom/a #js {:className (name (first entry))
-                :onClick (fn [_] (restore-process-to! process at)))}
+                :onClick (fn [_] (restore-process-to! process at))}
       ""))
 
 (defn ui [process owner]
