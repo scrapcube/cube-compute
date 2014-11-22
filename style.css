@@ -98,13 +98,14 @@ body {
     display: table;
 }
 
-.timeline-entry {
+.timeline li {
+    height: 100%;
     display: table-cell;
     vertical-align: center;
-    height: 100%;
 }
 
 .timeline-entry a {
+    position: relative;
     width: 1em;
     height: 1em;
     border-radius: 0.5em;
