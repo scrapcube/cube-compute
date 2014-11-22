@@ -90,6 +90,7 @@ body {
 }
 
 .timeline {
+    background: #444;
     position: relative;
     height: 8em;
     width: 100%;
@@ -130,8 +131,8 @@ body {
    box-shadow: 0 2px 5px 2px #222;
 }
 
-.timeline-entry .start {top: 2em;}
-.timeline-entry .start a {
+.timeline-entry .start {
+    top: 2.5em;
     height: 2em;
     width: 2em;
     border-radius: 1em;
