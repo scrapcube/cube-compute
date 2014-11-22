@@ -2,9 +2,7 @@
   (:require [learnable.cube.process :as proc]
             [learnable.cube.core :as cube]
             [learnable.components.display :as display]
-            [learnable.components.info :as info]
             [learnable.components.inspector :as inspector]
-            [learnable.components.timeline :as timeline]
             [learnable.components.controls :as controls]
             [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]
@@ -30,15 +28,6 @@
     om/IRenderState
     (render-state [_ _] (dom/span #js {:className "clock hidden"} ""))))
 
-(defn inspection-ui [a-cube owner]
-  (reify
-    om/IRender
-      (render [_]
-        (dom/div
-          #js {:className "inspector"}
-          (om/build timeline/ui (:process a-cube))
-          (om/build inspector/ui (:process a-cube))))))
-
 (defn ui [a-cube owner]
   (reify
     om/IWillMount
@@ -49,7 +38,7 @@
             (om/transact! a-cube :process
               (fn [process]
                 (if (= :running (:status process))
-                  (proc/commit process entry) ;; [:mouse [:game (0 0)]]
+                  (proc/commit process entry)
                   process)))
             (recur))))))
 
@@ -70,6 +59,6 @@
             (om/build controls/ui a-cube)
             (if (= :running (:status process))
               (om/build clock hz {:init-state {:bus bus}})
-              (om/build inspection-ui a-cube))))))))
+              (om/build inspector/ui (:process a-cube)))))))))
 
 

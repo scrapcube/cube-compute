@@ -2,17 +2,42 @@
   (:require [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]))
 
+(defn restore-to! [process this-time]
+  (om/transact! process #(proc/restore % this-time)))
+
+(defn entry-class [process at entry]
+  (let [classes "timeline-entry "]
+    (str classes
+         (if (= at (get-in process [:log :now]))
+           "current"
+           ""))))
+
+(defn timeline-entry [process at entry]
+  (dom/li #js {:className (entry-class process at entry)}
+    (dom/a #js {:className (name (first entry))
+                :onClick (fn [_] (restore-process-to! process at)))}
+      ""))
+
 (defn ui [process owner]
   (reify
     om/IRender
     (render [_]
-      (apply
-        dom/div
-        #js {:className "state"}
-        (map
-          (fn [[identifier value]]
-            (dom/div
-              #js {:className "attribute"}
-              (dom/div {:className "name"} (name identifier))
-              (dom/div {:className "value"} (str value))))
-          (:state process))))))
+      (dom/div #js {:className "inspector"}
+        (apply dom/ul #js {:className "timeline"}
+        (reverse
+          (cons
+            (timeline-entry process 0 ["start" ""])
+            (map-indexed
+              #(timeline-entry process %1 %2)
+              (get-in process [:log :entries])))))
+
+        (apply
+          dom/div
+          #js {:className "state"}
+          (map
+            (fn [[identifier value]]
+              (dom/div
+                #js {:className "attribute"}
+                (dom/div {:className "name"} (name identifier))
+                (dom/div {:className "value"} (str value))))
+            (:state process)))))))
