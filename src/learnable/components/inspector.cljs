@@ -17,6 +17,7 @@
   (dom/li nil
     (dom/div #js {:className (entry-class process at entry)}
       (dom/a #js {:className (name (first entry))
+                  :key at
                   :onClick (fn [_] (restore-to! process at))}
         ""))))
 
