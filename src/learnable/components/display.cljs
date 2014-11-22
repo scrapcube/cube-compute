@@ -86,7 +86,7 @@
     (render-state [_ {:keys [page-offset bus]}]
       (dom/div
         #js {:className "screen"
-             :tabeIndex "0"
+             :tabIndex "0"
              :onKeyDown (cube/keyboard-controller bus)
              :style #js {:width     (first (:dimensions frame))
                          :height    (last (:dimensions frame))}}

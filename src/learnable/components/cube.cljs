@@ -37,7 +37,7 @@
           (let [entry (<! bus)]
             (om/transact! a-cube :process
               (fn [process]
-                (if (= :running (:status a-cube))
+                (if (= :running (:status @a-cube))
                   (ps/commit process entry)
                   process)))
             (recur))))))
