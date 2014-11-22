@@ -26,12 +26,11 @@
     (render [_]
       (dom/div #js {:className "inspector"}
         (apply dom/ul #js {:className "timeline"}
-        (reverse
           (cons
             (timeline-entry process 0 ["start" ""])
             (map-indexed
-              #(timeline-entry process %1 %2)
-              (get-in process [:log :entries])))))
+              #(timeline-entry process (inc %1) %2)
+              (get-in process [:log :entries]))))
 
         (apply
           dom/div

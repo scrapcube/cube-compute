@@ -48,12 +48,10 @@
         (dom/div #js {:className "cube"}
 
           (dom/div
-            #js {:className "display"
-                 :tabIndex  "0"
-                 :onKeyDown (cube/keyboard-controller bus)}
+            #js {:className "display"}
             (om/build display/ui
                       (ps/output process screen)
-                      {:init-state{:bus bus}}))
+                      {:init-state {:bus bus}}))
 
           (dom/div #js {:className "interface"}
             (om/build controls/ui a-cube)
