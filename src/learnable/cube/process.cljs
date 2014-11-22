@@ -5,8 +5,7 @@
 
 (defn launch [program screen]
   (let [start-state ((:boot program) screen)]
-    {:status :halted
-     :get-frame (:get-frame program)
+    {:get-frame (:get-frame program)
      :state start-state
      :transitions (:transitions program)
      :log (statelog/create start-state)}))

@@ -37,7 +37,7 @@
           (let [entry (<! bus)]
             (om/transact! a-cube :process
               (fn [process]
-                (if (= :running (:status process))
+                (if (= :running (:status a-cube))
                   (ps/commit process entry)
                   process)))
             (recur))))))
@@ -55,7 +55,7 @@
 
           (dom/div #js {:className "interface"}
             (om/build controls/ui a-cube)
-            (if (= :running (:status process))
+            (if (= :running (:status a-cube))
               (om/build clock hz {:init-state {:bus bus}})
               (om/build inspector/ui (:process a-cube)))))))))
 

@@ -32,7 +32,7 @@
         (dom/div #js {:className "toolgroup right"}
           (button "Play"
                   (fn [] (om/transact! a-cube cube/resume))
-                  (fn [] (= (get-in a-cube [:process :status]) :running)))
+                  (fn [] (= (:status a-cube) :running)))
           (button "Pause"
                   (fn [] (om/transact! a-cube cube/halt))
-                  (fn [] (= (get-in a-cube [:process :status]) :halted))))))))
+                  (fn [] (= (:status a-cube) :halted))))))))

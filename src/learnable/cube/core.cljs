@@ -30,10 +30,10 @@
 (def max-hertz 20)
 
 (defn halt [a-cube]
-  (assoc-in a-cube [:process :status] :halted))
+  (assoc a-cube :status :halted :current-time 0))
 
 (defn resume [a-cube]
-  (assoc-in a-cube [:process :status] :running))
+  (assoc a-cube :status :running :current-time (js/Date.now)))
 
 (defn overclock [hz]
   (if (<= hz max-hertz)
