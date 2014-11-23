@@ -3,6 +3,7 @@
 (defn create [start-state]
   {:entries []
    :start-state start-state
+   :last-time (js/Date.now)
    :now 0})
 
 (defn commit [log entry]
