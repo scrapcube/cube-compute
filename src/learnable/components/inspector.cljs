@@ -6,6 +6,8 @@
 (defn restore-to! [process this-time]
   (om/transact! process #(ps/restore % this-time)))
 
+(def conversion-ratio 1/10)
+
 (defn entry-class [process at entry]
   (let [classes "timeline-entry "]
     (str classes
@@ -14,7 +16,7 @@
            ""))))
 
 (defn timeline-entry [process at entry]
-  (dom/li #js {:style #js {:paddingLeft (last entry)}}
+  (dom/li #js {:style #js {:paddingLeft (* conversion-ratio (last entry))}}
     (dom/div #js {:className (entry-class process at entry)}
       (dom/a #js {:className (name (first entry))
                   :key at
@@ -28,7 +30,7 @@
       (dom/div #js {:className "inspector"}
         (apply dom/ul #js {:className "timeline"}
           (cons
-            (timeline-entry process 0 ["start" ""])
+            (timeline-entry process 0 ["start" "" 20])
             (map-indexed
               #(timeline-entry process (inc %1) %2)
               (get-in process [:log :entries]))))
