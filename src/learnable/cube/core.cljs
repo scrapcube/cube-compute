@@ -33,7 +33,7 @@
   (let [current-time (:current-time a-cube)
         time-offset (- (js/Date.now) current-time)]
     (if (= :running (:status a-cube))
-      (update-in a-cube [:process] #(ps/commit % entry))
+      (update-in a-cube [:process] #(ps/commit % entry time-offset))
       a-cube)))
 
 (defn halt [a-cube]
