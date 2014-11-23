@@ -16,7 +16,7 @@
            ""))))
 
 (defn timeline-entry [process at entry]
-  (dom/li #js {:style #js {:paddingLeft (* conversion-ratio (last entry))}}
+  (dom/li #js {:style #js {:left (* conversion-ratio (last entry))}}
     (dom/div #js {:className (entry-class process at entry)}
       (dom/a #js {:className (name (first entry))
                   :key at

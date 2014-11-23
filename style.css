@@ -103,7 +103,8 @@ body {
 
 .timeline li {
     height: 100%;
-    display: inline-block;
+    display: block;
+    position: absolute;
     width: 2em;
     padding: 0;
 }
