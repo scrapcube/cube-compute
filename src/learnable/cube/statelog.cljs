@@ -20,7 +20,7 @@
 
 (defn trim [log]
   (let [{:keys [entries now]} log
-        trimmed-entries (subvec entries 0 now)]
+        trimmed-entries (vec (subvec entries 0 now))]
     (assoc log
       :entries trimmed-entries
       :total-time (last (last trimmed-entries)))))
