@@ -45,7 +45,9 @@
   (let [process (:process a-cube)
         previous-time (:current-time a-cube)
         current-time (js/Date.now)
-        differential (- current-time previous-time)]
+        differential (- current-time
+                        previous-time
+                        (reduce #(+ %1 (last %2)) 0 (get-in process [:log :entries])))]
     (assoc a-cube
       :status :running
       :current-time (js/Date.now)
