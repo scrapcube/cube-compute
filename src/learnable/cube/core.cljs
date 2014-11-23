@@ -52,11 +52,12 @@
       :process
         (update-in process [:log :entries]
           (fn [entries]
-            (map
-              (fn [entry]
-                (conj (butlast entry)
-                      (+ differential (last entry))))
-              entries))))))
+            (vec
+              (map
+                (fn [entry]
+                  (conj (subvec entry 0 3)
+                        (+ differential (last entry))))
+                entries)))))))
 
 
 
