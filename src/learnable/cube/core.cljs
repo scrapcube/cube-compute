@@ -36,11 +36,10 @@
 
 (defn halt [a-cube]
   (assoc a-cube
-    :status :halted
-    :paused-time (js/Date.now)))
+    :status :halted))
 
 (defn resume [a-cube]
-  (let [{:keys [process paused-time]} a-cube
+  (let [{:keys [process]} a-cube
         current-time (js/Date.now)]
     (assoc a-cube
       :status :running
