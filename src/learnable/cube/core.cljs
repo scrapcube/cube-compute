@@ -1,6 +1,7 @@
 (ns learnable.cube.core
   (:require
     [learnable.cube.process :as ps]
+    [learnable.cube.statelog :as statelog]
     [learnable.cube.graphix :as graphix]
     [om.core :as om :include-macros true]
     [om.dom :as dom :include-macros true]
@@ -42,7 +43,7 @@
   (let [process (:process a-cube)]
     (assoc a-cube
       :status :running
-      :process (update-in process [:log] set-time))))
+      :process (update-in process [:log] statelog/set-time))))
 
 (defn overclock [hz]
   (if (<= hz max-hertz)
