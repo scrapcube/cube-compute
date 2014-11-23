@@ -45,9 +45,7 @@
     (assoc a-cube
       :status :running
       :process
-        (update-in process [:log :last-time]
-          (fn [last-time]
-            (+ current-time (- paused-time last-time)))))))
+        (assoc-in process [:log :last-time] current-time))))
 
 (defn overclock [hz]
   (if (<= hz max-hertz)
