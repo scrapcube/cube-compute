@@ -50,18 +50,7 @@
                         (reduce #(+ %1 (last %2)) 0 (get-in process [:log :entries])))]
     (assoc a-cube
       :status :running
-      :current-time (js/Date.now)
-      :process
-        (update-in process [:log :entries]
-          (fn [entries]
-            (vec
-              (map
-                (fn [entry]
-                  (conj (subvec entry 0 3)
-                        (+ differential (last entry))))
-                entries)))))))
-
-
+      :current-time (js/Date.now))))
 
 (defn overclock [hz]
   (if (<= hz max-hertz)
