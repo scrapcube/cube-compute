@@ -18,7 +18,7 @@
   (let [{:keys [log transitions]} process]
     (assoc process
       :state (statelog/replay log at (transition process))
-      :log (statelog/settime log at))))
+      :log (statelog/set-event-index log at))))
 
 (defn commit [process entry]
   (let [{:keys [state log]} process

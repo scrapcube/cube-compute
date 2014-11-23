@@ -39,12 +39,10 @@
     :status :halted))
 
 (defn resume [a-cube]
-  (let [{:keys [process]} a-cube
-        current-time (js/Date.now)]
+  (let [{:keys [process]}]
     (assoc a-cube
       :status :running
-      :process
-        (assoc-in process [:log :last-time] current-time))))
+      :process (update-in process [:log] set-time))))
 
 (defn overclock [hz]
   (if (<= hz max-hertz)

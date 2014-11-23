@@ -35,8 +35,8 @@
     (or (and (= 0 now) (= 0 (count entries)))
         (= now (count entries)))))
 
-(defn settime [log atime]
+(defn set-event-index [log atime]
   (assoc log :now atime))
 
-(defn total-time [log]
-  (reduce #(+ % 1 (last %2)) 0 (:entries log)))
+(defn set-time [log]
+  (assoc-log :last-time (js/Date.now)))
