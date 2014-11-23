@@ -39,7 +39,7 @@
     :status :halted))
 
 (defn resume [a-cube]
-  (let [{:keys [process]}]
+  (let [process (:process a-cube)]
     (assoc a-cube
       :status :running
       :process (update-in process [:log] set-time))))
