@@ -45,7 +45,7 @@
     (assoc a-cube
       :status :running
       :process
-        (assoc-in process [:log :last-time]
+        (update-in process [:log :last-time]
           (fn [last-time]
             (+ current-time (- paused-time last-time)))))))
 
