@@ -23,7 +23,7 @@
       :state (statelog/replay log at (transition process))
       :log (statelog/settime log at))))
 
-(defn commit [process entry]
+(defn commit [process entry time-offset]
   (let [{:keys [state log]} process
         tlog (if (statelog/synced? log)
               log
@@ -33,7 +33,8 @@
         (let [t (transition process)
               state-prime (t state entry)]
           state-prime)
-      :log (statelog/commit tlog entry))))
+      :log
+        (statelog/commit tlog entry time-offset))))
 
 (defn output [process screen]
   ((:get-frame process) (:state process) screen))

@@ -30,9 +30,11 @@
 (def max-hertz 20)
 
 (defn admit [a-cube entry]
-  (if (= :running (:status a-cube))
-    (update-in a-cube [:process] #(ps/commit % entry))
-    a-cube))
+  (let [current-time (:current-time a-cube)
+        time-offset (- (js/Date.now) current-time)]
+    (if (= :running (:status a-cube))
+      (update-in a-cube [:process] #(ps/commit % entry))
+      a-cube)))
 
 (defn halt [a-cube]
   (assoc a-cube
@@ -40,9 +42,22 @@
     :current-time 0))
 
 (defn resume [a-cube]
-  (assoc a-cube
-    :status :running
-    :current-time (js/Date.now)))
+  (let [previous-time (:current-time a-cube)
+        current-time (js/Date.now)
+        differential (- current-time previous-time)]
+    (assoc a-cube
+      :status :running
+      :current-time (js/Date.now)
+      :process
+        (update-in process [:log :entries]
+          (fn [entries]
+            (map
+              (fn [entry]
+                (conj (butlast entry)
+                      (+ differential (last entry))))
+              entries))))))
+
+
 
 (defn overclock [hz]
   (if (<= hz max-hertz)

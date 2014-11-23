@@ -80,7 +80,7 @@
       (om/set-state! owner
         :page-offset
           (let [domn (om/get-node owner)]
-            (list (.-offsetLeft domn) (.-offsetTop domn)))))
+            [(.-offsetLeft domn) (.-offsetTop domn)])))
 
     om/IRenderState
     (render-state [_ {:keys [page-offset bus]}]
