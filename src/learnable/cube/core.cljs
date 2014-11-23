@@ -46,11 +46,13 @@
         previous-time (:current-time a-cube)
         current-time (js/Date.now)
         differential (- current-time
-                        previous-time
-                        (reduce #(+ %1 (last %2)) 0 (get-in process [:log :entries])))]
+                        (+ previous-time
+                          (reduce #(+ %1 (last %2))
+                                  0
+                                  (get-in process [:log :entries]))))]
     (assoc a-cube
       :status :running
-      :current-time (js/Date.now))))
+      :current-time (- current-time differential))))
 
 (defn overclock [hz]
   (if (<= hz max-hertz)
