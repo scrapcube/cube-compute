@@ -35,7 +35,7 @@
       (let [bus (om/get-state owner :bus)]
         (go (loop []
           (let [entry (<! bus)]
-            (om/transact! a-cube #(cube/admit entry))
+            (om/transact! a-cube #(cube/admit % entry))
             (recur))))))
 
     om/IRenderState
