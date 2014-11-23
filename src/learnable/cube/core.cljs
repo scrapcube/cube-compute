@@ -47,7 +47,7 @@
       :process
         (assoc-in process [:log :last-time]
           (fn [last-time]
-            (+ last-time (- current-time paused-time)))))))
+            (+ current-time (- paused-time last-time)))))))
 
 (defn overclock [hz]
   (if (<= hz max-hertz)
