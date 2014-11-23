@@ -22,7 +22,6 @@
         (assoc transitions
           :mouse
           (fn [state [graphic-id point]]
-            (str "T: " graphic-id " - " (str point))
             (if (= :game graphic-id)
               (mouse state point)
               state))))))
@@ -30,29 +29,25 @@
 (def max-hertz 20)
 
 (defn admit [a-cube entry]
-  (let [current-time (:current-time a-cube)
-        time-offset (- (js/Date.now) current-time)]
+  (let [current-time (:current-time a-cube)]
     (if (= :running (:status a-cube))
-      (update-in a-cube [:process] #(ps/commit % entry time-offset))
+      (update-in a-cube [:process] #(ps/commit % entry))
       a-cube)))
 
 (defn halt [a-cube]
   (assoc a-cube
     :status :halted
-    :current-time 0))
+    :paused-time (js/Date.now)))
 
 (defn resume [a-cube]
-  (let [process (:process a-cube)
-        previous-time (:current-time a-cube)
-        current-time (js/Date.now)
-        differential (- current-time
-                        (+ previous-time
-                          (reduce #(+ %1 (last %2))
-                                  0
-                                  (get-in process [:log :entries]))))]
+  (let [{:keys [process paused-time]} a-cube
+        current-time (js/Date.now)]
     (assoc a-cube
       :status :running
-      :current-time (- current-time differential))))
+      :process
+        (assoc-in process [:log :last-time]
+          (fn [last-time]
+            (+ last-time (- paused-time current-time)))))))
 
 (defn overclock [hz]
   (if (<= hz max-hertz)

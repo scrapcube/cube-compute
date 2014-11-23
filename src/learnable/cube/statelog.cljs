@@ -5,10 +5,13 @@
    :start-state start-state
    :now 0})
 
-(defn commit [log entry time-offset]
-  (let [{:keys [entries now]} log]
+(defn commit [log entry]
+  (let [{:keys [entries now last-time]} log
+        current-time (js/Date.now)
+        time-differential (- current-time last-time)]
     (assoc log
-           :entries (conj entries (conj entry time-offset))
+           :last-time current-time
+           :entries (conj entries (conj entry time-differential))
            :now (inc now))))
 
 (defn trim [log]
@@ -27,3 +30,6 @@
 
 (defn settime [log atime]
   (assoc log :now atime))
+
+(defn total-time [log]
+  (reduce #(+ % 1 (last %2)) 0 (:entries log)))

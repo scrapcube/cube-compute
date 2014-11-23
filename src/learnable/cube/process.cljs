@@ -14,9 +14,6 @@
   (fn [state [etype input]]
     ((get-in process [:transitions etype]) state input)))
 
-(defn logtime [process]
-  (get-in process [:log :now]))
-
 (defn restore [process at]
   (let [{:keys [log transitions]} process]
     (assoc process
