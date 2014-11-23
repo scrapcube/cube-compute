@@ -47,7 +47,7 @@
       :process
         (assoc-in process [:log :last-time]
           (fn [last-time]
-            (+ last-time (- paused-time current-time)))))))
+            (+ last-time (- current-time paused-time)))))))
 
 (defn overclock [hz]
   (if (<= hz max-hertz)
@@ -84,6 +84,7 @@
           (put! bus [:mouse (vec point)]))))))
 
 (defn run-logged [box program]
-  (assoc box
-         :process
-         (ps/launch program (:screen box))))
+  (halt
+    (assoc box
+           :process
+           (ps/launch program (:screen box)))))
