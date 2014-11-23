@@ -42,7 +42,8 @@
     :current-time 0))
 
 (defn resume [a-cube]
-  (let [previous-time (:current-time a-cube)
+  (let [process (:process a-cube)
+        previous-time (:current-time a-cube)
         current-time (js/Date.now)
         differential (- current-time previous-time)]
     (assoc a-cube
