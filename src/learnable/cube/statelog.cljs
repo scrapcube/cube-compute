@@ -19,8 +19,11 @@
            :now (inc now))))
 
 (defn trim [log]
-  (let [{:keys [entries now]} log]
-    (assoc log :entries (subvec entries 0 now))))
+  (let [{:keys [entries now]} log
+        trimmed-entries (subvec entries 0 now)]
+    (assoc log
+      :entries trimmed-entries
+      :total-time (last (last trimmed-entries)))))
 
 (defn replay [log atime f]
   (reduce #(f %1 (butlast %2))
