@@ -6,7 +6,7 @@
 (defn restore-to! [process this-time]
   (om/transact! process #(ps/restore % this-time)))
 
-(def conversion-ratio 1/10)
+(def conversion-ratio 1.0/10)
 
 (defn entry-class [process at entry]
   (let [classes "timeline-entry "]
