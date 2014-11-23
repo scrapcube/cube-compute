@@ -29,11 +29,20 @@
 
 (def max-hertz 20)
 
+(defn admit [a-cube entry]
+  (if (= :running (:status a-cube))
+    (update-in a-cube [:process] #(ps/commit % entry))
+    a-cube))
+
 (defn halt [a-cube]
-  (assoc a-cube :status :halted :current-time 0))
+  (assoc a-cube
+    :status :halted
+    :current-time 0))
 
 (defn resume [a-cube]
-  (assoc a-cube :status :running :current-time (js/Date.now)))
+  (assoc a-cube
+    :status :running
+    :current-time (js/Date.now)))
 
 (defn overclock [hz]
   (if (<= hz max-hertz)

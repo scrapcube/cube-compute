@@ -35,11 +35,7 @@
       (let [bus (om/get-state owner :bus)]
         (go (loop []
           (let [entry (<! bus)]
-            (om/transact! a-cube :process
-              (fn [process]
-                (if (= :running (:status @a-cube))
-                  (ps/commit process entry)
-                  process)))
+            (om/transact! a-cube #(cube/admit entry))
             (recur))))))
 
     om/IRenderState
