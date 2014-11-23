@@ -39,4 +39,4 @@
   (assoc log :now atime))
 
 (defn set-time [log]
-  (assoc-log :last-time (js/Date.now)))
+  (assoc log :last-time (js/Date.now)))
