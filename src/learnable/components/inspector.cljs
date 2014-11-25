@@ -11,10 +11,10 @@
                        :keyboard 5)))
 
 (defn timeline-entry [process at entry pixel-ratio circle-radius]
-  (dom/li #js {:style #js {:left (* pixel-ratio (last entry))
+  (dom/li #js {:key at
+               :style #js {:left (* pixel-ratio (last entry))
                            :width (* 2 circle-radius)}}
     (dom/a #js {:className "timeline-entry"
-                :key at
                 :onClick
                   (fn [_]
                     (om/transact! process #(ps/restore % at)))
