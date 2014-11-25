@@ -48,11 +48,15 @@
                     (fn [idx entry]
                       (- (last entry) (last (nth entries idx))))
                     (rest entries))
-                average-time-differential (average differentials)]
+                average-time-differential (average differentials)
+                screen-width (.-offsetWidth (om/get-node owner))]
             (assoc state
               :pixel-conversion-ratio
-                (/ (+ (* 2.0 circle-radius) min-circle-separation)
-                   average-time-differential))))))
+                (max
+                  (/ (+ (* 2.0 circle-radius) min-circle-separation)
+                        average-time-differential)
+                  (let [total-time (get-in process [:log :total-time])]
+                    (/ (- screen-width (* 2 circle-radius)) total-time))))))))
 
     om/IRenderState
     (render-state [_ {:keys [pixel-conversion-ratio circle-radius]}]
@@ -78,6 +82,6 @@
             (fn [[identifier value]]
               (dom/div
                 #js {:className "attribute"}
-                (dom/div {:className "name"} (name identifier))
-                (dom/div {:className "value"} (str value))))
+                (dom/div #js {:className "name"} (name identifier))
+                (dom/div #js {:className "value"} (str value))))
             (:state process)))))))
