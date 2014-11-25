@@ -49,7 +49,7 @@
             (assoc state
               :pixel-conversion-ratio
                 (/ (+ (* 2 circle-radius) min-circle-separation)
-                   (min-time-differential)))))))
+                   min-time-differential))))))
 
     om/IRenderState
     (render-state [_ {:keys [pixel-conversion-ratio circle-radius]}]
