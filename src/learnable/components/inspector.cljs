@@ -41,7 +41,9 @@
           (let [entries (get-in process [:log :entries])
                 {:keys [circle-radius min-circle-separation]} state
                 differentials
-                  (map-indexed #([%2 (nth entries %1)]) entries)
+                  (map-indexed
+                    #(- (last %2) (last (nth entries %1)))
+                    entries)
                 min-time-differential
                   (reduce min (first differentials) (rest differntials))]
             (assoc state
