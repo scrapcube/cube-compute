@@ -51,7 +51,7 @@
                 average-time-differential (average differentials)]
             (assoc state
               :pixel-conversion-ratio
-                (/ (+ (* 2.0 circle-radius) average-circle-separation)
+                (/ (+ (* 2.0 circle-radius) min-circle-separation)
                    average-time-differential))))))
 
     om/IRenderState

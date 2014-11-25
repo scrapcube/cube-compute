@@ -115,6 +115,11 @@ body {
     box-shadow: 0 2px 3px 1px #222;
 }
 
+.timeline > li:hover .timeline-entry {
+    z-index: 5;
+    background: #F06A5D;
+}
+
 .state {
     background: #efefef;
 }
