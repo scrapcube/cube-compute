@@ -92,7 +92,6 @@ body {
 .timeline {
     background: #444;
     position: relative;
-    height: 8em;
     width: 100%;
     padding: 0;
     margin: 0;
@@ -105,43 +104,16 @@ body {
     height: 100%;
     display: block;
     position: absolute;
-    width: 2em;
     padding: 0;
 }
 
 .timeline-entry {
-    position: relative;
-    margin: 0;
-    height: 100%;
-}
-
-.timeline-entry a {
     display: block;
     position: relative;
-    width: 1em;
-    height: 1em;
+    margin: 0;
     background: #fff;
-    border-radius: 0.5em;
     box-shadow: 0 2px 3px 1px #222;
 }
-
-.timeline-entry.current a {
-   width: 1.2em;
-   height: 1.2em;
-   border-radius: 0.6em;
-   box-shadow: 0 2px 5px 2px #222;
-}
-
-.timeline-entry .start {
-    top: 2.5em;
-    height: 2em;
-    width: 2em;
-    border-radius: 1em;
-}
-
-.timeline-entry .clock {top: 1em;}
-.timeline-entry .mouse {top: 3em;}
-.timeline-entry .keyboard {top: 5em;}
 
 .state {
     background: #efefef;
