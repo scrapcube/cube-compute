@@ -56,7 +56,7 @@
       (apply dom/ul #js {:className "timeline"
                          :height (* 2 circle-radius 7)}
         (cons
-            (timeline-entry process 0 ["start" "" 20] pixel-conversion-ratio circle-radius)
+            (timeline-entry process 0 [:start "" 0] pixel-conversion-ratio circle-radius)
             (map-indexed
               #(timeline-entry process (inc %1) %2 pixel-conversion-ratio circle-radius)
               (get-in process [:log :entries])))))))
