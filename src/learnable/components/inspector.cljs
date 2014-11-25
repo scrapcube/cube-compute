@@ -37,8 +37,8 @@
        :min-circle-separation 5
        :pixel-conversion-ratio 0.10})
 
-    om/IWillMount
-    (will-mount [_]
+    om/IDidMount
+    (did-mount [_]
       (om/update-state! owner
         (fn [state]
           (let [entries (get-in @process [:log :entries])
