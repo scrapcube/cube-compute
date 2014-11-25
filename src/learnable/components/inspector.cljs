@@ -55,8 +55,8 @@
                 (max
                   (/ (+ (* 2.0 circle-radius) min-circle-separation)
                         average-time-differential)
-                  (let [total-time (get-in process [:log :total-time])]
-                    (/ (- screen-width (* 2 circle-radius)) total-time))))))))
+                  (let [log-time (get-in process [:log :log-time])]
+                    (/ (- screen-width (* 2 circle-radius)) log-time))))))))
 
     om/IRenderState
     (render-state [_ {:keys [pixel-conversion-ratio circle-radius]}]

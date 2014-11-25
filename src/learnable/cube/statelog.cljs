@@ -4,18 +4,18 @@
   {:entries []
    :start-state start-state
    :last-time (js/Date.now)
-   :total-time 0
+   :log-time 0
    :now 0})
 
 (defn commit [log entry]
-  (let [{:keys [entries now last-time total-time]} log
+  (let [{:keys [entries now last-time log-time]} log
         current-time (js/Date.now)
         time-differential (- current-time last-time)
-        new-total-time (+ total-time time-differential)]
+        new-log-time (+ log-time time-differential)]
     (assoc log
            :last-time current-time
-           :total-time new-total-time
-           :entries (conj entries (conj entry new-total-time))
+           :log-time new-log-time
+           :entries (conj entries (conj entry new-log-time))
            :now (inc now))))
 
 (defn trim [log]
@@ -23,7 +23,7 @@
         trimmed-entries (vec (subvec entries 0 now))]
     (assoc log
       :entries trimmed-entries
-      :total-time (last (last trimmed-entries)))))
+      :log-time (last (last trimmed-entries)))))
 
 (defn replay [log atime f]
   (reduce #(f %1 (butlast %2))
