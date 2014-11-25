@@ -40,3 +40,10 @@
 
 (defn set-time [log]
   (assoc log :last-time (js/Date.now)))
+
+(def time-differentials [log]
+  (let [entries (:entries log)]
+    (map-indexed
+      (fn [idx entry]
+        (- (last entry) (last (nth entries idx))))
+      (rest entries))))

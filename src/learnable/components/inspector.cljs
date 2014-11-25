@@ -16,8 +16,7 @@
                            :width (* 2 circle-radius)}}
     (dom/a #js {:className "timeline-entry"
                 :onClick
-                  (fn [_]
-                    (om/transact! process #(ps/restore % at)))
+                  (fn [_] (om/transact! process #(ps/restore % at)))
                 :style
                   #js {:top (track-position (first entry) circle-radius)
                        :width (* 2 circle-radius)
@@ -26,8 +25,7 @@
       "")))
 
 (defn average [coll]
-  (/ (reduce + 0 coll)
-     (count coll)))
+  (/ (reduce + 0 coll) (count coll)))
 
 (defn timeline [process owner]
   (reify
@@ -41,22 +39,16 @@
     (did-mount [_]
       (om/update-state! owner
         (fn [state]
-          (let [entries (get-in @process [:log :entries])
+          (let [log (:log @process)
                 {:keys [circle-radius min-circle-separation]} state
-                differentials
-                  (map-indexed
-                    (fn [idx entry]
-                      (- (last entry) (last (nth entries idx))))
-                    (rest entries))
-                average-time-differential (average differentials)
+                diameter (* 2.0 circle-radius)
                 screen-width (.-offsetWidth (om/get-node owner))]
             (assoc state
               :pixel-conversion-ratio
                 (max
-                  (/ (+ (* 2.0 circle-radius) min-circle-separation)
-                        average-time-differential)
-                  (let [log-time (get-in process [:log :log-time])]
-                    (/ (- screen-width (* 2 circle-radius)) log-time))))))))
+                  (/ (+ diameter min-circle-separation)
+                     (average (statelog/time-differentials log)))
+                  (/ (- screen-width diameter) (:log-time log))))))))
 
     om/IRenderState
     (render-state [_ {:keys [pixel-conversion-ratio circle-radius]}]
