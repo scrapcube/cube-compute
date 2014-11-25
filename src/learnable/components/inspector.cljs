@@ -53,8 +53,9 @@
 
     om/IRenderState
     (render-state [_ {:keys [pixel-conversion-ratio circle-radius]}]
+      (println (str "pixel-conversion-ratio: " pixel-conversion-ratio))
       (apply dom/ul #js {:className "timeline"
-                         :height (* 2 circle-radius 7)}
+                         :style #js{:height (* 2 circle-radius 7)}}
         (cons
             (timeline-entry process 0 [:start "" 0] pixel-conversion-ratio circle-radius)
             (map-indexed
