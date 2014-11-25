@@ -45,7 +45,7 @@
                     #(- (last %2) (last (nth entries %1)))
                     entries)
                 min-time-differential
-                  (reduce min (first differentials) (rest differntials))]
+                  (reduce min (first differentials) (rest differentials))]
             (assoc state
               :pixel-conversion-ratio
                 (/ (+ (* 2 circle-radius) min-circle-separation)
