@@ -25,6 +25,10 @@
                        :borderRadius circle-radius}}
       "")))
 
+(defn average [coll]
+  (/ (reduce + 0 coll)
+     (count coll)))
+
 (defn timeline [process owner]
   (reify
     om/IInitState
@@ -44,12 +48,11 @@
                     (fn [idx entry]
                       (- (last entry) (last (nth entries idx))))
                     (rest entries))
-                min-time-differential
-                  (reduce min (first differentials) (rest differentials))]
+                average-time-differential (average differentials)]
             (assoc state
               :pixel-conversion-ratio
-                (/ (+ (* 2.0 circle-radius) min-circle-separation)
-                   min-time-differential))))))
+                (/ (+ (* 2.0 circle-radius) average-circle-separation)
+                   average-time-differential))))))
 
     om/IRenderState
     (render-state [_ {:keys [pixel-conversion-ratio circle-radius]}]
