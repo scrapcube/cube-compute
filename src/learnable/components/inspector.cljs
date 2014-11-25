@@ -41,14 +41,18 @@
                 {:keys [circle-radius min-circle-separation]} state
                 differentials
                   (map-indexed
+<<<<<<< HEAD
                     (fn [idx entry]
                       (- (last entry) (last (nth entries idx))))
+=======
+                    #(- (last %2) (last (nth entries %1)))
+>>>>>>> 5e37a63a27d80d5538a4b73147c13166484f3218
                     (rest entries))
                 min-time-differential
                   (reduce min (first differentials) (rest differentials))]
             (assoc state
               :pixel-conversion-ratio
-                (/ (+ (* 2 circle-radius) min-circle-separation)
+                (/ (+ (* 2.0 circle-radius) min-circle-separation)
                    min-time-differential))))))
 
     om/IRenderState
