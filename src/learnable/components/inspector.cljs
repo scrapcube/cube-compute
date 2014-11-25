@@ -1,5 +1,6 @@
 (ns learnable.components.inspector
   (:require [learnable.cube.process :as ps]
+            [learnable.cube.statelog :as statelog]
             [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]))
 
