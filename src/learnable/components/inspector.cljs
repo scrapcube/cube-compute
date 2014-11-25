@@ -38,22 +38,21 @@
       (om/update-state!
         owner
         (fn [state]
-          (let [entries (get-in process [:log :entries])
+          (let [entries (get-in @process [:log :entries])
                 {:keys [circle-radius min-circle-separation]} state
                 differentials
                   (map-indexed
                     #(- (last %2) (last (nth entries %1)))
-                    entries)
+                    (rest entries))
                 min-time-differential
                   (reduce min (first differentials) (rest differentials))]
             (assoc state
               :pixel-conversion-ratio
-                (/ (+ (* 2 circle-radius) min-circle-separation)
+                (/ (+ (* 2.0 circle-radius) min-circle-separation)
                    min-time-differential))))))
 
     om/IRenderState
     (render-state [_ {:keys [pixel-conversion-ratio circle-radius]}]
-      (println (str "pixel-conversion-ratio: " pixel-conversion-ratio))
       (apply dom/ul #js {:className "timeline"
                          :style #js{:height (* 2 circle-radius 7)}}
         (cons
