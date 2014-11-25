@@ -33,8 +33,8 @@
        :min-circle-separation 0
        :pixel-conversion-ratio 0.10})
 
-    om/IWillRender
-    (will-render [_]
+    om/IWillMount
+    (will-mount [_]
       (om/update-state!
         owner
         (fn [state]
