@@ -52,7 +52,7 @@
           (dom/div #js {:className "interface"}
             (if (= :running (:status a-cube))
               (om/build clock hz {:init-state {:bus bus}})
-              (om/build inspector/ui (:process a-cube)))))))))
-            (om/build controls/ui a-cube)
+              (om/build inspector/ui (:process a-cube)))
+            (om/build controls/ui a-cube)))))))
 
 
