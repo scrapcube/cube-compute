@@ -23,7 +23,7 @@ body {
 }
 
 .cube > .display {
-    background: #444;
+    background: #50608F; /* Baby blue */
     height: 100%;
 }
 
@@ -45,7 +45,7 @@ body {
 
 .cube > .interface > .toolbar {
     overflow: hidden;
-    background: #837DFA;
+    background: #061339; /* NAVYISH BLUE */
     font-size: 1em;
     width: 100%;
     box-shadow: 0 2px 3px 2px #aaa;
@@ -90,7 +90,7 @@ body {
 }
 
 .timeline {
-    background: #efefef;
+    background: #162656; /* PUNK ROCK BLUE */
     position: relative;
     width: 100%;
     padding: 0;

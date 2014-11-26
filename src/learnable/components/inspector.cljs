@@ -4,6 +4,9 @@
             [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]))
 
+(defn average [coll]
+  (/ (reduce + 0 coll) (count coll)))
+
 (defn track-position [entry-type circle-radius]
   (* 2 circle-radius (condp = entry-type
                        :clock 1
@@ -24,9 +27,6 @@
                        :height (* 2 circle-radius)
                        :borderRadius circle-radius}}
       "")))
-
-(defn average [coll]
-  (/ (reduce + 0 coll) (count coll)))
 
 (defn timeline [process owner]
   (reify
@@ -54,7 +54,8 @@
     om/IRenderState
     (render-state [_ {:keys [pixel-conversion-ratio circle-radius]}]
       (apply dom/ul #js {:className "timeline"
-                         :style #js{:height (* 2 circle-radius 7)}}
+                         :style #js{:height (* 2 circle-radius 7)
+                                    :paddingLeft 50}}
         (cons
             (timeline-entry process 0 [:start "" 0] pixel-conversion-ratio circle-radius)
             (map-indexed
