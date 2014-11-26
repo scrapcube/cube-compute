@@ -50,9 +50,9 @@
                       {:init-state {:bus bus}}))
 
           (dom/div #js {:className "interface"}
-            (om/build controls/ui a-cube)
             (if (= :running (:status a-cube))
               (om/build clock hz {:init-state {:bus bus}})
               (om/build inspector/ui (:process a-cube)))))))))
+            (om/build controls/ui a-cube)
 
 

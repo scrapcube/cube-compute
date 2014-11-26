@@ -23,7 +23,7 @@ body {
 }
 
 .cube > .display {
-    background: #50608F; /* Baby blue */
+    background: #578D8D; /* Baby blue */
     height: 100%;
 }
 
@@ -90,7 +90,7 @@ body {
 }
 
 .timeline {
-    background: #162656; /* PUNK ROCK BLUE */
+    background: #226666; /* PUNK ROCK BLUE */
     position: relative;
     width: 100%;
     padding: 0;
