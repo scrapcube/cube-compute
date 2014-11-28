@@ -32,19 +32,19 @@ ul { margin: 0; padding: 0; }
   height: 100%;
 }
 
-#cube, #editor {
+.cube, .editor {
   position: absolute;
   width: 50%;
   height: 100%;
 }
 
-#cube{
+.cube{
   display: table;
   background: #033F3f;
   left: 0;
 }
 
-#editor{
+.editor{
   z-index: 200;
   left: 50%;
   background: #1F1500;
@@ -56,12 +56,8 @@ ul { margin: 0; padding: 0; }
 
 .cube-control {
   position: absolute;
-  top: -2em;
+  bottom: 0;
   padding: 0.5em;
-}
-
-.toolgroup {
-  display: table-cell;
 }
 
 .viewport {

@@ -75,8 +75,8 @@
 
 (defn ui [frame owner]
   (reify
-    om/IDidMount
-    (did-mount [_]
+    om/IDidUpdate
+    (did-update [_ _ _]
       (om/set-state! owner
         :page-offset
           (let [domn (om/get-node owner)]
