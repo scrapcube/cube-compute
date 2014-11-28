@@ -18,7 +18,8 @@
 
 (defn move-scrubber [owner]
   (fn [e]
-    (let [{:keys [held scrub-chan knob-offset knob-position track-width]} (om/get-state owner)
+    (let [{:keys [held scrub-chan knob-offset track-width]} (om/get-state owner)
+          knob-position (aget (.getElementsByClassName js/document "scrubber-knob") 0)
           mouse-position (.-screenX e)
           differential (- mouse-position knob-position)
           new-knob-offset (+ knob-offset differential)]
@@ -34,6 +35,9 @@
 
 (defn scrubber [_ owner]
   (reify
+    om/IInitState
+    (init-state [_] {:held false})
+
     om/IDidMount
     (did-mount [_]
       (let [knob-node (aget (.getElementsByClassName js/document "scrubber-knob") 0)
@@ -42,9 +46,7 @@
           owner
           (fn [state]
             (assoc state
-              :held false
               :knob-offset 0
-              :knob-position (.-offsetLeft knob-node)
               :track-width (.-outerWidth track-node))))))
 
     om/IRenderState
