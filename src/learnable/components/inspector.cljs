@@ -69,7 +69,7 @@
         (om/build scrubber [])
         (dom/div #js {:className "timeline"}
           (apply dom/ul #js {:className "timeline-track"
-                             :left time-offset}
+                             :style #js {:left time-offset}}
             (om/build-all timeline-entry
               (build-entries-list (:log process) pixel-conversion-ratio)
               {:init-state {:restore-chan restore-chan}}))
