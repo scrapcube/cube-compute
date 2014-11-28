@@ -18,20 +18,21 @@
 
 (defn move-scrubber [owner]
   (fn [e]
-    (let [{:keys [held scrub-chan knob-offset track-width]} (om/get-state owner)
-          knob-position (.-offsetLeft (aget (.getElementsByClassName js/document "scrubber-knob") 0))
+    (let [{:keys [held scrub-chan track-width]} (om/get-state owner)
+          track-position (.-offsetLeft (aget (.getElementsByClassName js/document "scrubber-track") 0))
           mouse-position (.-screenX e)
-          differential (- mouse-position knob-position)
-          new-knob-offset (+ knob-offset differential)]
-      (println (str "knob-position: " knob-position))
-      (println (str "mouse-position: " mouse-position))
+          knob-offset (- mouse-position track-position)]
       (when (= true held)
-        (put! scrub-chan (/ new-knob-offset track-width))
+        (put! scrub-chan (/ knob-offset track-width))
         (om/update-state! owner
           (fn [state]
             (assoc state
-              :knob-offset new-knob-offset
-              :knob-position mouse-position)))))))
+              :knob-offset
+                (cond (> knob-offset track-width)
+                      track-width
+                      (< knob-offset 0)
+                      0
+                      :else knob-offset))))))))
 
 (defn scrubber [_ owner]
   (reify
@@ -40,8 +41,7 @@
 
     om/IDidMount
     (did-mount [_]
-      (let [knob-node (aget (.getElementsByClassName js/document "scrubber-knob") 0)
-            track-node (aget (.getElementsByClassName js/document "scrubber-track") 0)]
+      (let [track-node (aget (.getElementsByClassName js/document "scrubber-track") 0)]
         (om/update-state!
           owner
           (fn [state]
