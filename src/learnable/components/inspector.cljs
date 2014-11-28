@@ -34,7 +34,7 @@
   (reify
     om/IDidMount
     (did-mount [_]
-      (let [knob-node (first (.getElementsByClassName js/document "scrubber-knob"))]
+      (let [knob-node (aget (.getElementsByClassName js/document "scrubber-knob") 0)]
         (om/update-state!
           owner
           (fn [state]
