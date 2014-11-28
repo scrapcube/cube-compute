@@ -86,7 +86,7 @@
                          :height    (last (:dimensions frame))}}
         (render-surface frame
                         (cube/mouse-controller bus)
-                        (list)
+                        (list identity)
                         (fn []
                           (let [domn (om/get-node owner)]
                             [(.-offsetLeft domn) (.-offsetRight domn)])))))))
