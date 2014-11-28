@@ -115,7 +115,7 @@
 
     om/IWillMount
     (will-mount [_]
-      (let [{:keys [restore-chan]} (om/get-state owner)]
+      (let [{:keys [restore-chan scrub-chan]} (om/get-state owner)]
         (go (loop []
           (let [entry-idx (<! restore-chan)]
             (om/transact! process #(ps/restore % entry-idx))
