@@ -31,8 +31,8 @@
               :knob-offset
                 (cond (> knob-offset track-width)
                       track-width
-                      (< knob-offset 0)
-                      0
+                      (< knob-offset (/ knob-diameter 2))
+                      (/ knob-diameter 2)
                       :else (- knob-offset (/ knob-diameter 2))))))))))
 
 (defn scrubber [_ owner]
