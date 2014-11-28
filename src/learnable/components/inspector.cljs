@@ -65,17 +65,17 @@
       [_ {:keys [time-offset restore-chan pixel-conversion-ratio circle-radius]}]
 
       (dom/div #js {:className "timeline-material"}
-        (om/build scrubber [])
-
         (dom/hr #js {:className "teal-blue-seam"} nil)
-        (apply dom/ul #js {:className "timeline-track"
-                           :left time-offset}
-          (om/build-all timeline-entry
-            (build-entries-list (:log process) pixel-conversion-ratio)
-            {:init-state {:restore-chan restore-chan}}))
-        (dom/div #js {:className "timeline-rules"}
-          (dom/div #js {:className "timeline-ruler-marks"
-                        :style #js {:left time-offset}}))))
+        (om/build scrubber [])
+        (dom/div #js {:className "timeline"}
+          (apply dom/ul #js {:className "timeline-track"
+                             :left time-offset}
+            (om/build-all timeline-entry
+              (build-entries-list (:log process) pixel-conversion-ratio)
+              {:init-state {:restore-chan restore-chan}}))
+          (dom/div #js {:className "timeline-ruler"}
+            (dom/div #js {:className "timeline-ruler-marks"
+                          :style #js {:left time-offset}})))))
 
     om/IWillMount
     (will-mount [_]
