@@ -22,6 +22,11 @@ body {
 ul { margin: 0; padding: 0; }
 
 #app {
+  width: 100%;
+  height: 100%;
+}
+
+#learnable-computer {
   position: relative;
   width: 100%;
   height: 100%;
