@@ -22,7 +22,7 @@
           mouse-position (.-screenX e)
           differential (- mouse-position knob-position)
           new-knob-offset (+ knob-offset differential)]
-      (when held
+      (when (= true held)
         (put! scrub-chan (/ new-knob-offset track-width))
         (om/set-state! owner
           {:held true
