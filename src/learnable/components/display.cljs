@@ -65,7 +65,7 @@
       (map
         (fn [item]
           (if (graphix/is-surface? item)
-            (render-surface item mouse transforms-prime)
+            (render-surface item mouse transforms-prime offset)
             (render-graphic item)))
         items))))
 
