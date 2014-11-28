@@ -50,7 +50,7 @@
               :track-width (.-outerWidth track-node))))))
 
     om/IRenderState
-    (render-state [_ {:keys [knob-offset scrub-chan]}]
+    (render-state [_ {:keys [knob-offset held scrub-chan]}]
       (dom/div #js {:className "scrubber shadow-2"}
         (dom/div #js {:className "scrubber-track"}
           (dom/div #js {:className "scrubber-knob shadow-2"
@@ -61,7 +61,10 @@
                           (fn [_]
                             (om/set-state! owner :held false))
                         :onMouseMove (move-scrubber owner)
-                        :style #js {:left knob-offset}}
+                        :style #js {:left knob-offset
+                                    :background
+                                      (if held                                        "#666"
+                                        "")}}
             (dom/i #js {:className "fa fa-clock-o"})))))))
 
 (defn timeline-entry [entry owner]
