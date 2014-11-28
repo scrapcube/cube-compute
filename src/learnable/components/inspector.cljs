@@ -20,7 +20,7 @@
   (fn [e]
     (let [{:keys [held scrub-chan track-width]} (om/get-state owner)
           track-position (.-offsetLeft (aget (.getElementsByClassName js/document "scrubber-track") 0))
-          mouse-position (.-screenX e)
+          mouse-position (.-clientX e)
           knob-offset (- mouse-position track-position)]
       (when (= true held)
         (put! scrub-chan (/ knob-offset track-width))
