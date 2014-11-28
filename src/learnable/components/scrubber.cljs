@@ -27,7 +27,9 @@
 (defn ui [_ owner]
   (reify
     om/IInitState
-    (init-state [_] {:held false})
+    (init-state [_]
+      {:held false
+       :knob-offset 0})
 
     om/IDidMount
     (did-mount [_]
@@ -38,7 +40,6 @@
           owner
           (fn [state]
             (assoc state
-              :knob-offset (/ knob-width 2.0)
               :knob-width knob-width
               :track-width (.-outerWidth track-node))))))
 
