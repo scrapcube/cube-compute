@@ -42,8 +42,8 @@
     (render-state [_ {:keys [bus]}]
       (let [{:keys [process screen hz]} a-cube]
         (dom/div #js {:className "cube"}
-          (om/build controls/ui a-cube)
           (dom/div #js {:className "viewport"}
+            (om/build controls/ui a-cube)
             (dom/div #js {:className "viewport-container"}
               (dom/div #js {:className "viewport-material"}
                 (om/build display/ui
