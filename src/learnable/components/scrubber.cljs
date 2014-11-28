@@ -45,16 +45,16 @@
 
     om/IRenderState
     (render-state [_ {:keys [knob-offset held scrub-chan]}]
-      (dom/div #js {:className "scrubber shadow-2"}
+      (dom/div #js {:className "scrubber shadow-2"
+                    :onMouseUp
+                      (fn [_]
+                        (om/set-state! owner :held false))
+                    :onMouseMove (move-scrubber owner)}
         (dom/div #js {:className "scrubber-track"}
           (dom/div #js {:className "scrubber-knob shadow-2"
                         :onMouseDown
                           (fn [_]
                             (om/set-state! owner :held true))
-                        :onMouseUp
-                          (fn [_]
-                            (om/set-state! owner :held false))
-                        :onMouseMove (move-scrubber owner)
                         :style #js {:left knob-offset
                                     :background
                                       (if held
