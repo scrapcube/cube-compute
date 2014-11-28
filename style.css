@@ -45,8 +45,12 @@ ul { margin: 0; padding: 0; }
   background: #1F1500;
 }
 
-.viewport, .interface {
+.viewport, .interface, .cube-control {
   display: table-row;
+}
+
+.toolgroup {
+  display: table-cell;
 }
 
 .viewport {
