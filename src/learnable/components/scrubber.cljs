@@ -21,7 +21,7 @@
                       (- track-width knob-width)
                       (< knob-offset 0)
                       0
-                      :else knob-offset))))))))
+                      :else (- knob-offset knob-radius)))))))))
 
 (defn ui [_ owner]
   (reify
