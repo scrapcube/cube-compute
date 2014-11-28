@@ -24,23 +24,25 @@
           new-knob-offset (+ knob-offset differential)]
       (when (= true held)
         (put! scrub-chan (/ new-knob-offset track-width))
-        (om/set-state! owner
-          {:held true
-           :knob-offset new-knob-offset
-           :knob-position mouse-position
-           :track-width track-width})))))
+        (om/update-state! owner
+          (fn [state]
+            (assoc state
+              :knob-offset new-knob-offset
+              :knob-position mouse-position)))))))
 
 (defn scrubber [_ owner]
   (reify
     om/IDidMount
     (did-mount [_]
       (let [knob-node (first (.getElementsByClassName (js/document) "scrubber-knob"))]
-        (om/set-state!
+        (om/update-state!
           owner
-          {:held false
-           :knob-offset 0
-           :knob-position (.-offsetLeft knob-node)
-           :track-width (.-outerWidth knob-node)})))
+          (fn [state]
+            (assoc state
+              :held false
+              :knob-offset 0
+              :knob-position (.-offsetLeft knob-node)
+              :track-width (.-outerWidth knob-node))))))
 
     om/IRenderState
     (render-state [_ {:keys [scrub-chan]}]
