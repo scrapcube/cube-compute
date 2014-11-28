@@ -61,7 +61,7 @@
            :key id
            :onClick
              (mouse (fn [point]
-               [id ((apply comp transforms-prime) (map - point (get-offset)))]))}
+               [id ((apply comp transforms-prime identity) (map - point (get-offset)))]))}
       (map
         (fn [item]
           (if (graphix/is-surface? item)
@@ -86,7 +86,7 @@
                          :height    (last (:dimensions frame))}}
         (render-surface frame
                         (cube/mouse-controller bus)
-                        (list identity)
+                        (list)
                         (fn []
                           (let [domn (om/get-node owner)]
                             [(.-offsetLeft domn) (.-offsetTop domn)])))))))
