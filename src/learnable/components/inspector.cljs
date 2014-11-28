@@ -20,6 +20,7 @@
   (fn [e]
     (let [{:keys [held scrub-chan track-width]} (om/get-state owner)
           track-position (.-offsetLeft (aget (.getElementsByClassName js/document "scrubber-track") 0))
+          knob-diameter (.-outerWidth (aget (.getElementsByClassName js/document "scrubber-knob") 0))
           mouse-position (.-clientX e)
           knob-offset (- mouse-position track-position)]
       (when (= true held)
@@ -32,7 +33,7 @@
                       track-width
                       (< knob-offset 0)
                       0
-                      :else knob-offset))))))))
+                      :else (- knob-offset (/ knob-diameter 2))))))))))
 
 (defn scrubber [_ owner]
   (reify
