@@ -63,7 +63,8 @@
                         :onMouseMove (move-scrubber owner)
                         :style #js {:left knob-offset
                                     :background
-                                      (if held                                        "#666"
+                                      (if (= held)
+                                        "#666"
                                         "")}}
             (dom/i #js {:className "fa fa-clock-o"})))))))
 
