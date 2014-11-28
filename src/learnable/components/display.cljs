@@ -80,8 +80,6 @@
     (render-state [_ {:keys [bus]}]
       (dom/div
         #js {:className "screen shadow-2"
-             :tabIndex "0"
-             :onKeyDown (cube/keyboard-controller bus)
              :style #js {:width     (first (:dimensions frame))
                          :height    (last (:dimensions frame))}}
         (render-surface frame

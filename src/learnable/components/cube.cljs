@@ -42,7 +42,9 @@
     (render-state [_ {:keys [bus]}]
       (let [{:keys [process screen hz]} a-cube]
         (dom/div #js {:className "cube"}
-          (dom/div #js {:className "viewport"}
+          (dom/div #js {:className "viewport"
+                        :tabIndex "0"
+                        :onKeyDown (cube/keyboard-controller bus)}
             (om/build controls/ui a-cube)
             (dom/div #js {:className "viewport-container"}
               (dom/div #js {:className "viewport-material"}
