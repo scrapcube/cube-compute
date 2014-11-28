@@ -89,4 +89,4 @@
                         (list identity)
                         (fn []
                           (let [domn (om/get-node owner)]
-                            [(.-offsetLeft domn) (.-offsetRight domn)])))))))
+                            [(.-offsetLeft domn) (.-offsetTop domn)])))))))
