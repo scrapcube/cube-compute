@@ -52,7 +52,7 @@
                   :key id}
              "")))
 
-(defn render-surface [surface mouse transforms offset]
+(defn render-surface [surface mouse transforms get-offset]
   (let [{:keys [etype id transform items offset dimensions]} surface
         transforms-prime (cons transform transforms)]
     (apply
@@ -61,11 +61,11 @@
            :key id
            :onClick
              (mouse (fn [point]
-               [id ((apply comp transforms-prime) (map - point (offset)))]))}
+               [id ((apply comp transforms-prime) (map - point (get-offset)))]))}
       (map
         (fn [item]
           (if (graphix/is-surface? item)
-            (render-surface item mouse transforms-prime offset)
+            (render-surface item mouse transforms-prime get-offset)
             (render-graphic item)))
         items))))
 
