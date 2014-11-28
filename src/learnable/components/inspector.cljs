@@ -1,6 +1,7 @@
 (ns learnable.components.inspector
   (:require [learnable.cube.process :as ps]
             [learnable.cube.statelog :as statelog]
+            [learnable.components.scrubber :as scrubber]
             [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]
             [cljs.core.async :as async :refer [put! <! chan]])
@@ -15,59 +16,6 @@
     (max
       (/ (+ diameter min-separation) (average differentials))
       (/ (- screen-width diameter) (:log-time log)))))
-
-(defn move-scrubber [owner]
-  (fn [e]
-    (let [{:keys [held scrub-chan track-width]} (om/get-state owner)
-          track-position (.-offsetLeft (aget (.getElementsByClassName js/document "scrubber-track") 0))
-          knob-diameter (.-outerWidth (aget (.getElementsByClassName js/document "scrubber-knob") 0))
-          mouse-position (.-clientX e)
-          knob-offset (- mouse-position track-position)]
-      (when (= true held)
-        (put! scrub-chan (/ knob-offset track-width))
-        (om/update-state! owner
-          (fn [state]
-            (assoc state
-              :knob-offset
-                (cond (> knob-offset track-width)
-                      track-width
-                      (< knob-offset (/ knob-diameter 2))
-                      (/ knob-diameter 2)
-                      :else (- knob-offset (/ knob-diameter 2))))))))))
-
-(defn scrubber [_ owner]
-  (reify
-    om/IInitState
-    (init-state [_] {:held false})
-
-    om/IDidMount
-    (did-mount [_]
-      (let [track-node (aget (.getElementsByClassName js/document "scrubber-track") 0)]
-        (om/update-state!
-          owner
-          (fn [state]
-            (assoc state
-              :knob-offset 0
-              :track-width (.-outerWidth track-node))))))
-
-    om/IRenderState
-    (render-state [_ {:keys [knob-offset held scrub-chan]}]
-      (dom/div #js {:className "scrubber shadow-2"}
-        (dom/div #js {:className "scrubber-track"}
-          (dom/div #js {:className "scrubber-knob shadow-2"
-                        :onMouseDown
-                          (fn [_]
-                            (om/set-state! owner :held true))
-                        :onMouseUp
-                          (fn [_]
-                            (om/set-state! owner :held false))
-                        :onMouseMove (move-scrubber owner)
-                        :style #js {:left knob-offset
-                                    :background
-                                      (if held
-                                        "#666"
-                                        "")}}
-            (dom/i #js {:className "fa fa-clock-o"})))))))
 
 (defn timeline-entry [entry owner]
   (let [{:keys [idx entry-time entry-type pixel-ratio]} entry]
@@ -114,7 +62,7 @@
 
       (dom/div #js {:className "timeline-material"}
         (dom/hr #js {:className "teal-blue-seam"} nil)
-        (om/build scrubber [] {:init-state {:scrub-chan scrub-chan}})
+        (om/build scrubber/ui [] {:init-state {:scrub-chan scrub-chan}})
         (dom/div #js {:className "timeline"}
           (apply dom/ul #js {:className "timeline-track"
                              :style #js {:left time-offset}}
