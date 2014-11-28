@@ -3,7 +3,7 @@
             [learnable.cube.statelog :as statelog]
             [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]
-            [cljs.core.async :as async :refer [put! <!]])
+            [cljs.core.async :as async :refer [put! <! chan]])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
 (defn average [coll]
@@ -64,7 +64,7 @@
     (render-state
       [_ {:keys [time-offset restore-chan pixel-conversion-ratio circle-radius]}]
 
-      (div #js {:className "timeline-material"}
+      (dom/div #js {:className "timeline-material"}
         (om/build scrubber [])
 
         (dom/hr #js {:className "teal-blue-seam"} nil)
