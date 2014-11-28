@@ -6,7 +6,7 @@
 
 (defn move-scrubber [owner]
   (fn [e]
-    (let [{:keys [held scrub-chan track-width]} (om/get-state owner)
+    (let [{:keys [held knob-width track-width scrub-chan]} (om/get-state owner)
           track-position (.-offsetLeft (aget (.getElementsByClassName js/document "scrubber-track") 0))
           knob-diameter (.-outerWidth (aget (.getElementsByClassName js/document "scrubber-knob") 0))
           mouse-position (.-clientX e)
@@ -30,12 +30,15 @@
 
     om/IDidMount
     (did-mount [_]
-      (let [track-node (aget (.getElementsByClassName js/document "scrubber-track") 0)]
+      (let [knob-node (aget (.getElementsByClassName js/document "scrubber-knob"))
+            track-node (aget (.getElementsByClassName js/document "scrubber-track") 0)
+            know-width (.-outerWidth knob-node)]
         (om/update-state!
           owner
           (fn [state]
             (assoc state
-              :knob-offset 0
+              :knob-offset (/ knob-width 2.0)
+              :knob-width knob-width
               :track-width (.-outerWidth track-node))))))
 
     om/IRenderState
