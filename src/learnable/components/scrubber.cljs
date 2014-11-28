@@ -8,20 +8,20 @@
   (fn [e]
     (let [{:keys [held knob-width track-width scrub-chan]} (om/get-state owner)
           track-position (.-offsetLeft (aget (.getElementsByClassName js/document "scrubber-track") 0))
-          knob-diameter (.-outerWidth (aget (.getElementsByClassName js/document "scrubber-knob") 0))
           mouse-position (.-clientX e)
+          knob-radius (/ knob-width 2.0)
           knob-offset (- mouse-position track-position)]
       (when (= true held)
-        (put! scrub-chan (/ knob-offset track-width))
+        (put! scrub-chan (/ knob-offset (- track-width knob-width)))
         (om/update-state! owner
           (fn [state]
             (assoc state
               :knob-offset
-                (cond (> knob-offset track-width)
-                      track-width
-                      (< knob-offset (/ knob-diameter 2))
-                      (/ knob-diameter 2)
-                      :else (- knob-offset (/ knob-diameter 2))))))))))
+                (cond (> knob-offset (- track-width knob-width))
+                      (- track-width knob-width)
+                      (< knob-offset 0)
+                      0
+                      :else knob-offset))))))))
 
 (defn ui [_ owner]
   (reify
@@ -32,7 +32,7 @@
     (did-mount [_]
       (let [knob-node (aget (.getElementsByClassName js/document "scrubber-knob"))
             track-node (aget (.getElementsByClassName js/document "scrubber-track") 0)
-            know-width (.-outerWidth knob-node)]
+            knob-width (.-outerWidth knob-node)]
         (om/update-state!
           owner
           (fn [state]
