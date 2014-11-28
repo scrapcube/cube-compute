@@ -34,7 +34,8 @@
   (reify
     om/IDidMount
     (did-mount [_]
-      (let [knob-node (aget (.getElementsByClassName js/document "scrubber-knob") 0)]
+      (let [knob-node (aget (.getElementsByClassName js/document "scrubber-knob") 0)
+            track-node (aget (.getElementsByClassName js/document "scrubber-track") 0)]
         (om/update-state!
           owner
           (fn [state]
@@ -42,7 +43,7 @@
               :held false
               :knob-offset 0
               :knob-position (.-offsetLeft knob-node)
-              :track-width (.-outerWidth knob-node))))))
+              :track-width (.-outerWidth track-node))))))
 
     om/IRenderState
     (render-state [_ {:keys [knob-offset scrub-chan]}]
