@@ -16,13 +16,44 @@
       (/ (+ diameter min-separation) (average differentials))
       (/ (- screen-width diameter) (:log-time log)))))
 
+(defn move-scrubber [owner]
+  (fn [e]
+    (let [{:keys [held scrub-chan knob-offset knob-position track-width]} (om/get-state owner)
+          mouse-position (.-screenX e)
+          differential (- mouse-position knob-position)
+          new-knob-offset (+ knob-offset differential)]
+      (when held
+        (put! scrub-chan (/ new-knob-offset track-width))
+        (om/set-state! owner
+          {:held true
+           :knob-offset new-knob-offset
+           :knob-position mouse-position
+           :track-width track-width})))))
+
 (defn scrubber [_ owner]
   (reify
+    om/IDidMount
+    (did-mount [_]
+      (let [knob-node (.getElementByClassName (js/document) "scrubber-knob")]
+        (om/set-state
+          owner
+          {:held false
+           :knob-offset 0
+           :knob-position (.-offsetLeft knob-node)
+           :track-width (.-outerWidth knob-node)})))
+
     om/IRenderState
-    (render-state [_ _]
+    (render-state [_ {:keys [scrub-chan]}]
       (dom/div #js {:className "scrubber shadow-2"}
         (dom/div #js {:className "scrubber-track"}
           (dom/div #js {:className "scrubber-knob shadow-2"
+                        :onMouseDown
+                          (fn [_]
+                            (om/set-state :held true))
+                        :onMouseUp
+                          (fn [_]
+                            (om/set-state :held false))
+                        :onMouseMove (move-scrubber owner)
                         :style #js {:left 0}}
             (dom/i #js {:className "fa fa-clock-o"})))))))
 
@@ -58,15 +89,20 @@
        :circle-radius 5
        :min-circle-separation 5
        :pixel-conversion-ratio 0.10
-       :restore-chan (chan)})
+       :restore-chan (chan)
+       :scrub-chan (chan)})
 
     om/IRenderState
     (render-state
-      [_ {:keys [time-offset restore-chan pixel-conversion-ratio circle-radius]}]
+      [_ {:keys [time-offset
+                 restore-chan
+                 scrub-chan
+                 pixel-conversion-ratio
+                 circle-radius]}]
 
       (dom/div #js {:className "timeline-material"}
         (dom/hr #js {:className "teal-blue-seam"} nil)
-        (om/build scrubber [])
+        (om/build scrubber [] {:init-state {:scrub-chan scrub-chan}})
         (dom/div #js {:className "timeline"}
           (apply dom/ul #js {:className "timeline-track"
                              :style #js {:left time-offset}}
@@ -83,6 +119,10 @@
         (go (loop []
           (let [entry-idx (<! restore-chan)]
             (om/transact! process #(ps/restore % entry-idx))
+            (recur))))
+        (go (loop []
+          (let [scrub-ratio (<! scrub-chan)]
+            (println (str "scrub: " scrub-ratio))
             (recur))))))
 
     om/IDidMount
