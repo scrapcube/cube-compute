@@ -2,7 +2,9 @@
   (:require [learnable.cube.process :as ps]
             [learnable.cube.statelog :as statelog]
             [om.core :as om :include-macros true]
-            [om.dom :as dom :include-macros true]))
+            [om.dom :as dom :include-macros true]
+            [cljs.core.async :as async :refer [put! <!]])
+  (:require-macros [cljs.core.async.macros :refer [go]]))
 
 (defn average [coll]
   (/ (reduce + 0 coll) (count coll)))
@@ -16,7 +18,7 @@
 
 (defn scrubber [_ owner]
   (reify
-    IRenderState
+    om/IRenderState
     (render-state [_ _]
       (dom/div #js {:className "scrubber shadow-2"}
         (dom/div #js {:className "scrubber-track"}
@@ -36,7 +38,7 @@
 
 (defn build-entries-list [log pixel-conversion-ratio]
   (cons
-    {:idx (inc idx)
+    {:idx 0
      :entry-time 0
      :entry-type :start
      :pixel-ratio pixel-conversion-ratio}
@@ -52,14 +54,15 @@
   (reify
     om/IInitState
     (init-state [_]
-      {:circle-radius 5
+      {:time-offset 0
+       :circle-radius 5
        :min-circle-separation 5
        :pixel-conversion-ratio 0.10
        :restore-chan (chan)})
 
     om/IRenderState
     (render-state
-      [_ {:keys [time-offset scrub-chan pixel-conversion-ratio circle-radius]}]
+      [_ {:keys [time-offset restore-chan pixel-conversion-ratio circle-radius]}]
 
       (div #js {:className "timeline-material"}
         (om/build scrubber [])
@@ -68,17 +71,19 @@
         (apply dom/ul #js {:className "timeline-track"
                            :left time-offset}
           (om/build-all timeline-entry
-            (build-entries-list (:log process) pixel-conversion-ratio)))
+            (build-entries-list (:log process) pixel-conversion-ratio)
+            {:init-state {:restore-chan restore-chan}}))
         (dom/div #js {:className "timeline-rules"}
           (dom/div #js {:className "timeline-ruler-marks"
                         :style #js {:left time-offset}}))))
 
     om/IWillMount
     (will-mount [_]
-      (go (loop []
-        (let [entry-idx (<! restore-chan)]
-          (om/transact! process #(proc/restore % entry-idx))
-          (recur)))))
+      (let [{:keys [restore-chan]} (om/get-state owner)]
+        (go (loop []
+          (let [entry-idx (<! restore-chan)]
+            (om/transact! process #(ps/restore % entry-idx))
+            (recur))))))
 
     om/IDidMount
     (did-mount [_]
