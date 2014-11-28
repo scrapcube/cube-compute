@@ -35,7 +35,7 @@
     om/IDidMount
     (did-mount [_]
       (let [knob-node (.getElementByClassName (js/document) "scrubber-knob")]
-        (om/set-state
+        (om/set-state!
           owner
           {:held false
            :knob-offset 0
@@ -49,10 +49,10 @@
           (dom/div #js {:className "scrubber-knob shadow-2"
                         :onMouseDown
                           (fn [_]
-                            (om/set-state :held true))
+                            (om/set-state! :held true))
                         :onMouseUp
                           (fn [_]
-                            (om/set-state :held false))
+                            (om/set-state! :held false))
                         :onMouseMove (move-scrubber owner)
                         :style #js {:left 0}}
             (dom/i #js {:className "fa fa-clock-o"})))))))
