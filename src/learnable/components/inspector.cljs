@@ -22,6 +22,8 @@
           mouse-position (.-screenX e)
           differential (- mouse-position knob-position)
           new-knob-offset (+ knob-offset differential)]
+      (println (str "knob-position: " knob-position))
+      (println (str "mouse-position: " mouse-position))
       (when (= true held)
         (put! scrub-chan (/ new-knob-offset track-width))
         (om/update-state! owner
