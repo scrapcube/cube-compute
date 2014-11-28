@@ -7,26 +7,46 @@
 (defn average [coll]
   (/ (reduce + 0 coll) (count coll)))
 
-(defn track-position [entry-type circle-radius]
-  (* 2 circle-radius (condp = entry-type
-                       :clock 1
-                       :mouse 3
-                       :start 3
-                       :keyboard 5)))
+(defn average-circle-spacing-ratio [radius min-separation screen-width log]
+  (let [diameter (* 2.0 radius)
+        differentials (statelog/time-differentials log)]
+    (max
+      (/ (+ diameter min-separation) (average differentials))
+      (/ (- screen-width diameter) (:log-time log)))))
 
-(defn timeline-entry [process at entry pixel-ratio circle-radius]
-  (dom/li #js {:key at
-               :style #js {:left (* pixel-ratio (last entry))
-                           :width (* 2 circle-radius)}}
-    (dom/a #js {:className "timeline-entry"
-                :onClick
-                  (fn [_] (om/transact! process #(ps/restore % at)))
-                :style
-                  #js {:top (track-position (first entry) circle-radius)
-                       :width (* 2 circle-radius)
-                       :height (* 2 circle-radius)
-                       :borderRadius circle-radius}}
-      "")))
+(defn scrubber [_ owner]
+  (reify
+    IRenderState
+    (render-state [_ _]
+      (dom/div #js {:className "scrubber shadow-2"}
+        (dom/div #js {:className "scrubber-track"}
+          (dom/div #js {:className "scrubber-knob shadow-2"
+                        :style #js {:left 0}}
+            (dom/i #js {:className "fa fa-clock-o"})))))))
+
+(defn timeline-entry [entry owner]
+  (let [{:keys [idx entry-time entry-type pixel-ratio]} entry]
+    (reify
+      om/IRenderState
+      (render-state [_ {:keys [restore-chan]}]
+        (dom/li #js {:className (str "timeline-entry " (name entry-type))
+                     :onClick (fn [_] (put! restore-chan idx))
+                     :style #js {:left (* pixel-ratio entry-time)}}
+          "")))))
+
+(defn build-entries-list [log pixel-conversion-ratio]
+  (cons
+    {:idx (inc idx)
+     :entry-time 0
+     :entry-type :start
+     :pixel-ratio pixel-conversion-ratio}
+    (map-indexed
+      (fn [idx [etype _ etime]]
+        {:idx (inc idx)
+         :entry-time etime
+         :entry-type etype
+         :pixel-ratio pixel-conversion-ratio})
+      (:entries log))))
 
 (defn timeline [process owner]
   (reify
@@ -34,7 +54,31 @@
     (init-state [_]
       {:circle-radius 5
        :min-circle-separation 5
-       :pixel-conversion-ratio 0.10})
+       :pixel-conversion-ratio 0.10
+       :restore-chan (chan)})
+
+    om/IRenderState
+    (render-state
+      [_ {:keys [time-offset scrub-chan pixel-conversion-ratio circle-radius]}]
+
+      (div #js {:className "timeline-material"}
+        (om/build scrubber [])
+
+        (dom/hr #js {:className "teal-blue-seam"} nil)
+        (apply dom/ul #js {:className "timeline-track"
+                           :left time-offset}
+          (om/build-all timeline-entry
+            (build-entries-list (:log process) pixel-conversion-ratio)))
+        (dom/div #js {:className "timeline-rules"}
+          (dom/div #js {:className "timeline-ruler-marks"
+                        :style #js {:left time-offset}}))))
+
+    om/IWillMount
+    (will-mount [_]
+      (go (loop []
+        (let [entry-idx (<! restore-chan)]
+          (om/transact! process #(proc/restore % entry-idx))
+          (recur)))))
 
     om/IDidMount
     (did-mount [_]
@@ -42,40 +86,18 @@
         (fn [state]
           (let [log (:log @process)
                 {:keys [circle-radius min-circle-separation]} state
-                diameter (* 2.0 circle-radius)
                 screen-width (.-offsetWidth (om/get-node owner))]
             (assoc state
               :pixel-conversion-ratio
-                (max
-                  (/ (+ diameter min-circle-separation)
-                     (average (statelog/time-differentials log)))
-                  (/ (- screen-width diameter) (:log-time log))))))))
-
-    om/IRenderState
-    (render-state [_ {:keys [pixel-conversion-ratio circle-radius]}]
-      (apply dom/ul #js {:className "timeline"
-                         :style #js{:height (* 2 circle-radius 7)
-                                    :paddingLeft 50}}
-        (cons
-            (timeline-entry process 0 [:start "" 0] pixel-conversion-ratio circle-radius)
-            (map-indexed
-              #(timeline-entry process (inc %1) %2 pixel-conversion-ratio circle-radius)
-              (get-in process [:log :entries])))))))
+              (average-circle-spacing-ratio
+                circle-radius
+                min-circle-separation
+                screen-width
+                log))))))))
 
 (defn ui [process owner]
   (reify
     om/IRender
     (render [_]
-      (dom/div #js {:className "inspector"}
-        (om/build timeline process)
-
-        (apply
-          dom/div
-          #js {:className "state"}
-          (map
-            (fn [[identifier value]]
-              (dom/div
-                #js {:className "attribute"}
-                (dom/div #js {:className "name"} (name identifier))
-                (dom/div #js {:className "value"} (str value))))
-            (:state process)))))))
+      (dom/div #js {:className "interface"}
+        (om/build timeline process)))))
