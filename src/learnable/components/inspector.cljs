@@ -35,7 +35,7 @@
                      :onMouseEnter
                        (fn [_]
                         (om/set-state! owner :active true))
-                     :onMouseOut
+                     :onMouseLeave
                        (fn [_]
                         (om/set-state! owner :actiive false))
                      :style #js {:left (* pixel-ratio entry-time)}}
