@@ -22,11 +22,10 @@
     (reify
       om/IRenderState
       (render-state [_ {:keys [restore-chan]}]
-        (dom/li #js {:className (str "timeline-entry "
-                                     (name entry-type)
-                                     (if (= idx current-idx)
-                                       " current"
-                                       ""))
+        (dom/li #js {:className
+                      (str "timeline-entry "
+                        (name entry-type)
+                        (if (= idx current-idx) " current" ""))
                      :onClick (fn [_] (put! restore-chan idx))
                      :style #js {:left (* pixel-ratio entry-time)}}
           "")))))
@@ -91,12 +90,13 @@
             (om/update-state! owner :time-offset
               (fn [state]
                 (let [log-time (get-in @process [:log :log-time])
-                          {:keys [screen-width pixel-conversion-ratio]} (om/get-state owner)]
-                      (* -1.0
-                         scrub-ratio
-                         pixel-conversion-ratio
-                         (- log-time
-                            (/ screen-width pixel-conversion-ratio))))))
+                      {:keys [screen-width pixel-conversion-ratio]} (om/get-state owner)]
+                  (println (str "scrub-ratio: " scrub-ratio))
+                  (* -1.0
+                     scrub-ratio
+                     pixel-conversion-ratio
+                     (- log-time
+                        (/ screen-width pixel-conversion-ratio))))))
             (recur))))))
 
     om/IDidMount
