@@ -11,18 +11,18 @@
           track-position (.-offsetLeft track-node)
           mouse-position (.-clientX e)
           knob-radius (/ knob-width 2.0)
-          knob-offset (- mouse-position track-position)]
+          knob-offset (- mouse-position track-position)
+          normalized-knob-offset
+            (cond
+              (> knob-offset (- track-width knob-width)) (- track-width knob-width)
+              (< knob-offset 0) 0
+              :else (- knob-offset knob-radius))]
       (when (= true held)
-        (put! scrub-chan (/ knob-offset (- track-width knob-width)))
+        (put! scrub-chan (/ normalized-knob-offset (- track-width knob-width)))
         (om/update-state! owner
           (fn [state]
             (assoc state
-              :knob-offset
-                (cond (> knob-offset (- track-width knob-width))
-                      (- track-width knob-width)
-                      (< knob-offset 0)
-                      0
-                      :else (- knob-offset knob-radius)))))))))
+              :knob-offset normalized-knob-offset)))))))
 
 (defn ui [_ owner]
   (reify
