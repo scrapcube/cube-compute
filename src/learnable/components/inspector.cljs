@@ -91,7 +91,7 @@
             (om/update-state! owner :time-offset
               (fn [state]
                 (let [log-time (get-in @process [:log :log-time])
-                      {:keys [screen-width pixel-conversion-ratio]} (om/get-state owner)]
+                      {:keys [screen-width circle-radius pixel-conversion-ratio]} (om/get-state owner)]
                   (println (str "scrub-ratio: " scrub-ratio))
                   (* -1.0
                      scrub-ratio
