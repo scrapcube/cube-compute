@@ -18,11 +18,15 @@
       (/ (- screen-width diameter) (:log-time log)))))
 
 (defn timeline-entry [entry owner]
-  (let [{:keys [idx entry-time entry-type pixel-ratio]} entry]
+  (let [{:keys [idx entry-time entry-type pixel-ratio current-idx]} entry]
     (reify
       om/IRenderState
       (render-state [_ {:keys [restore-chan]}]
-        (dom/li #js {:className (str "timeline-entry " (name entry-type))
+        (dom/li #js {:className (str "timeline-entry "
+                                     (name entry-type)
+                                     (if (= idx current-idx)
+                                       " current"
+                                       ""))
                      :onClick (fn [_] (put! restore-chan idx))
                      :style #js {:left (* pixel-ratio entry-time)}}
           "")))))
@@ -30,12 +34,14 @@
 (defn build-entries-list [log pixel-conversion-ratio]
   (cons
     {:idx 0
+     :current-idx (:now log)
      :entry-time 0
      :entry-type :start
      :pixel-ratio pixel-conversion-ratio}
     (map-indexed
       (fn [idx [etype _ etime]]
         {:idx (inc idx)
+         :current-idx (:now log)
          :entry-time etime
          :entry-type etype
          :pixel-ratio pixel-conversion-ratio})
@@ -82,7 +88,13 @@
             (recur))))
         (go (loop []
           (let [scrub-ratio (<! scrub-chan)]
-            (println (str "scrub: " scrub-ratio))
+            (om/update-state! owner :time-offset
+              (let [log-time (get-in @process [:log :log-time])
+                    {:keys [screen-width pixel-conversion-ratio]} (om/get-state owner)]
+                (* -1.0
+                   scrub-ratio
+                   (- log-time
+                      (/ screen-width pixel-conversion-ratio)))))
             (recur))))))
 
     om/IDidMount
