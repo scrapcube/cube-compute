@@ -20,14 +20,24 @@
 (defn timeline-entry [entry owner]
   (let [{:keys [idx entry-time entry-type pixel-ratio current-idx]} entry]
     (reify
+      om/IInitState
+      (init-state [_]
+        {:active false})
+
       om/IRenderState
-      (render-state [_ {:keys [restore-chan]}]
+      (render-state [_ {:keys [restore-chan active]}]
         (dom/li #js {:key idx
                      :className
                       (str "timeline-entry "
                         (name entry-type)
-                        (if (= idx current-idx) " current" ""))
+                        (if (= idx current-idx) " current shadow-3" (if active " shadow-2 " "")))
                      :onClick (fn [_] (put! restore-chan idx))
+                     :onMouseEnter
+                       (fn [_]
+                        (om/set-state! owner :active true))
+                     :onMouseOut
+                       (fn [_]
+                        (om/set-state! owner :actiive false))
                      :style #js {:left (* pixel-ratio entry-time)}}
           "")))))
 
