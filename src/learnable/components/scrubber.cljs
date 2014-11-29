@@ -16,6 +16,8 @@
         (println (str "track-position: " track-position))
         (println (str "mouse-position: " mouse-position))
         (println (str "knob-offset: " knob-offset))
+        (println (str "knob-radius: " knob-radius))
+        (println (str "track-width: " track-width))
         (put! scrub-chan (/ knob-offset (- track-width knob-width)))
         (om/update-state! owner
           (fn [state]
@@ -38,13 +40,13 @@
     (did-mount [_]
       (let [knob-node (aget (.getElementsByClassName js/document "scrubber-knob") 0)
             track-node (aget (.getElementsByClassName js/document "scrubber-track") 0)
-            knob-width (.-outerWidth knob-node)]
+            knob-width (.-offsetWidth knob-node)]
         (om/update-state!
           owner
           (fn [state]
             (assoc state
               :knob-width knob-width
-              :track-width (.-outerWidth track-node))))))
+              :track-width (.-offsetWidth track-node))))))
 
     om/IRenderState
     (render-state [_ {:keys [knob-offset held scrub-chan]}]
