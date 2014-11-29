@@ -58,9 +58,5 @@
                         :onMouseDown
                           (fn [_]
                             (om/set-state! owner :held true))
-                        :style #js {:left knob-offset
-                                    :background
-                                      (if held
-                                        "#666"
-                                        "")}}
+                        :style #js {:left knob-offset}}
             (dom/i #js {:className "fa fa-clock-o"})))))))
