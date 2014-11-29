@@ -94,6 +94,7 @@
                           {:keys [screen-width pixel-conversion-ratio]} (om/get-state owner)]
                       (* -1.0
                          scrub-ratio
+                         pixel-conversion-ratio
                          (- log-time
                             (/ screen-width pixel-conversion-ratio))))))
             (recur))))))
