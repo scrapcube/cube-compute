@@ -52,8 +52,8 @@
     om/IInitState
     (init-state [_]
       {:time-offset 0
-       :circle-radius 5
-       :min-circle-separation 5
+       :circle-radius 8
+       :min-circle-separation 10
        :pixel-conversion-ratio 0.10
        :restore-chan (chan)
        :scrub-chan (chan)})
@@ -89,12 +89,13 @@
         (go (loop []
           (let [scrub-ratio (<! scrub-chan)]
             (om/update-state! owner :time-offset
-              (let [log-time (get-in @process [:log :log-time])
-                    {:keys [screen-width pixel-conversion-ratio]} (om/get-state owner)]
-                (* -1.0
-                   scrub-ratio
-                   (- log-time
-                      (/ screen-width pixel-conversion-ratio)))))
+              (fn [state]
+                (let [log-time (get-in @process [:log :log-time])
+                          {:keys [screen-width pixel-conversion-ratio]} state]
+                      (* -1.0
+                         scrub-ratio
+                         (- log-time
+                            (/ screen-width pixel-conversion-ratio))))))
             (recur))))))
 
     om/IDidMount
