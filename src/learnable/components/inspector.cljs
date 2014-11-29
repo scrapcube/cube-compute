@@ -107,6 +107,7 @@
                 {:keys [circle-radius min-circle-separation]} state
                 screen-width (.-offsetWidth (om/get-node owner))]
             (assoc state
+              :screen-width screen-width
               :pixel-conversion-ratio
               (average-circle-spacing-ratio
                 circle-radius
