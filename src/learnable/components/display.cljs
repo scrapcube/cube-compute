@@ -20,8 +20,7 @@
   (let [[x y] (:offset graphic)
         [width height] (:dimensions graphic)
         color (:color graphic)]
-    #js {:position "absolute"
-         :left (str x "px")
+    #js {:left (str x "px")
          :top (str y "px")
          :width (str width "px")
          :height (str height "px")

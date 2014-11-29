@@ -214,6 +214,10 @@ hr.teal-blue-seam {
   position: relative;
 }
 
+.screen div {
+  position: absolute;
+}
+
 div, ul, li, span, a {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
