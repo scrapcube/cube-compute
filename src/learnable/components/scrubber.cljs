@@ -13,6 +13,9 @@
           knob-radius (/ knob-width 2.0)
           knob-offset (- mouse-position track-position)]
       (when (= true held)
+        (println (str "track-position: " track-position))
+        (println (str "mouse-position: " mouse-position))
+        (println (str "knob-offset: " knob-offset))
         (put! scrub-chan (/ knob-offset (- track-width knob-width)))
         (om/update-state! owner
           (fn [state]
