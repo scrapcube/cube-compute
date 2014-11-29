@@ -98,7 +98,7 @@
                      pixel-conversion-ratio
                      (- log-time
                         (/ screen-width pixel-conversion-ratio)
-                        (/ (* 2 circle-radius) pixel-conversion-ratio))))))
+                        (* -1.0 (/ (* 2 circle-radius) pixel-conversion-ratio)))))))
             (recur))))))
 
     om/IDidMount
