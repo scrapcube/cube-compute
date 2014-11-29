@@ -22,7 +22,8 @@
     (reify
       om/IRenderState
       (render-state [_ {:keys [restore-chan]}]
-        (dom/li #js {:className
+        (dom/li #js {:key idx
+                     :className
                       (str "timeline-entry "
                         (name entry-type)
                         (if (= idx current-idx) " current" ""))
