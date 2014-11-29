@@ -159,9 +159,8 @@ hr.teal-blue-seam {
   background: #67789D;
 }
 
-.timeline-ruler-marks {
+#ruler-marks {
   position: relative;
-  height: 2em;
 }
 
 /* height 1.4 */
