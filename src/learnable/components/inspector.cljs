@@ -95,8 +95,7 @@
                   (* -1.0
                      scrub-ratio
                      pixel-conversion-ratio
-                     (- log-time
-                        (/ screen-width pixel-conversion-ratio))))))
+                     log-time))))
             (recur))))))
 
     om/IDidMount
