@@ -93,8 +93,7 @@
                        :ref "rulercanvas"
                        :width
                          (/ total-time pixel-conversion-ratio)
-                       :height "32px"
-                       :style #js {:left time-offset}}))))))
+                       :height "32px"}))))))
 
     om/IWillMount
     (will-mount [_]
