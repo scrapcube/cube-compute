@@ -20,6 +20,7 @@
     :program (cube/grid-game default-game)}))
 
 (defn reboot! [state-cursor]
+  (println "booting...")
   (om/transact! state-cursor
     (fn [state]
       (let [{:keys [the-cube program]} state]
