@@ -31,6 +31,7 @@
           (assoc state :the-cube cube-state))))))
 
 (defn reboot! [state]
+  (println "BOOTING.")
   (om/transact! state :the-cube
     (fn [the-cube]
       (cube/run-logged the-cube (cube/grid-game (:program @state))))))
