@@ -20,12 +20,10 @@
     :program (cube/grid-game default-game)}))
 
 (defn reboot! [app-state]
-  (println "...booting process")
   (om/transact! app-state
     (fn [state]
       (let [{:keys [cube program]} state]
-        (println (cube/run-logged cube program))
-        (cube/run-logged cube program)))))
+        (assoc state :cube (cube/run-logged cube program))))))
 
 (defn learnable-computer [app-state owner]
   (reify

@@ -43,7 +43,6 @@
       (let [{:keys [process screen hz]} a-cube]
         (dom/div #js {:className "cube"}
           (when (not= nil process)
-            (println "rendering process...")
             (dom/div #js {:className "viewport"
                           :tabIndex "0"
                           :onKeyDown (cube/keyboard-controller bus)}
