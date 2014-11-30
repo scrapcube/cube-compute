@@ -34,10 +34,6 @@
     (init-state [_]
       {:bus (chan)})
 
-    om/IDidMount
-    (did-mount [_]
-      (reboot! the-state))
-
     om/IRenderState
     (render-state [_ {:keys [bus]}]
       (println the-state)
@@ -45,7 +41,9 @@
         #js {:id "learnable-computer"}
         (om/build cube-manifestation/ui
                   (:the-cube the-state)
-                  {:init-state {:bus bus}})
+                  {:init-state {:bus bus}
+                   :fn (fn [cube-state]
+                         (cube-run-logged cube-state (cube/grid-game (:program the-state))))})
         (dom/div #js {:className "editor"})))))
 
 (om/root
