@@ -129,12 +129,13 @@
                     min-circle-separation
                     screen-width
                     log)]
-            (ruler/draw! (om/get-node owner "rulercanvas")
-                         (:log-time log)
-                         pixel-ratio)
             (assoc state
               :screen-width screen-width
-              :pixel-conversion-ratio pixel-ratio)))))))
+              :pixel-conversion-ratio pixel-ratio))))
+      (when (> (om/get-state owner :pixel-conversion-ratio))
+        (ruler/draw! (om/get-node owner "rulercanvas")
+                     (:log-time log)
+                     pixel-ratio)))
 
 (defn ui [process owner]
   (reify
