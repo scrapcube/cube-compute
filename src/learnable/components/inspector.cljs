@@ -89,7 +89,8 @@
             (let [total-time (get-in process [:log :log-time])]
               (when (> pixel-conversion-ratio 0)
                 (dom/canvas
-                  #js {:ref "ruler-canvas"
+                  #js {:id "ruler-canvas"
+                       :ref "ruler-canvas"
                        :width
                          (/ total-time pixel-conversion-ratio)
                        :height "32px"
