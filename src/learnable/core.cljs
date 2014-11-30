@@ -25,7 +25,7 @@
       (let [{:keys [the-cube program]} state]
         (assoc state :the-cube (cube/run-logged the-cube program))))))
 
-(defn learnable-computer [app-state owner]
+(defn learnable-computer [the-state owner]
   (reify
     om/IInitState
     (init-state [_]
@@ -33,14 +33,14 @@
 
     om/IDidMount
     (did-mount [_]
-      (reboot! app-state))
+      (reboot! the-state))
 
     om/IRenderState
     (render-state [_ {:keys [bus]}]
       (dom/div
         #js {:id "learnable-computer"}
         (om/build cube-manifestation/ui
-                  (:the-cube app-state)
+                  (:the-cube the-state)
                   {:init-state {:bus bus}})
         (dom/div #js {:className "editor"})))))
 
