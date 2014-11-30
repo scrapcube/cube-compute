@@ -3,7 +3,7 @@
 
 ; the owner has a ref'ed child "ruler-canvas"
 (defn draw! [canvas total-time pixel-ratio]
-  (let [ctx            (.getCanvas canvas "2d")
+  (let [ctx            (.getContext canvas "2d")
         canvas-height  (.-height canvas)
         maximum-time   (Math/ceil (/ total-time))]
     (set! (.-strokeStyle ctx) "rbg(10, 29, 71)")
