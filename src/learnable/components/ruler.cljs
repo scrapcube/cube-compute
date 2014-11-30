@@ -10,7 +10,7 @@
     (set! (.-strokeStyle ctx) "rgb(10, 29, 71)")
     (set! (.-lineWidth ctx) 2)
     (set! (.-font ctx) "10px Roboto")
-    (set! (.-textBaseline) "bottom")
+    (set! (.-textBaseline ctx) "bottom")
     (set! (.-globalAlpha ctx) 1.0)
     (.beginPath ctx)
     (doseq [interval (map #(* % 1000) (range 0 maximum-time))]
