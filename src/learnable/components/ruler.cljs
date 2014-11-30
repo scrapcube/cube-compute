@@ -24,3 +24,19 @@
           (.moveTo ctx millisecond-mark 0)
           (.lineTo ctx millisecond-mark (* canvas-height 0.5)))))
     (.stroke ctx)))
+
+(defn ui [ruler-options owner]
+  (let [{:keys [total-time pixel-ratio]}]
+    (reify
+      om/IDidMount
+      (did-mount [_]
+        (draw! (om/get-node owner "rulercanvas") total-time pixel-ratio))
+
+      om/IRender
+      (render [_]
+        (dom/canvas
+          #js {:id "ruler-canvas"
+               :ref "rulercanvas"
+               :width
+                 (str (* total-time pixel-ratio) "px")
+               :height "32px"})))))

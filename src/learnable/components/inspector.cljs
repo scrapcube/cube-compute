@@ -76,7 +76,6 @@
                  scrub-chan
                  pixel-conversion-ratio
                  circle-radius]}]
-      (println "rendering timeline")
       (dom/div #js {:className "timeline-material"}
         (dom/hr #js {:className "teal-blue-seam"} nil)
         (om/build scrubber/ui [] {:init-state {:scrub-chan scrub-chan}})
@@ -88,12 +87,9 @@
               {:init-state {:restore-chan restore-chan}}))
           (dom/div #js {:className "timeline-ruler"}
             (let [total-time (get-in process [:log :log-time])]
-                (dom/canvas
-                  #js {:id "ruler-canvas"
-                       :ref "rulercanvas"
-                       :width
-                         (str (* total-time pixel-conversion-ratio) "px")
-                       :height "32px"}))))))
+              (om/build ruler/ui
+                {:total-time total-time
+                 :pixel-ratio pixel-conversion-ratio}))))))
 
     om/IWillMount
     (will-mount [_]
@@ -131,13 +127,7 @@
                     log)]
             (assoc state
               :screen-width screen-width
-              :pixel-conversion-ratio pixel-ratio))))
-      (let [pixel-ratio (om/get-state owner :pixel-conversion-ratio)
-            log (:log @process)]
-        (when (> pixel-ratio 0)
-              (ruler/draw! (om/get-node owner "rulercanvas")
-                           (:log-time log)
-                           pixel-ratio))))))
+              :pixel-conversion-ratio pixel-ratio)))))
 
 (defn ui [process owner]
   (reify
