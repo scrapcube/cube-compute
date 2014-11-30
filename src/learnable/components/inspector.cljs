@@ -123,7 +123,7 @@
                 min-circle-separation
                 screen-width
                 log)]
-        (when (!= pixel-ratio pixel-conversion-ratio)
+        (when (not= pixel-ratio pixel-conversion-ratio)
           (om/update-state! owner
                   (fn [state]
                     (assoc state
