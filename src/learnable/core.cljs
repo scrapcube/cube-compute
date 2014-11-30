@@ -11,13 +11,23 @@
 
 (def default-game life/life-game)
 
+(defn launch [cube program]
+  (cube/run-logged the-cube (cube/grid-game program)))
+
 (def app-state
   (atom {
-    :the-cube {:screen (graphix/surface :canvas :main `(0 0) `(512 512))
-               :hz 5
-               :process nil
-               :status :halted}
-    :program default-game}))
+    :the-cube (launch
+                {:screen (graphix/surface :canvas :main `(0 0) `(512 512))
+                 :hz 5
+                 :process nil
+                 :status :halted}
+                default-game)
+    :program  default-game}))
+
+(defn reboot! [the-state]
+  (om/transact! the-state :the-cube
+    (fn [the-cube]
+      (launch the-cube (:program @the-state)))))
 
 (defn learnable-computer [the-state owner]
   (reify
@@ -25,15 +35,12 @@
     (init-state [_]
       {:bus (chan)})
 
-    om/IWillMount
-    (will-mount [_]
-      (om/transact! the-state (fn [_] ["foobar"])))
-
     om/IRenderState
     (render-state [_ {:keys [bus]}]
       (dom/div
         #js {:id "learnable-computer"}
-        (println the-state)
+        (dom/a #js {:className "reboot"
+                    :onClick   (fn [_] (reboot! the-state))})
         (om/build cube-manifestation/ui
                   (:the-cube the-state)
                   {:init-state {:bus bus}})
