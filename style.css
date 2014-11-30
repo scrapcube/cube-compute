@@ -226,3 +226,13 @@ div, ul, li, span, a {
     -ms-user-select: none;
     user-select: none;
 }
+
+.action-button {
+  display: block;
+  width: 2em;
+  height: 2em;
+  border-radius: 1em;
+  background: #AA8439;
+  color: #6A4805;
+  padding: 0.5em;
+}
