@@ -47,6 +47,7 @@
 
     om/IRenderState
     (render-state [_ {:keys [bus]}]
+      (println the-state)
       (dom/div
         #js {:id "learnable-computer"}
         (om/build cube-manifestation/ui
