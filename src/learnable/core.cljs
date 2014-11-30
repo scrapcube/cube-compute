@@ -24,6 +24,8 @@
   (om/transact! state-cursor
     (fn [state]
       (let [{:keys [the-cube program]} state]
+        (println (str "...with the program: " program))
+        (println (str "...on the cube: " the-cube))
         (assoc state :the-cube (cube/run-logged the-cube program))))))
 
 (defn learnable-computer [the-state owner]
