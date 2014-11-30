@@ -35,6 +35,7 @@
 
       om/IRender
       (render [_]
+        (println "...rendering ruler component...")
         (dom/canvas
           #js {:id "ruler-canvas"
                :ref "rulercanvas"
