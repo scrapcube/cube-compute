@@ -9,7 +9,7 @@
         maximum-time   (Math/ceil (/ total-time 1000))]
     (set! (.-strokeStyle ctx) "rgb(10, 29, 71)")
     (set! (.-lineWidth ctx) 2)
-    (set! (.-font ctx) "10px Roboto")
+    (set! (.-font ctx) "14px Roboto")
     (set! (.-textBaseline ctx) "bottom")
     (set! (.-globalAlpha ctx) 1.0)
     (doseq [interval (map #(* % 1000) (range 0 maximum-time))]
@@ -29,10 +29,10 @@
         (.strokeText ctx
                      (str (/ interval 1000) "s")
                      (+ second-mark 5)
-                     (- canvas-height 5))))))
+                     (- canvas-height 1))))))
 
 (defn ui [ruler-options owner]
-  (let [{:keys [total-time pixel-ratio]} ruler-options]
+  (let [{:keys [total-time time-offset pixel-ratio]} ruler-options]
     (reify
       om/IDidUpdate
       (did-update [_ _ _]
@@ -45,4 +45,5 @@
                :ref "rulercanvas"
                :width
                  (str (* total-time pixel-ratio) "px")
-               :height "32px"})))))
+               :height "32px"
+               :style #js {:left time-offset}})))))

@@ -89,6 +89,7 @@
             (let [total-time (get-in process [:log :log-time])]
               (om/build ruler/ui
                 {:total-time total-time
+                 :time-offset time-offset
                  :pixel-ratio pixel-conversion-ratio}))))))
 
     om/IWillMount
