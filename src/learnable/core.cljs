@@ -28,7 +28,7 @@
         (println (str "...on the cube: " the-cube))
         (let [cube-state (cube/run-logged the-cube program)]
           (println (str "BOOT STATE: " cube-state))
-          (assoc state :the-cube cube-state)))))))
+          (assoc state :the-cube cube-state))))))
 
 (defn learnable-computer [the-state owner]
   (reify
