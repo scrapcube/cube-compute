@@ -25,15 +25,17 @@
     (init-state [_]
       {:bus (chan)})
 
+    om/IDidMount
+    (did-mount [_]
+      (om/transact! the-state (fn [_] ["foobar"])))
+
     om/IRenderState
     (render-state [_ {:keys [bus]}]
       (dom/div
         #js {:id "learnable-computer"}
         (om/build cube-manifestation/ui
                   (:the-cube the-state)
-                  {:init-state {:bus bus}
-                   :fn (fn [cube-state]
-                         (cube/run-logged cube-state (cube/grid-game (:program the-state))))})
+                  {:init-state {:bus bus}})
         (dom/div #js {:className "editor"})))))
 
 (om/root
