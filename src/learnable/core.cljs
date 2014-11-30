@@ -17,18 +17,28 @@
            :hz 5}
     :program (cube/grid-game default-game)}))
 
+(defn reboot! [app-state]
+  (om/transact! app-state
+    (fn [state]
+      (let [{:keys [cube program]} state]
+        (cube/run-logged cube program)))))
+
 (defn learnable-computer [app-state owner]
   (reify
     om/IInitState
     (init-state [_]
       {:bus (chan)})
 
+    om/IDidMount
+    (did-mount [_]
+      (reboot! app-state))
+
     om/IRenderState
     (render-state [_ {:keys [bus]}]
       (dom/div
         #js {:id "learnable-computer"}
         (om/build cube-manifestation/ui
-                  (cube/run-logged (:box app-state) (:program app-state))
+                  (:cube app-state)
                   {:init-state {:bus bus}})
         (dom/div #js {:className "editor"})))))
 
