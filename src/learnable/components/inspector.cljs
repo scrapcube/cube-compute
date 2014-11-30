@@ -135,7 +135,7 @@
       (when (> (om/get-state owner :pixel-conversion-ratio))
         (ruler/draw! (om/get-node owner "rulercanvas")
                      (:log-time log)
-                     pixel-ratio)))
+                     pixel-ratio)))))
 
 (defn ui [process owner]
   (reify
