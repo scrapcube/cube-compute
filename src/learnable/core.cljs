@@ -19,9 +19,9 @@
                :status :halted}
     :program default-game}))
 
-(defn reboot! [state]
+(defn reboot! [the-state]
   (println "BOOTING.")
-  (om/transact! state :the-cube
+  (om/transact! the-state :the-cube
     (fn [the-cube]
       (let [prime (cube/run-logged the-cube (cube/grid-game (:program @state)))]
         (println "BOOTED_STATE: ")
