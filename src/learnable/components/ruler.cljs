@@ -12,6 +12,7 @@
     (println (str "... maximum-time:" maximum-time))
     (aset ctx "strokeStyle" "rgb(10, 29, 71)")
     (aset ctx "lineWidth" 2)
+    (aset ctx "globalAlpha" 1.0)
     (println (str "strokeStyle: " (aget ctx "strokeStyle")))
     (.beginPath ctx)
     (doseq [interval (map #(* % 1000) (range 0 maximum-time))]
