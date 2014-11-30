@@ -18,7 +18,7 @@
     om/IRender
     (render [_]
       (dom/div #js {:className "cube-control toolbar"}
-        (if (= (:status a-cube :running))
+        (if (= (:status a-cube) :running)
           (dom/a #js {:className "action-button"
                       :onClick (fn [_] (om/transact! a-cube cube/resume))}
             (dom/i #js {:className "fa fa-pause"}))
