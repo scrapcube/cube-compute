@@ -2,6 +2,7 @@
   (:require [learnable.cube.process :as ps]
             [learnable.cube.statelog :as statelog]
             [learnable.components.scrubber :as scrubber]
+            [learnable.components.ruler :as ruler]
             [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]
             [cljs.core.async :as async :refer [put! <! chan]])
@@ -109,7 +110,6 @@
               (fn [state]
                 (let [log-time (get-in @process [:log :log-time])
                       {:keys [screen-width circle-radius pixel-conversion-ratio]} (om/get-state owner)]
-                  (println (str "scrub-ratio: " scrub-ratio))
                   (* -1.0
                      scrub-ratio
                      pixel-conversion-ratio
@@ -124,15 +124,17 @@
         (fn [state]
           (let [log (:log @process)
                 {:keys [circle-radius min-circle-separation]} state
-                screen-width (.-offsetWidth (om/get-node owner))]
+                screen-width (.-offsetWidth (om/get-node owner))
+                pixel-ratio
+                  (average-circle-spacing-ratio
+                    circle-radius
+                    min-circle-separation
+                    screen-width
+                    log)]
+            (ruler/draw! owner (:log-time log) pixel-ratio)
             (assoc state
               :screen-width screen-width
-              :pixel-conversion-ratio
-              (average-circle-spacing-ratio
-                circle-radius
-                min-circle-separation
-                screen-width
-                log))))))))
+              :pixel-conversion-ratio pixel-ratio)))))))
 
 (defn ui [process owner]
   (reify
