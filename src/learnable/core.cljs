@@ -19,13 +19,6 @@
                :status :halted}
     :program default-game}))
 
-(defn reboot! [the-state]
-  (let [program (:program @the-state)]
-    (om/transact! the-state :the-cube
-      (fn [the-cube]
-        (let [prime (cube/run-logged the-cube (cube/grid-game program))]
-          prime)))))
-
 (defn learnable-computer [the-state owner]
   (reify
     om/IInitState
