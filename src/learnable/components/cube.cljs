@@ -42,7 +42,6 @@
     (render-state [_ {:keys [bus]}]
       (let [{:keys [process screen hz]} a-cube]
         (dom/div #js {:className "cube"}
-          (when (not= nil process)
             (dom/div #js {:className "viewport"
                           :tabIndex "0"
                           :onKeyDown (cube/keyboard-controller bus)}
@@ -55,6 +54,6 @@
 
             (if (= :running (:status a-cube))
               (om/build clock hz {:init-state {:bus bus}})
-              (om/build inspector/ui (:process a-cube)))))))))
+              (om/build inspector/ui (:process a-cube))))))))
 
 
