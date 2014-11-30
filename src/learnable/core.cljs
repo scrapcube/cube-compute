@@ -30,6 +30,11 @@
           (println (str "BOOT STATE: " cube-state))
           (assoc state :the-cube cube-state))))))
 
+(defn reboot! [state]
+  (om/transact! state :the-cube
+    (fn [the-cube]
+      (cube/run-logged the-cube (:program @state)))))
+
 (defn learnable-computer [the-state owner]
   (reify
     om/IInitState
