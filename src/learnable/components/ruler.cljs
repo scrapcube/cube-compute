@@ -5,7 +5,7 @@
 (defn draw! [canvas total-time pixel-ratio]
   (let [ctx            (.getContext canvas "2d")
         canvas-height  (aget canvas "height")
-        maximum-time   (Math/ceil (/ total-time pixel-ratio))]
+        maximum-time   (Math/ceil (/ total-time 1000))]
     (println "drawing the ruler...")
     (println (str "... total-time:" total-time))
     (println (str "... pixel-ratio:" pixel-ratio))
@@ -13,7 +13,7 @@
     (aset ctx "strokeStyle" "rgb(10, 29, 71)")
     (aset ctx "lineWidth" 2)
     (.beginPath ctx)
-    (doseq [interval (vec (range 0 maximum-time))]
+    (doseq [interval (map #(* % 1000) (range 0 maximum-time))]
       (let [second-mark       (* interval pixel-ratio)
             half-mark         (* (+ interval 500) pixel-ratio)
             millisecond-marks (map #(* (+ % second-mark) pixel-ratio)
