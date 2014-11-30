@@ -15,7 +15,7 @@
   (let [differentials  (statelog/time-differentials log)]
     (max
       (/ (+ (* 2.0 unit-measure) min-separation) (average differentials))
-      (/ (- screen-width diameter) (:log-time log)))))
+      (/ (- screen-width (* 2.0 unit-measure)) (:log-time log)))))
 
 (defn calculate-time-offset [total-time scrub-ratio screen-width pixel-ratio unit-measure]
   (let [time-in-screen (/ screen-width pixel-ratio)
@@ -23,7 +23,7 @@
     (* -1.0
        scrub-ratio
        pixel-ratio
-       (- log-time
+       (- total-time
           (- time-in-screen
              time-in-unit)))))
 
