@@ -155,12 +155,13 @@ hr.teal-blue-seam {
 }
 
 .timeline-ruler {
+  height: 2em;
   position: relative;
   background: #67789D;
 }
 
 #ruler-canvas {
-  position: relative;
+  position: absolute;
 }
 
 /* height 1.4 */
