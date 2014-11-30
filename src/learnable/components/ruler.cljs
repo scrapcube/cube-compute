@@ -21,6 +21,7 @@
         (println (str "s: " (/ interval 1000)))
         (println (str "half-mark: " half-mark))
         (println (str "millisecond-marks: " millisecond-marks))
+        (println (str "canvas-height: " canvas-height))
         (.moveTo ctx second-mark 0)
         (.lineTo ctx second-mark canvas-height)
         (.moveTo ctx half-mark 0)
