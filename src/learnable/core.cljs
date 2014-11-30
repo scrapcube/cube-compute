@@ -23,7 +23,10 @@
   (println "BOOTING.")
   (om/transact! state :the-cube
     (fn [the-cube]
-      (cube/run-logged the-cube (cube/grid-game (:program @state))))))
+      (let [prime (cube/run-logged the-cube (cube/grid-game (:program @state)))]
+        (println "BOOTED_STATE: ")
+        (println prime)
+        prime))))
 
 (defn learnable-computer [the-state owner]
   (reify
