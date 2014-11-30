@@ -29,8 +29,8 @@
 (defn ui [ruler-options owner]
   (let [{:keys [total-time pixel-ratio]} ruler-options]
     (reify
-      om/IDidMount
-      (did-mount [_]
+      om/IDidUpdate
+      (did-update [_ _ _]
         (draw! (om/get-node owner "rulercanvas") total-time pixel-ratio))
 
       om/IRender
