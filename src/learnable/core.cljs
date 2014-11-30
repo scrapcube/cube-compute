@@ -34,8 +34,8 @@
     (init-state [_]
       {:bus (chan)})
 
-    om/IWillMount
-    (will-mount [_]
+    om/IDidMount
+    (did-mount [_]
       (reboot! the-state))
 
     om/IRenderState
