@@ -9,6 +9,8 @@
         maximum-time   (Math/ceil (/ total-time 1000))]
     (set! (.-strokeStyle ctx) "rgb(10, 29, 71)")
     (set! (.-lineWidth ctx) 2)
+    (set! (.-font ctx) "10px Roboto")
+    (set! (.-textBaseline) "bottom")
     (set! (.-globalAlpha ctx) 1.0)
     (.beginPath ctx)
     (doseq [interval (map #(* % 1000) (range 0 maximum-time))]
@@ -23,7 +25,11 @@
         (doseq [millisecond-mark millisecond-marks]
           (.moveTo ctx millisecond-mark 0)
           (.lineTo ctx millisecond-mark (* canvas-height 0.25)))))
-    (.stroke ctx)))
+    (.stroke ctx)
+    (.strokeText ctx
+                 (str (/ interval 1000) "s")
+                 (+ second-mark 5)
+                 (- canvas-height 5))))
 
 (defn ui [ruler-options owner]
   (let [{:keys [total-time pixel-ratio]} ruler-options]
