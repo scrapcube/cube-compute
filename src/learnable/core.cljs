@@ -20,13 +20,13 @@
     :program default-game}))
 
 (defn reboot! [the-state]
-  (println "BOOTING.")
-  (om/transact! the-state :the-cube
-    (fn [the-cube]
-      (let [prime (cube/run-logged the-cube (cube/grid-game (:program @the-state)))]
-        (println "BOOTED_STATE: ")
-        (println prime)
-        prime))))
+  (let [program (:program @the-state)]
+    (om/transact! the-state :the-cube
+      (fn [the-cube]
+        (let [prime (cube/run-logged the-cube (cube/grid-game program))]
+          (println "BOOTED_STATE: ")
+          (println prime)
+          prime)))))
 
 (defn learnable-computer [the-state owner]
   (reify
