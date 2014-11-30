@@ -22,8 +22,8 @@
 (defn reboot! [app-state]
   (om/transact! app-state
     (fn [state]
-      (let [{:keys [cube program]} state]
-        (assoc state :cube (cube/run-logged cube program))))))
+      (let [{:keys [the-cube program]} state]
+        (assoc state :cube (cube/run-logged the-cube program))))))
 
 (defn learnable-computer [app-state owner]
   (reify
