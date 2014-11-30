@@ -31,4 +31,6 @@
           (println (str "millisecond-mark" millisecond-mark))
           (.moveTo ctx millisecond-mark 0)
           (.lineTo ctx millisecond-mark (* canvas-height 0.5)))))
-    (.stroke ctx)))
+    (.stroke ctx)
+    (doseq [i (range 0)]
+      (identity i))))
