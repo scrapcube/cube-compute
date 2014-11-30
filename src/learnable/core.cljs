@@ -25,8 +25,8 @@
     (init-state [_]
       {:bus (chan)})
 
-    om/IDidMount
-    (did-mount [_]
+    om/IWillMount
+    (will-mount [_]
       (om/transact! the-state (fn [_] ["foobar"])))
 
     om/IRenderState
