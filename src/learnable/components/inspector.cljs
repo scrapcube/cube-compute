@@ -34,7 +34,7 @@
                 entry-type
                 pixel-ratio
                 current-idx]} entry
-        css-class (str "timeline-entry"
+        css-class (str "timeline-entry "
                        (name entry-type)
                        (when (= idx current-idx)
                          " current"))]
