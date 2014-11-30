@@ -18,7 +18,7 @@
             half-mark         (* (+ interval 500) pixel-ratio)
             millisecond-marks (map #(* (+ % second-mark) pixel-ratio)
                                    [100 200 300 400 600 700 800 900])]
-        (println (str "s: " (/interval 1000)))
+        (println (str "s: " (/ interval 1000)))
         (println (str "half-mark: " half-mark))
         (println (str "millisecond-marks: " millisecond-marks))
         (.moveTo ctx second-mark 0)
