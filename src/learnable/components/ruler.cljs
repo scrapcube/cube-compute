@@ -2,9 +2,8 @@
   (:require [om.core :as om :include-macros true]))
 
 ; the owner has a ref'ed child "ruler-canvas"
-(defn draw! [owner total-time pixel-ratio]
-  (let [canvas         (om/get-node owner "ruler-canvas")
-        ctx            (.getCanvas canvas "2d")
+(defn draw! [canvas total-time pixel-ratio]
+  (let [ctx            (.getCanvas canvas "2d")
         canvas-height  (.-height canvas)
         maximum-time   (Math/ceil (/ total-time))]
     (set! (.-strokeStyle ctx) "rbg(10, 29, 71)")

@@ -131,7 +131,9 @@
                     min-circle-separation
                     screen-width
                     log)]
-            (ruler/draw! owner (:log-time log) pixel-ratio)
+            (ruler/draw! (om/get-node owner "ruler-canvas")
+                         (:log-time log)
+                         pixel-ratio)
             (assoc state
               :screen-width screen-width
               :pixel-conversion-ratio pixel-ratio)))))))
