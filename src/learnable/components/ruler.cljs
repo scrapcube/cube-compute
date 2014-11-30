@@ -25,7 +25,7 @@
         (doseq [millisecond-mark millisecond-marks]
           (.moveTo ctx millisecond-mark 0)
           (.lineTo ctx millisecond-mark (* canvas-height 0.25)))
-        (.strokeCtx)
+        (.stroke ctx)
         (.strokeText ctx
                      (str (/ interval 1000) "s")
                      (+ second-mark 5)
