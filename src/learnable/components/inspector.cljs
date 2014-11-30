@@ -115,7 +115,7 @@
     om/IDidMount
     (did-mount [_]
       (let [log (:log @process)
-            {:keys [circle-radius min-circle-separation pixel-conversion-ratio} (om/get-state owner)
+            {:keys [circle-radius min-circle-separation pixel-conversion-ratio]} (om/get-state owner)
             screen-width (.-offsetWidth (om/get-node owner))
             pixel-ratio
               (average-circle-spacing-ratio
