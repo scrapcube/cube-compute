@@ -4,7 +4,7 @@
 (enable-console-print!)
 
 (defn time-of [process]
-  (get-in process [:log :log-entry]))
+  (get-in process [:log :log-time]))
 
 (defn launch [program screen]
   (let [start-state ((:boot program) screen)]
