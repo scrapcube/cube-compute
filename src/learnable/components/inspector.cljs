@@ -87,9 +87,8 @@
               {:init-state {:restore-chan restore-chan}}))
           (dom/div #js {:className "timeline-ruler"}
             (dom/canvas
-              #js {:id "ruler-marks"
-                   :width (/ (get-in process [:log :log-time])
-                             pixel-conversion-ratio)
+              #js {:ref "ruler-canvas"
+                   :width "200px"
                    :height "32px"
                    :style #js {:left time-offset}})))))
 
