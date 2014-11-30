@@ -20,8 +20,8 @@
       (dom/div #js {:className "cube-control toolbar"}
         (if (= (:status a-cube) :running)
           (dom/a #js {:className "action-button"
-                      :onClick (fn [_] (om/transact! a-cube cube/resume))}
+                      :onClick (fn [_] (om/transact! a-cube cube/halt))}
             (dom/i #js {:className "fa fa-pause"}))
           (dom/a #js {:className "action-button"
-                      :onClick (fn [_] (om/transact! a-cube cube/halt))}
+                      :onClick (fn [_] (om/transact! a-cube cube/resume))}
             (dom/i #js {:className "fa fa-play"})))))))
