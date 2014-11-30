@@ -6,6 +6,7 @@
   (let [ctx            (.getContext canvas "2d")
         canvas-height  (aget canvas "height")
         maximum-time   (Math/ceil (/ total-time 1000))]
+    (println "...drawing ruler...")
     (aset ctx "strokeStyle" "rgb(10, 29, 71)")
     (aset ctx "lineWidth" 2)
     (aset ctx "globalAlpha" 1.0)
