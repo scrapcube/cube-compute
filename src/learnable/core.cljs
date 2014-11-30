@@ -33,6 +33,7 @@
     (render-state [_ {:keys [bus]}]
       (dom/div
         #js {:id "learnable-computer"}
+        (println the-state)
         (om/build cube-manifestation/ui
                   (:the-cube the-state)
                   {:init-state {:bus bus}})
