@@ -24,8 +24,8 @@
        scrub-ratio
        pixel-ratio
        (- total-time
-          (- time-in-screen
-             time-in-unit)))))
+          time-in-screen
+          (- time-in-unit)))))
 
 ;; each timeline-entry has a 2.0 unit-measure sized width and height.
 (defn timeline-entry [entry owner]
