@@ -1,5 +1,6 @@
 (ns learnable.components.ruler
-  (:require [om.core :as om :include-macros true]))
+  (:require [om.core :as om :include-macros true]
+            [om.dom :as dom :include-macros true]))
 
 ; the owner has a ref'ed child "ruler-canvas"
 (defn draw! [canvas total-time pixel-ratio]
@@ -26,7 +27,7 @@
     (.stroke ctx)))
 
 (defn ui [ruler-options owner]
-  (let [{:keys [total-time pixel-ratio]}]
+  (let [{:keys [total-time pixel-ratio]} ruler-options]
     (reify
       om/IDidMount
       (did-mount [_]
