@@ -3,6 +3,9 @@
 
 (enable-console-print!)
 
+(defn time-of [process]
+  (get-in process [:log :log-entry]))
+
 (defn launch [program screen]
   (let [start-state ((:boot program) screen)]
     {:get-frame (:get-frame program)
