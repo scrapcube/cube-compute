@@ -134,7 +134,7 @@
               :pixel-conversion-ratio pixel-ratio))))
       (let [pixel-ratio (om/get-state owner :pixel-conversion-ratio)
             log (:log @process)]
-        (when (> (om/get-state owner :pixel-conversion-ratio))
+        (when (> pixel-ratio 0)
               (ruler/draw! (om/get-node owner "rulercanvas")
                            (:log-time log)
                            pixel-ratio))))))
