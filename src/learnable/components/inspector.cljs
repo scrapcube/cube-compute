@@ -76,7 +76,7 @@
                  scrub-chan
                  pixel-conversion-ratio
                  circle-radius]}]
-
+      (println "rendering timeline")
       (dom/div #js {:className "timeline-material"}
         (dom/hr #js {:className "teal-blue-seam"} nil)
         (om/build scrubber/ui [] {:init-state {:scrub-chan scrub-chan}})
