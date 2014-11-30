@@ -7,13 +7,17 @@
         canvas-height  (aget canvas "height")
         maximum-time   (Math/ceil (/ total-time pixel-ratio))]
     (println "drawing the ruler...")
+    (println (str "... total-time:" total-time))
+    (println (str "... pixel-ratio:" pixel-ratio))
+    (println (str "... maximum-time:" maximum-time))
     (aset ctx "strokeStyle" "rgb(10, 29, 71)")
     (aset ctx "lineWidth" 2)
     (.beginPath ctx)
     (doseq [interval (vec (range 0 maximum-time))]
       (let [second-mark       (* interval pixel-ratio)
-            half-mark         (+ 500 second-mark)
-            millisecond-marks (map #(+ % second-mark) [100 200 300 400 600 700 800 900])]
+            half-mark         (* (+ interval 500) pixel-ratio)
+            millisecond-marks (map #(* (+ % second-mark) pixel-ratio)
+                                   [100 200 300 400 600 700 800 900])]
         (.moveTo ctx second-mark 0)
         (.lineTo ctx second-mark canvas-height)
         (.moveTo ctx half-mark 0)
