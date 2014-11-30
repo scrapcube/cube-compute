@@ -24,6 +24,7 @@
   (om/transact! app-state
     (fn [state]
       (let [{:keys [cube program]} state]
+        (println (cube/run-logged cube program))
         (cube/run-logged cube program)))))
 
 (defn learnable-computer [app-state owner]
