@@ -10,7 +10,7 @@
     (set! (.-strokeStyle ctx) "rgb(10, 29, 71)")
     (set! (.-lineWidth ctx) 2)
     (.beginPath ctx)
-    (doseq [interval (range 0 maximum-time)]
+    (doseq [interval (vec (range 0 maximum-time))]
       (let [second-mark       (* interval pixel-ratio)
             half-mark         (+ 500 second-mark)
             millisecond-marks (map #(+ % second-mark) [100 200 300 400 600 700 800 900])]
