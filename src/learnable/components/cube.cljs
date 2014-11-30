@@ -52,10 +52,10 @@
                 (dom/div #js {:className "viewport-material"}
                   (om/build display/ui
                     (ps/output process screen)
-                    {:init-state {:bus bus}})))))
+                    {:init-state {:bus bus}}))))
 
-          (if (= :running (:status a-cube))
-            (om/build clock hz {:init-state {:bus bus}})
-            (om/build inspector/ui (:process a-cube))))))))
+            (if (= :running (:status a-cube))
+              (om/build clock hz {:init-state {:bus bus}})
+              (om/build inspector/ui (:process a-cube)))))))))
 
 
