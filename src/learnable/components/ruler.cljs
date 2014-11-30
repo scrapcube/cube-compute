@@ -4,11 +4,11 @@
 ; the owner has a ref'ed child "ruler-canvas"
 (defn draw! [canvas total-time pixel-ratio]
   (let [ctx            (.getContext canvas "2d")
-        canvas-height  (.-height canvas)
-        maximum-time   (Math/ceil (/ total-time))]
+        canvas-height  (aget canvas "height")
+        maximum-time   (Math/ceil (/ total-time pixel-ratio))]
     (println "drawing the ruler...")
-    (set! (.-strokeStyle ctx) "rgb(10, 29, 71)")
-    (set! (.-lineWidth ctx) 2)
+    (aset ctx "strokeStyle" "rgb(10, 29, 71)")
+    (aset ctx "lineWidth" 2)
     (.beginPath ctx)
     (doseq [interval (vec (range 0 maximum-time))]
       (let [second-mark       (* interval pixel-ratio)
