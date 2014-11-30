@@ -80,6 +80,7 @@
           (put! bus [:mouse (vec point)]))))))
 
 (defn run-logged [box program]
+  (println "running program")
   (halt
     (assoc box
            :process

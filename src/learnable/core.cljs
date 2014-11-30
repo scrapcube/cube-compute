@@ -19,17 +19,6 @@
                :status :halted}
     :program default-game}))
 
-(defn reboot! [state-cursor]
-  (println "booting...")
-  (om/transact! state-cursor
-    (fn [state]
-      (let [{:keys [the-cube program]} state]
-        (println (str "...with the program: " program))
-        (println (str "...on the cube: " the-cube))
-        (let [cube-state (cube/run-logged the-cube program)]
-          (println (str "BOOT STATE: " cube-state))
-          (assoc state :the-cube cube-state))))))
-
 (defn reboot! [state]
   (println "BOOTING.")
   (om/transact! state :the-cube
