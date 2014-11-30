@@ -229,9 +229,10 @@ div, ul, li, span, a {
 
 .action-button {
   display: block;
-  width: 2em;
-  height: 2em;
-  border-radius: 1em;
+  font-size: 2em;
+  width: 1em;
+  height: 1em;
+  border-radius: 0.5em;
   background: #AA8439;
   color: #6A4805;
   padding: 0.5em;
