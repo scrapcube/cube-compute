@@ -17,7 +17,7 @@
                :hz 5
                :process nil
                :status :halted}
-    :program (cube/grid-game default-game)}))
+    :program default-game}))
 
 (defn reboot! [state-cursor]
   (println "booting...")
@@ -33,7 +33,7 @@
 (defn reboot! [state]
   (om/transact! state :the-cube
     (fn [the-cube]
-      (cube/run-logged the-cube (:program @state)))))
+      (cube/run-logged the-cube (cube/grid-game (:program @state))))))
 
 (defn learnable-computer [the-state owner]
   (reify
