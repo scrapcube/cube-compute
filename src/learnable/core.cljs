@@ -23,7 +23,7 @@
   (om/transact! app-state
     (fn [state]
       (let [{:keys [the-cube program]} state]
-        (assoc state :cube (cube/run-logged the-cube program))))))
+        (assoc state :the-cube (cube/run-logged the-cube program))))))
 
 (defn learnable-computer [app-state owner]
   (reify
