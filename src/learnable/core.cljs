@@ -9,23 +9,17 @@
 
 (enable-console-print!)
 
-(def box
-  {:screen (graphix/surface :canvas :main `(0 0) `(512 512))
-   :hz 5})
+(def default-game life/life-game)
 
-(defn boot [program]
-  (cube/run-logged box program))
+(def app-state
+  (atom {
+    :the-cube {:screen (graphix/surface :canvas :main `(0 0) `(512 512))
+               :hz 5
+               :process nil
+               :status :halted}
+    :program default-game}))
 
-(def game life/life-game)
-
-(def cube-state
-  (atom (boot (cube/grid-game game))))
-
-(defn reboot [js-code]
-  (js/eval js-code)
-  (swap! cube-state (boot (cube/grid-game game))))
-
-(defn learnable-computer [cube-state owner]
+(defn learnable-computer [the-state owner]
   (reify
     om/IInitState
     (init-state [_]
@@ -36,13 +30,15 @@
       (dom/div
         #js {:id "learnable-computer"}
         (om/build cube-manifestation/ui
-                  cube-state
-                  {:init-state {:bus bus}})
+                  (:the-cube the-state)
+                  {:init-state {:bus bus}
+                   :fn (fn [cube-state]
+                         (cube/run-logged cube-state (cube/grid-game (:program the-state))))})
         (dom/div #js {:className "editor"})))))
 
 (om/root
   learnable-computer
-  cube-state
+  app-state
   {:target (. js/document (getElementById "app"))})
 
 
