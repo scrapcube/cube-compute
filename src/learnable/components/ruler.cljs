@@ -13,7 +13,7 @@
     (doseq [interval (range 0 maximum-time)]
       (let [second-mark       (* interval pixel-ratio)
             half-mark         (+ 500 second-mark)
-            millisecond-marks (map (+ i second-mark) [100 200 300 400 600 700 800 900])]
+            millisecond-marks (map #(+ % second-mark) [100 200 300 400 600 700 800 900])]
         (.moveTo ctx second-mark 0)
         (.lineTo ctx second-mark canvas-height)
         (.moveTo ctx half-mark 0)
