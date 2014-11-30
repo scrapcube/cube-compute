@@ -132,7 +132,7 @@
             (assoc state
               :screen-width screen-width
               :pixel-conversion-ratio pixel-ratio))))
-      (let [pixel-ration (om/get-state owner :pixel-conversion-ratio)
+      (let [pixel-ratio (om/get-state owner :pixel-conversion-ratio)
             log (:log @process)]
         (when (> (om/get-state owner :pixel-conversion-ratio))
               (ruler/draw! (om/get-node owner "rulercanvas")
