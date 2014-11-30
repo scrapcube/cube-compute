@@ -8,7 +8,7 @@
         canvas-height  (.-height canvas)
         maximum-time   (Math/ceil (/ total-time 1000))]
     (set! (.-strokeStyle ctx) "rgb(10, 29, 71)")
-    (set! (.-lineWidth ctx) 2)
+    (set! (.-lineWidth ctx) 1)
     (set! (.-font ctx) "14px Roboto")
     (set! (.-textBaseline ctx) "bottom")
     (set! (.-globalAlpha ctx) 1.0)
