@@ -40,7 +40,8 @@
       (dom/div
         #js {:id "learnable-computer"}
         (dom/a #js {:className "reboot"
-                    :onClick   (fn [_] (reboot! the-state))})
+                    :onClick   (fn [_] (reboot! the-state))}
+          "reboot")
         (om/build cube-manifestation/ui
                   (:the-cube the-state)
                   {:init-state {:bus bus}})
