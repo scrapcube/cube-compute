@@ -127,7 +127,7 @@
                     log)]
             (assoc state
               :screen-width screen-width
-              :pixel-conversion-ratio pixel-ratio)))))
+              :pixel-conversion-ratio pixel-ratio)))))))
 
 (defn ui [process owner]
   (reify
