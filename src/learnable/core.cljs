@@ -19,8 +19,8 @@
                :status :halted}
     :program (cube/grid-game default-game)}))
 
-(defn reboot! [app-state]
-  (om/transact! app-state
+(defn reboot! [state-cursor]
+  (om/transact! state-cursor
     (fn [state]
       (let [{:keys [the-cube program]} state]
         (assoc state :the-cube (cube/run-logged the-cube program))))))
