@@ -91,7 +91,7 @@
               (when (> pixel-conversion-ratio 0)
                 (dom/canvas
                   #js {:id "ruler-canvas"
-                       :ref "ruler-canvas"
+                       :ref "rulercanvas"
                        :width
                          (/ total-time pixel-conversion-ratio)
                        :height "32px"
@@ -131,7 +131,7 @@
                     min-circle-separation
                     screen-width
                     log)]
-            (ruler/draw! (om/get-node owner "ruler-canvas")
+            (ruler/draw! (om/get-node owner "rulercanvas")
                          (:log-time log)
                          pixel-ratio)
             (assoc state
