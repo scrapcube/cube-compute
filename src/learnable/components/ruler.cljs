@@ -19,10 +19,10 @@
         (.moveTo ctx second-mark 0)
         (.lineTo ctx second-mark canvas-height)
         (.moveTo ctx half-mark 0)
-        (.lineTo ctx half-mark (* canvas-height 0.75))
+        (.lineTo ctx half-mark (* canvas-height 0.5))
         (doseq [millisecond-mark millisecond-marks]
           (.moveTo ctx millisecond-mark 0)
-          (.lineTo ctx millisecond-mark (* canvas-height 0.5)))))
+          (.lineTo ctx millisecond-mark (* canvas-height 0.25)))))
     (.stroke ctx)))
 
 (defn ui [ruler-options owner]
