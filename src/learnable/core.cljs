@@ -11,7 +11,7 @@
 
 (def default-game life/life-game)
 
-(defn launch [cube program]
+(defn launch [the-cube program]
   (cube/run-logged the-cube (cube/grid-game program)))
 
 (def app-state
