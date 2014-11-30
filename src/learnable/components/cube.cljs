@@ -42,15 +42,16 @@
     (render-state [_ {:keys [bus]}]
       (let [{:keys [process screen hz]} a-cube]
         (dom/div #js {:className "cube"}
-          (dom/div #js {:className "viewport"
-                        :tabIndex "0"
-                        :onKeyDown (cube/keyboard-controller bus)}
-            (om/build controls/ui a-cube)
-            (dom/div #js {:className "viewport-container"}
-              (dom/div #js {:className "viewport-material"}
-                (om/build display/ui
-                  (ps/output process screen)
-                  {:init-state {:bus bus}}))))
+          (when process
+            (dom/div #js {:className "viewport"
+                          :tabIndex "0"
+                          :onKeyDown (cube/keyboard-controller bus)}
+              (om/build controls/ui a-cube)
+              (dom/div #js {:className "viewport-container"}
+                (dom/div #js {:className "viewport-material"}
+                  (om/build display/ui
+                    (ps/output process screen)
+                    {:init-state {:bus bus}})))))
 
           (if (= :running (:status a-cube))
             (om/build clock hz {:init-state {:bus bus}})

@@ -14,7 +14,9 @@
 (def app-state
   (atom {
     :cube {:screen (graphix/surface :canvas :main `(0 0) `(512 512))
-           :hz 5}
+           :hz 5
+           :process nil
+           :status :halted}
     :program (cube/grid-game default-game)}))
 
 (defn reboot! [app-state]
