@@ -86,11 +86,14 @@
               (build-entries-list (:log process) pixel-conversion-ratio)
               {:init-state {:restore-chan restore-chan}}))
           (dom/div #js {:className "timeline-ruler"}
-            (dom/canvas
-              #js {:ref "ruler-canvas"
-                   :width "200px"
-                   :height "32px"
-                   :style #js {:left time-offset}})))))
+            (let [total-time (get-in process [:log :log-time])]
+              (when (> total-time 0)
+                (dom/canvas
+                  #js {:ref "ruler-canvas"
+                       :width
+                         (/ total-time pixel-conversion-ratio)
+                       :height "32px"
+                       :style #js {:left time-offset}})))))))
 
     om/IWillMount
     (will-mount [_]
