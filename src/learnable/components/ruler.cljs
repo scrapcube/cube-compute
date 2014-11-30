@@ -1,4 +1,4 @@
-(ns learnable.cube.components.ruler
+(ns learnable.components.ruler
   (:require [om.core :as om :include-macros true]))
 
 ; the owner has a ref'ed child "ruler-canvas"
