@@ -24,8 +24,6 @@
     (om/transact! the-state :the-cube
       (fn [the-cube]
         (let [prime (cube/run-logged the-cube (cube/grid-game program))]
-          (println "BOOTED_STATE: ")
-          (println prime)
           prime)))))
 
 (defn learnable-computer [the-state owner]
@@ -36,14 +34,13 @@
 
     om/IRenderState
     (render-state [_ {:keys [bus]}]
-      (println the-state)
       (dom/div
         #js {:id "learnable-computer"}
         (om/build cube-manifestation/ui
                   (:the-cube the-state)
                   {:init-state {:bus bus}
                    :fn (fn [cube-state]
-                         (cube-run-logged cube-state (cube/grid-game (:program the-state))))})
+                         (cube/run-logged cube-state (cube/grid-game (:program the-state))))})
         (dom/div #js {:className "editor"})))))
 
 (om/root

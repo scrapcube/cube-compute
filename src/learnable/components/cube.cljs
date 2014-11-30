@@ -41,10 +41,8 @@
     om/IRenderState
     (render-state [_ {:keys [bus]}]
       (let [{:keys [process screen hz]} a-cube]
-        (println (str "rendering cube..." (:process a-cube)))
         (dom/div #js {:className "cube"}
           (when (not= nil process)
-            (println "rendering cube...")
             (dom/div #js {:className "viewport"
                           :tabIndex "0"
                           :onKeyDown (cube/keyboard-controller bus)}
