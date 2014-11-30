@@ -7,7 +7,6 @@
   (let [ctx            (.getContext canvas "2d")
         canvas-height  (.-height canvas)
         maximum-time   (Math/ceil (/ total-time 1000))]
-    (println "...drawing ruler...")
     (set! (.-strokeStyle ctx) "rgb(10, 29, 71)")
     (set! (.-lineWidth ctx) 2)
     (set! (.-globalAlpha ctx) 1.0)
@@ -15,7 +14,7 @@
     (doseq [interval (map #(* % 1000) (range 0 maximum-time))]
       (let [second-mark       (* interval pixel-ratio)
             half-mark         (* (+ interval 500) pixel-ratio)
-            millisecond-marks (map #(* (+ % second-mark) pixel-ratio)
+            millisecond-marks (map #(* (+ % interval) pixel-ratio)
                                    [100 200 300 400 600 700 800 900])]
         (.moveTo ctx second-mark 0)
         (.lineTo ctx second-mark canvas-height)
@@ -35,7 +34,6 @@
 
       om/IRender
       (render [_]
-        (println "...rendering ruler component...")
         (dom/canvas
           #js {:id "ruler-canvas"
                :ref "rulercanvas"
