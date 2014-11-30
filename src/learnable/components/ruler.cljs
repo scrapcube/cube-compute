@@ -12,24 +12,24 @@
     (set! (.-font ctx) "10px Roboto")
     (set! (.-textBaseline ctx) "bottom")
     (set! (.-globalAlpha ctx) 1.0)
-    (.beginPath ctx)
     (doseq [interval (map #(* % 1000) (range 0 maximum-time))]
       (let [second-mark       (* interval pixel-ratio)
             half-mark         (* (+ interval 500) pixel-ratio)
             millisecond-marks (map #(* (+ % interval) pixel-ratio)
                                    [100 200 300 400 600 700 800 900])]
+        (.beginPath ctx)
         (.moveTo ctx second-mark 0)
         (.lineTo ctx second-mark canvas-height)
         (.moveTo ctx half-mark 0)
         (.lineTo ctx half-mark (* canvas-height 0.5))
         (doseq [millisecond-mark millisecond-marks]
           (.moveTo ctx millisecond-mark 0)
-          (.lineTo ctx millisecond-mark (* canvas-height 0.25)))))
-    (.stroke ctx)
-    (.strokeText ctx
-                 (str (/ interval 1000) "s")
-                 (+ second-mark 5)
-                 (- canvas-height 5))))
+          (.lineTo ctx millisecond-mark (* canvas-height 0.25)))
+        (.strokeCtx)
+        (.strokeText ctx
+                     (str (/ interval 1000) "s")
+                     (+ second-mark 5)
+                     (- canvas-height 5))))))
 
 (defn ui [ruler-options owner]
   (let [{:keys [total-time pixel-ratio]} ruler-options]
