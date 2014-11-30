@@ -41,7 +41,7 @@
     om/IRenderState
     (render-state [_ {:keys [bus]}]
       (let [{:keys [process screen hz]} a-cube]
-        (println "rendering cube...")
+        (println (str "rendering cube..." a-cube))
         (dom/div #js {:className "cube"}
           (when (not= nil process)
             (println "rendering cube...")
