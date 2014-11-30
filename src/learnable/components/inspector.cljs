@@ -92,7 +92,7 @@
                   #js {:id "ruler-canvas"
                        :ref "rulercanvas"
                        :width
-                         (/ total-time pixel-conversion-ratio)
+                         (* total-time pixel-conversion-ratio)
                        :height "32px"}))))))
 
     om/IWillMount
