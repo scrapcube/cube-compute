@@ -64,7 +64,7 @@
       {:time-offset 0
        :circle-radius 8
        :min-circle-separation 10
-       :pixel-conversion-ratio 0.10
+       :pixel-conversion-ratio 0
        :restore-chan (chan)
        :scrub-chan (chan)})
 
@@ -87,7 +87,7 @@
               {:init-state {:restore-chan restore-chan}}))
           (dom/div #js {:className "timeline-ruler"}
             (let [total-time (get-in process [:log :log-time])]
-              (when (> total-time 0)
+              (when (> pixel-conversion-ratio 0)
                 (dom/canvas
                   #js {:ref "ruler-canvas"
                        :width
