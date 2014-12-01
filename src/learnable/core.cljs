@@ -30,7 +30,7 @@
   (println
     (str 'foobar'
          (foobar-implemented))))
-(foobar)
+(learnable.core/foobar)
 ")
 
 (def compiled-test-code
