@@ -20,8 +20,7 @@
   (let [[x y] (:offset graphic)
         [width height] (:dimensions graphic)
         color (:color graphic)]
-    #js {:position "absolute"
-         :left (str x "px")
+    #js {:left (str x "px")
          :top (str y "px")
          :width (str width "px")
          :height (str height "px")
@@ -52,19 +51,20 @@
                   :key id}
              "")))
 
-(defn render-surface [surface mouse transforms]
+(defn render-surface [surface mouse transforms get-offset]
   (let [{:keys [etype id transform items offset dimensions]} surface
         transforms-prime (cons transform transforms)]
     (apply
       dom/div
       #js {:style (box-style surface)
            :key id
-           :onClick (mouse (fn [point]
-                              [id ((apply comp transforms-prime) point)]))}
+           :onClick
+             (mouse (fn [point]
+               [id ((apply comp transforms-prime) (map - point (get-offset)))]))}
       (map
         (fn [item]
           (if (graphix/is-surface? item)
-            (render-surface item mouse transforms-prime)
+            (render-surface item mouse transforms-prime get-offset)
             (render-graphic item)))
         items))))
 
@@ -75,19 +75,15 @@
 
 (defn ui [frame owner]
   (reify
-    om/IDidMount
-    (did-mount [_]
-      (om/set-state! owner
-        :page-offset
-          (let [domn (om/get-node owner)]
-            (list (.-offsetLeft domn) (.-offsetTop domn)))))
-
     om/IRenderState
-    (render-state [_ {:keys [page-offset bus]}]
+    (render-state [_ {:keys [bus]}]
       (dom/div
-        #js {:className "screen"
-             :tabIndex "0"
-             :onKeyDown (cube/keyboard-controller bus)
+        #js {:className "screen shadow-2"
              :style #js {:width     (first (:dimensions frame))
                          :height    (last (:dimensions frame))}}
-        (render-surface frame (cube/mouse-controller bus) (list #(map - % page-offset)))))))
+        (render-surface frame
+                        (cube/mouse-controller bus)
+                        (list identity)
+                        (fn []
+                          (let [domn (om/get-node owner)]
+                            [(.-offsetLeft domn) (.-offsetTop domn)])))))))

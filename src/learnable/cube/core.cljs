@@ -1,6 +1,7 @@
 (ns learnable.cube.core
   (:require
     [learnable.cube.process :as ps]
+    [learnable.cube.statelog :as statelog]
     [learnable.cube.graphix :as graphix]
     [om.core :as om :include-macros true]
     [om.dom :as dom :include-macros true]
@@ -22,7 +23,6 @@
         (assoc transitions
           :mouse
           (fn [state [graphic-id point]]
-            (str "T: " graphic-id " - " (str point))
             (if (= :game graphic-id)
               (mouse state point)
               state))))))
@@ -30,19 +30,20 @@
 (def max-hertz 20)
 
 (defn admit [a-cube entry]
-  (if (= :running (:status a-cube))
-    (update-in a-cube [:process] #(ps/commit % entry))
-    a-cube))
+  (let [current-time (:current-time a-cube)]
+    (if (= :running (:status a-cube))
+      (update-in a-cube [:process] #(ps/commit % entry))
+      a-cube)))
 
 (defn halt [a-cube]
   (assoc a-cube
-    :status :halted
-    :current-time 0))
+    :status :halted))
 
 (defn resume [a-cube]
-  (assoc a-cube
-    :status :running
-    :current-time (js/Date.now)))
+  (let [process (:process a-cube)]
+    (assoc a-cube
+      :status :running
+      :process (update-in process [:log] statelog/set-time))))
 
 (defn overclock [hz]
   (if (<= hz max-hertz)
@@ -79,6 +80,7 @@
           (put! bus [:mouse (vec point)]))))))
 
 (defn run-logged [box program]
-  (assoc box
-         :process
-         (ps/launch program (:screen box))))
+  (halt
+    (assoc box
+           :process
+           (ps/launch program (:screen box)))))

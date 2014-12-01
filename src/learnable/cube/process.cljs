@@ -3,6 +3,9 @@
 
 (enable-console-print!)
 
+(defn time-of [process]
+  (get-in process [:log :log-time]))
+
 (defn launch [program screen]
   (let [start-state ((:boot program) screen)]
     {:get-frame (:get-frame program)
@@ -14,14 +17,11 @@
   (fn [state [etype input]]
     ((get-in process [:transitions etype]) state input)))
 
-(defn logtime [process]
-  (get-in process [:log :now]))
-
 (defn restore [process at]
   (let [{:keys [log transitions]} process]
     (assoc process
       :state (statelog/replay log at (transition process))
-      :log (statelog/settime log at))))
+      :log (statelog/set-event-index log at))))
 
 (defn commit [process entry]
   (let [{:keys [state log]} process
@@ -33,7 +33,8 @@
         (let [t (transition process)
               state-prime (t state entry)]
           state-prime)
-      :log (statelog/commit tlog entry))))
+      :log
+        (statelog/commit tlog entry))))
 
 (defn output [process screen]
   ((:get-frame process) (:state process) screen))
