@@ -25,6 +25,9 @@
   (js/eval js-code)
   (swap! cube-state (boot (cube/grid-game game))))
 
+(def compiled-foobar
+  "_SLASH_defn.call(null,_SLASH_foo,cljs.core.Vector.fromArray([]),_SLASH_println.call(null,\":'bar'\"));\n")
+
 (defn learnable-computer [cube-state owner]
   (reify
     om/IInitState
@@ -34,6 +37,9 @@
     om/IRenderState
     (render-state [_ {:keys [bus]}]
       (dom/div
+        (let [code compiled-foobar]
+          (js/eval code)
+          (foobar))
         #js {:id "learnable-computer"}
         (om/build cube-manifestation/ui
                   cube-state
