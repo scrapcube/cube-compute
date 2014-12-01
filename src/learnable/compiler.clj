@@ -33,8 +33,11 @@
   (let [code-stream (string-reader code)
         form-seq    (forms-seq code-stream)
         user-env    (make-env user-ns)]
-    (reduce
-      (fn [output form]
-        (str output (emit-str (ana/analyze user-env form))))
-      ""
-      form-seq)))
+    (env/ensure
+      (compiler/with-core-cljs nil
+          (fn []
+            (reduce
+              (fn [output form]
+                (str output (emit-str (ana/analyze user-env form))))
+              ""
+              form-seq))))))
