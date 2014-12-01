@@ -27,11 +27,12 @@
 (def test-code
 "
 (defn foobar []
-  (println \"foobar\"))
+  (println (str \"foobar\"
+                (foobar-implemented))))
 ")
 
 (def compiled-test-code
-"learnable.core.foobar = (function foobar(){return cljs.core.println.call(null,\"foobar\");\n});\n")
+"learnable.core.foobar = (function foobar(){return cljs.core.println.call(null,(\"foobar\"+cljs.core.str.cljs$core$IFn$_invoke$arity$1(learnable.core.foobar_implemented.call(null))));\n});\n")
 
 (js/eval compiled-test-code)
 
