@@ -30,10 +30,11 @@
   (println (str \"foobar\"
                 (foobar-implemented)))
   (println message))
+(println \"foobar defined!\")
 ")
 
 (def compiled-test-code
-"learnable.core.foobar = (function foobar(message){cljs.core.println.call(null,(\"foobar\"+cljs.core.str.cljs$core$IFn$_invoke$arity$1(learnable.core.foobar_implemented.call(null))));\nreturn cljs.core.println.call(null,message);\n});\n")
+"learnable.core.foobar = (function foobar(message){cljs.core.println.call(null,(\"foobar\"+cljs.core.str.cljs$core$IFn$_invoke$arity$1(learnable.core.foobar_implemented.call(null))));\nreturn cljs.core.println.call(null,message);\n});\ncljs.core.println.call(null,\"foobar defined!\");\n")
 
 (js/eval compiled-test-code)
 
