@@ -30,13 +30,14 @@
   (println
     (str 'foobar'
          (foobar-implemented))))
-(learnable.core/foobar)
 ")
 
 (def compiled-test-code
-"learnable.core.foobar = (function foobar(){return learnable.core.println.call(null,(''+cljs.core.str.cljs$core$IFn$_invoke$arity$1(new cljs.core.Symbol(null,\"foobar'\",\"foobar'\",2006234269,null))+cljs.core.str.cljs$core$IFn$_invoke$arity$1(learnable.core.foobar_implemented.call(null))));\n});\nlearnable.core.foobar.call(null);\n")
+"learnable.core.foobar = (function foobar(){return learnable.core.println.call(null,(''+cljs.core.str.cljs$core$IFn$_invoke$arity$1(new cljs.core.Symbol(null,\"foobar'\",\"foobar'\",2006234269,null))+cljs.core.str.cljs$core$IFn$_invoke$arity$1(learnable.core.foobar_implemented.call(null))));\n});\n")
 
 (js/eval compiled-test-code)
+
+(foobar)
 
 (defn reboot [js-code]
   (js/eval js-code)
