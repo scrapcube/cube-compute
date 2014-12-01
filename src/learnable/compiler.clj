@@ -6,6 +6,9 @@
     [cljs.compiler :as compiler]
     [cljs.env :as env]))
 
+;; Referencing David Nolen's interactive explanation:
+;; https://github.com/swannodette/hello-cljsc
+
 ;; A helper to emit ClojureScript compiled to Javascript as a string
 (defn emit-str [ast]
   (with-out-str (compiler/emit ast)))
@@ -29,7 +32,9 @@
   {:ns     {:name user-ns}
    :locals {}})
 
-(defn compile-form [code user-ns]
+
+;; Compiles a sequence of clojurescript forms, under the namespace 'user-ns'.
+(defn ->cljs [code user-ns]
   (let [code-stream (string-reader code)
         form-seq    (forms-seq code-stream)
         user-env    (make-env user-ns)]

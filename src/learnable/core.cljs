@@ -21,25 +21,6 @@
 (def cube-state
   (atom (boot (cube/grid-game game))))
 
-(defn foobar-implemented []
-  ": THIS IS AWESOME")
-
-(def test-code
-"
-(defn foobar [message]
-  (println (str \"foobar\"
-                (foobar-implemented)))
-  (println message))
-(println \"foobar defined!\")
-")
-
-(def compiled-test-code
-"learnable.core.foobar = (function foobar(message){cljs.core.println.call(null,(\"foobar\"+cljs.core.str.cljs$core$IFn$_invoke$arity$1(learnable.core.foobar_implemented.call(null))));\nreturn cljs.core.println.call(null,message);\n});\ncljs.core.println.call(null,\"foobar defined!\");\n")
-
-(js/eval compiled-test-code)
-
-(foobar "ain't no one gonna say I aint punk rock")
-
 (defn reboot [js-code]
   (js/eval js-code)
   (swap! cube-state (boot (cube/grid-game game))))
